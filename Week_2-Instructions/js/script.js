@@ -1,5 +1,5 @@
 /**
- * Function Calls
+ * The Blank Page
  * Diana Edvi
  * 
  * Existential crisis program.
@@ -8,20 +8,21 @@
 "use strict";
 
 /**
- * OH LOOK I DIDN'T DESCRIBE SETUP!!
+ * Creates the canvas for our masterpiece
 */
 function setup() {
-    //Once at the beginning of the program
+    //create canvas at a standard resolution
     createCanvas(640,480);
 }
 
 
 /**
- * OOPS I DIDN'T DESCRIBE WHAT MY DRAW DOES!
+ * Draw's the writer's desktop and a blank piece of paper
 */
 function draw() {
-    //every frame
+    //the pink desktop
     background(255, 100, 100);
+    // the paper
     rect(200, 20, 240, 320);
 
 
