@@ -13,7 +13,7 @@
  */
 function setup() {
     // 640x480 canvas
-    createCanvas(640, 100);
+    createCanvas(640, 480);
 }
 
 /**
@@ -21,9 +21,9 @@ function setup() {
  */
 function draw() {
     // Black background
-    background("yellow");
+    background("black");
 
-    drawAllen();
+    drawAlien();
 }
 
 /**
@@ -48,8 +48,8 @@ function drawAlien() {
     // Draw the eyes
     push();
     fill(0);
-    ellipse(250, 240, 80, 250);
-    ellipse(390, 240, 80, 250);
+    ellipse(250, 240, 80, 100);
+    ellipse(390, 240, 80, 100);
     pop();
 
     // Draw the nostrils
@@ -61,10 +61,10 @@ function drawAlien() {
 
     // Draw the mouth
     push();
-    strokeWeigh(10);
+    strokeWeight(10);
     stroke(0, 200, 0);
-    noFall();
+    noFill();
     angleMode(DEGREES);
-    arc(320, 240, 200, 340, 65, 115);
+    arc(320, 160, 200, 340, 65, 115);
     pop();
 }
