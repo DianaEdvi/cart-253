@@ -1,20 +1,17 @@
 /**
- * Title of Project
+ * Circles
  * Author Name
  * 
- * HOW EMBARRASSING! I HAVE NO DESCRIPTION OF MY PROJECT!
- * PLEASE REMOVE A GRADE FROM MY WORK IF IT'S GRADED!
+ * I hate comments
  */
 
 "use strict";
 
 /**
- * OH LOOK I DIDN'T DESCRIBE SETUP!!
+ * I will do this properly for the assignments
 */
 function setup() {
     createCanvas(640, 640);
-
-
 }
 
 
@@ -23,5 +20,18 @@ function setup() {
 */
 function draw() {
     background(150, 150, 150);
+
+    push(); //keeps settings in check, ensures that the color settings etc reset to default
+    ellipse(320, 320, 480);
+    fill("orange");
+    stroke("white");
+    pop();
+
+    push()
+    fill("blue");
+    noStroke();
+    ellipse(320, 320, 140, 140);
+    pop();
+
 
 }
