@@ -8,6 +8,11 @@
 
 "use strict";
 
+let canvas = {
+    canvasWidth: 640,
+    canvasHeight: 480
+}
+
 let car = {
     xPos: 10,
     yPos: 320,
@@ -15,11 +20,26 @@ let car = {
     baseHeight: 20,
 }
 
+//Establishes mountain properties
+let mountain = {
+    fill: "brown",
+    //Coordinates for the bottom left corner of the mountains
+    //Mountain One width:
+    mountainOneX: 0,
+    mountainOneY: 480,
+    mountainTwoX: 160,
+    mountainTwoY: 480,
+    mountainOneWidth: 320,
+    mountainTwoWidth: 640,
+    // mountainThreeWidth:
+}
+
+
 /**
  * OH LOOK I DIDN'T DESCRIBE SETUP!!
  */
 function setup() {
-    createCanvas(640, 640);
+    createCanvas(canvas.canvasWidth, canvas.canvasHeight);
 }
 
 
@@ -27,9 +47,14 @@ function setup() {
  * OOPS I DIDN'T DESCRIBE WHAT MY DRAW DOES!
  */
 function draw() {
-    background(55, 220, 250);
+    background(145, 220, 230);
+    drawMountains();
+    moveMountains();
+    drawGround();
     drawCar();
-    followMouse();
+    // followMouse();
+
+
 }
 
 function drawCar() {
@@ -74,7 +99,77 @@ function followMouse() {
 }
 
 function drawMountains() {
+    //Draw first mountain
     push();
-
+    fill(160, 75, 50);
+    noStroke();
+    //Positions triangle
+    triangle(mountain.mountainOneX, canvas.canvasHeight,
+        mountain.mountainOneX + canvas.canvasWidth / 4, 0,
+        mountain.mountainOneX + canvas.canvasWidth / 2, canvas.canvasHeight);
     pop;
+
+    //Draw second mountain
+    push();
+    fill(190, 90, 70);
+    noStroke();
+    //Positions triangle
+    triangle(mountain.mountainTwoX, mountain.mountainTwoY,
+        mountain.mountainTwoX + canvas.canvasWidth / 2, 0.25 * canvas.canvasHeight,
+        mountain.mountainTwoX + canvas.canvasWidth, canvas.canvasHeight);
+    pop;
+}
+
+function drawMountainsTwo() {
+    console.log("i have been called")
+    //Draw first mountain
+    push();
+    fill(160, 75, 50);
+    noStroke();
+    //Positions triangle
+    triangle(canvas.canvasWidth + mountain.mountainOneX, canvas.canvasHeight,
+        canvas.canvasWidth + mountain.mountainOneX + canvas.canvasWidth / 4, 0,
+        canvas.canvasWidth + mountain.mountainOneX + canvas.canvasWidth / 2, canvas.canvasHeight);
+    pop;
+
+    //Draw second mountain
+    push();
+    fill(190, 90, 70);
+    noStroke();
+    //Positions triangle
+    triangle(canvas.canvasWidth + mountain.mountainTwoX, mountain.mountainTwoY,
+        canvas.canvasWidth + mountain.mountainTwoX + canvas.canvasWidth / 2, 0.25 * canvas.canvasHeight,
+        canvas.canvasWidth + mountain.mountainTwoX + canvas.canvasWidth, canvas.canvasHeight);
+    pop;
+}
+
+//Draw ground
+function drawGround() {
+    push();
+    fill("green");
+    noStroke();
+    rect(0, canvas.canvasHeight - 75, canvas.canvasWidth, 75);
+    pop;
+}
+
+function moveMountains() {
+    mountain.mountainOneX -= 3;
+    mountain.mountainTwoX -= 3;
+    let counter = 0;
+    counter -= 3;
+
+
+    if (mountain.mountainOneX <= -10) {
+        drawMountainsTwo();
+        mountain.mountainOneX = canvas.canvasWidth;
+        mountain.mountainTwoX = canvas.canvasWidth + mountain.mountainOneWidth;
+    }
+
+    if (counter <= -640) {
+        console.log("i am here")
+        console.log(counter)
+        mountain.mountainOneX = canvas.canvasWidth;
+        mountain.mountainTwoX = canvas.canvasWidth + mountain.mountainOneWidth;
+    }
+
 }
