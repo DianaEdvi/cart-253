@@ -18,6 +18,12 @@ let car = {
     yPos: 320,
     baseWidth: 80,
     baseHeight: 20,
+
+    fill: {
+        r: 0,
+        g: 0,
+        b: 0
+    }
 }
 
 //Establishes mountain properties
@@ -48,27 +54,64 @@ function setup() {
  */
 function draw() {
     background(145, 220, 230);
-    drawMountains();
-    moveMountains();
+    // drawMountains();
+    // moveMountains();
     drawGround();
     drawCar();
-    // followMouse();
-
-
+    followMouse();
+    colorCar();
 }
 
 function drawCar() {
-    //Draw base
-    push();
-    fill("red");
+    //Car's colors
+    let red;
+    let green;
+    let blue;
     noStroke();
+
+    //Draw cabin
+    push();
+    //Changes the color of the car according to the mouseY
+    //Separated into 5 in order to include the full rainbow
+    if (mouseY <= height / 5) {
+        red = 255;
+        green = map(mouseY, 0, height / 5, 0, 255);
+        blue = 0;
+    } else if (mouseY > height / 5 && mouseY < 2 * height / 5) {
+        red = map(mouseY, height / 5, 2 * height / 5, 0, 255);
+        green = 255;
+        blue = 0;
+    } else if (mouseY > 2 * height / 5 && mouseY < 3 * height / 5) {
+        red = 0;
+        green = 255;
+        blue = map(mouseY, 2 * height / 5, 3 * height / 5, 0, 255);
+    } else if (mouseY > 3 * height / 5 && mouseY < 4 * height / 5) {
+        red = 0;
+        green = map(mouseY, 3 * height / 5, 4 * height / 5, 255, 0);
+        blue = 255;
+    } else {
+        red = map(mouseY, 4 * height / 5, 480, 0, 255);
+        console.log(4 * height / 5)
+        green = 0;
+        blue = 255;
+    }
+
+    fill(red, green, blue);
+
+    //Draw base (rectangle)
     rect(car.xPos, car.yPos, car.baseWidth, car.baseHeight);
+
+    //Draw cabin (trapezoid)
+    //Positions cabin proportionally according to the car's size
+    quad(car.xPos, car.yPos,
+        car.xPos + car.baseHeight, car.yPos - car.baseHeight,
+        car.xPos + car.baseWidth - car.baseHeight, car.yPos - car.baseHeight,
+        car.xPos + car.baseWidth, car.yPos);
     pop;
 
     //Draw left tire
     push();
     fill("black");
-    noStroke();
     //Positions tire proportionally according to car's size
     ellipse(car.xPos + car.baseWidth / 4, car.yPos + car.baseHeight, car.baseHeight);
     pop;
@@ -76,26 +119,15 @@ function drawCar() {
     //Draw left tire
     push();
     fill("black");
-    noStroke();
     //Positions tire proportionally according to car's size
     ellipse(car.xPos + car.baseWidth - car.baseWidth / 4, car.yPos + car.baseHeight, car.baseHeight);
-    pop;
-
-    //Draw cabin
-    push();
-    fill("red");
-    noStroke();
-    //Positions cabin proportionally according to the car's size
-    quad(car.xPos, car.yPos,
-        car.xPos + car.baseHeight, car.yPos - car.baseHeight,
-        car.xPos + car.baseWidth - car.baseHeight, car.yPos - car.baseHeight,
-        car.xPos + car.baseWidth, car.yPos);
     pop;
 }
 
 function followMouse() {
-    //Follow mouse y position
-    car.yPos = mouseY;
+    //Follow mouse y position and constrain it to the borders, taking into consideration the car's size
+    car.yPos = constrain(mouseY, car.baseHeight, height - 1.5 * car.baseHeight);
+
 }
 
 function drawMountains() {
@@ -171,5 +203,10 @@ function moveMountains() {
         mountain.mountainOneX = canvas.canvasWidth;
         mountain.mountainTwoX = canvas.canvasWidth + mountain.mountainOneWidth;
     }
+
+}
+
+function colorCar() {
+
 
 }
