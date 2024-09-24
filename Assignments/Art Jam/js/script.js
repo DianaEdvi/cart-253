@@ -41,9 +41,12 @@ let mountain = {
 }
 
 let heart = {
-    x: 320,
-    y: 240,
-    w: 30
+    w: 30,
+    diagonal: {
+        x: 320,
+        y: 455,
+        movingLeft: false
+    }
 }
 
 let timer = 60;
@@ -67,8 +70,8 @@ function draw() {
     drawGround();
     drawCar();
     followMouse();
-    // moveHearts();
-    spawnHearts();
+    // spawnHearts();
+    drawDiagonalHeart();
 }
 
 function drawCar() {
@@ -215,12 +218,12 @@ function moveMountains() {
 
 }
 
-function drawHeart(y) {
+function drawHeart(x, y) {
     push();
     fill(255, 150, 230)
     noStroke();
     rectMode(CENTER);
-    translate(heart.x, y);
+    translate(x, y);
     rotate(PI / 4);
     rect(0, 0, heart.w);
     circle(0 - heart.w / 2, 0, heart.w);
@@ -228,33 +231,55 @@ function drawHeart(y) {
     pop();
 }
 
-function moveHearts() {
-    let heartPositions = [height / 4, height / 2, 3 * height / 4];
-    heart.x--;
-    drawHeart(heartPositions[0]);
-    drawHeart(heartPositions[1]);
-    drawHeart(heartPositions[2]);
-}
+// function spawnHearts() {
+//     console.log("i am here")
+//     let heartPositions = [height / 4, height / 2, 3 * height / 4];
+//     timer--;
+//     console.log(timer)
+//     if (timer <= 0) {
+//         console.log("I got here")
+//         timer = 60;
+//     }
+//
+//     drawHeart(heartPositions[0]);
+//     drawHeart(heartPositions[1]);
+//     drawHeart(heartPositions[2]);
+//     heart.x--;
+// }
 
-function spawnHearts() {
-    console.log("i am here")
-    let heartPositions = [height / 4, height / 2, 3 * height / 4];
-    timer--;
-    console.log(timer)
-    if (timer <= 0) {
-        console.log("I got here")
-        timer = 60;
+function drawDiagonalHeart() {
+    drawHeart(heart.diagonal.x, heart.diagonal.y);
+    heart.diagonal.x = constrain(heart.diagonal.x, 0, width - heart.w);
+    heart.diagonal.y = constrain(heart.diagonal.y, heart.w, height + heart.w);
+    boolean
+
+    if (!heart.diagonal.movingLeft) {
+        heart.diagonal.x++;
+    } else {
+        heart.diagonal.x--;
     }
 
-    drawHeart(heartPositions[0]);
-    drawHeart(heartPositions[1]);
-    drawHeart(heartPositions[2]);
-    heart.x--;
+    if (heart.diagonal.x >= width - heart.w) {
+        console.log("hit right");
+        heart.diagonal.movingLeft = true;
+    } else if (heart.diagonal.x <= heart.w) {
+        console.log("hit left");
+        heart.diagonal.movingLeft = false;
+    }
+    // heart.diagonal.y--;
 
+
+    if (heart.diagonal.x >= 640) {
+        map(heart.diagonal.x, 0, 640, 640, 0);
+    }
+
+    //start by going right, when hit wall, go left
 
 }
 
+
 //TODO
+
 //Spawn hearts
 //If collide with heart, destroy heart and move car forward
 //If car reaches end of the screen, win
