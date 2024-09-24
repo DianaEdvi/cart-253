@@ -45,7 +45,8 @@ let heart = {
     diagonal: {
         x: 320,
         y: 455,
-        movingLeft: false
+        movingLeft: false,
+        movingDown: false
     }
 }
 
@@ -250,13 +251,18 @@ function drawHeart(x, y) {
 function drawDiagonalHeart() {
     drawHeart(heart.diagonal.x, heart.diagonal.y);
     heart.diagonal.x = constrain(heart.diagonal.x, 0, width - heart.w);
-    heart.diagonal.y = constrain(heart.diagonal.y, heart.w, height + heart.w);
-    boolean
+    heart.diagonal.y = constrain(heart.diagonal.y, heart.w, height - heart.w);
 
     if (!heart.diagonal.movingLeft) {
         heart.diagonal.x++;
     } else {
         heart.diagonal.x--;
+    }
+
+    if (!heart.diagonal.movingDown) {
+        heart.diagonal.y++;
+    } else {
+        heart.diagonal.y--;
     }
 
     if (heart.diagonal.x >= width - heart.w) {
@@ -266,15 +272,13 @@ function drawDiagonalHeart() {
         console.log("hit left");
         heart.diagonal.movingLeft = false;
     }
-    // heart.diagonal.y--;
-
-
-    if (heart.diagonal.x >= 640) {
-        map(heart.diagonal.x, 0, 640, 640, 0);
+    if (heart.diagonal.y >= height - heart.w) {
+        console.log("hit top");
+        heart.diagonal.movingDown = true;
+    } else if (heart.diagonal.y <= heart.w) {
+        console.log("hit bottom");
+        heart.diagonal.movingDown = false;
     }
-
-    //start by going right, when hit wall, go left
-
 }
 
 
