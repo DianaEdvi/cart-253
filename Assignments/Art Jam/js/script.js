@@ -47,6 +47,10 @@ let heart = {
         y: 455,
         movingLeft: false,
         movingDown: false
+    },
+    circle: {
+        x: 320,
+        y: 240,
     }
 }
 
@@ -71,8 +75,8 @@ function draw() {
     drawGround();
     drawCar();
     followMouse();
-    // spawnHearts();
-    drawDiagonalHeart();
+    moveDiagonalHeart();
+    moveCircleHeart();
 }
 
 function drawCar() {
@@ -232,23 +236,8 @@ function drawHeart(x, y) {
     pop();
 }
 
-// function spawnHearts() {
-//     console.log("i am here")
-//     let heartPositions = [height / 4, height / 2, 3 * height / 4];
-//     timer--;
-//     console.log(timer)
-//     if (timer <= 0) {
-//         console.log("I got here")
-//         timer = 60;
-//     }
-//
-//     drawHeart(heartPositions[0]);
-//     drawHeart(heartPositions[1]);
-//     drawHeart(heartPositions[2]);
-//     heart.x--;
-// }
 
-function drawDiagonalHeart() {
+function moveDiagonalHeart() {
     drawHeart(heart.diagonal.x, heart.diagonal.y);
     heart.diagonal.x = constrain(heart.diagonal.x, 0, width - heart.w);
     heart.diagonal.y = constrain(heart.diagonal.y, heart.w, height - heart.w);
@@ -279,6 +268,12 @@ function drawDiagonalHeart() {
         console.log("hit bottom");
         heart.diagonal.movingDown = false;
     }
+}
+
+function moveCircleHeart() {
+    drawHeart(200, 240);
+    // heart.size.size =
+
 }
 
 
