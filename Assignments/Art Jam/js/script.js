@@ -40,6 +40,12 @@ let mountain = {
     // mountainThreeWidth:
 }
 
+let heart = {
+    x: 320,
+    y: 240,
+    w: 30
+}
+
 
 /**
  * OH LOOK I DIDN'T DESCRIBE SETUP!!
@@ -58,8 +64,8 @@ function draw() {
     // moveMountains();
     drawGround();
     drawCar();
+    drawHeart();
     followMouse();
-    colorCar();
 }
 
 function drawCar() {
@@ -127,7 +133,6 @@ function drawCar() {
 function followMouse() {
     //Follow mouse y position and constrain it to the borders, taking into consideration the car's size
     car.yPos = constrain(mouseY, car.baseHeight, height - 1.5 * car.baseHeight);
-
 }
 
 function drawMountains() {
@@ -206,7 +211,15 @@ function moveMountains() {
 
 }
 
-function colorCar() {
-
-
+function drawHeart() {
+    push();
+    fill(255, 150, 230)
+    noStroke();
+    rectMode(CENTER);
+    translate(heart.x, heart.y);
+    rotate(PI / 4);
+    rect(0, 0, heart.w);
+    circle(0 - heart.w / 2, 0, heart.w);
+    circle(0, 0 - heart.w / 2, heart.w);
+    pop();
 }
