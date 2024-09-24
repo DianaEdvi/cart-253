@@ -46,6 +46,8 @@ let heart = {
     w: 30
 }
 
+let timer = 60;
+
 
 /**
  * OH LOOK I DIDN'T DESCRIBE SETUP!!
@@ -64,8 +66,9 @@ function draw() {
     // moveMountains();
     drawGround();
     drawCar();
-    drawHeart();
     followMouse();
+    // moveHearts();
+    spawnHearts();
 }
 
 function drawCar() {
@@ -133,6 +136,7 @@ function drawCar() {
 function followMouse() {
     //Follow mouse y position and constrain it to the borders, taking into consideration the car's size
     car.yPos = constrain(mouseY, car.baseHeight, height - 1.5 * car.baseHeight);
+    car.xPos = constrain(mouseX, 0, width - car.baseWidth);
 }
 
 function drawMountains() {
@@ -157,28 +161,28 @@ function drawMountains() {
     pop;
 }
 
-function drawMountainsTwo() {
-    console.log("i have been called")
-    //Draw first mountain
-    push();
-    fill(160, 75, 50);
-    noStroke();
-    //Positions triangle
-    triangle(canvas.canvasWidth + mountain.mountainOneX, canvas.canvasHeight,
-        canvas.canvasWidth + mountain.mountainOneX + canvas.canvasWidth / 4, 0,
-        canvas.canvasWidth + mountain.mountainOneX + canvas.canvasWidth / 2, canvas.canvasHeight);
-    pop;
-
-    //Draw second mountain
-    push();
-    fill(190, 90, 70);
-    noStroke();
-    //Positions triangle
-    triangle(canvas.canvasWidth + mountain.mountainTwoX, mountain.mountainTwoY,
-        canvas.canvasWidth + mountain.mountainTwoX + canvas.canvasWidth / 2, 0.25 * canvas.canvasHeight,
-        canvas.canvasWidth + mountain.mountainTwoX + canvas.canvasWidth, canvas.canvasHeight);
-    pop;
-}
+// function drawMountainsTwo() {
+//     console.log("i have been called")
+//     //Draw first mountain
+//     push();
+//     fill(160, 75, 50);
+//     noStroke();
+//     //Positions triangle
+//     triangle(canvas.canvasWidth + mountain.mountainOneX, canvas.canvasHeight,
+//         canvas.canvasWidth + mountain.mountainOneX + canvas.canvasWidth / 4, 0,
+//         canvas.canvasWidth + mountain.mountainOneX + canvas.canvasWidth / 2, canvas.canvasHeight);
+//     pop;
+//
+//     //Draw second mountain
+//     push();
+//     fill(190, 90, 70);
+//     noStroke();
+//     //Positions triangle
+//     triangle(canvas.canvasWidth + mountain.mountainTwoX, mountain.mountainTwoY,
+//         canvas.canvasWidth + mountain.mountainTwoX + canvas.canvasWidth / 2, 0.25 * canvas.canvasHeight,
+//         canvas.canvasWidth + mountain.mountainTwoX + canvas.canvasWidth, canvas.canvasHeight);
+//     pop;
+// }
 
 //Draw ground
 function drawGround() {
@@ -211,15 +215,48 @@ function moveMountains() {
 
 }
 
-function drawHeart() {
+function drawHeart(y) {
     push();
     fill(255, 150, 230)
     noStroke();
     rectMode(CENTER);
-    translate(heart.x, heart.y);
+    translate(heart.x, y);
     rotate(PI / 4);
     rect(0, 0, heart.w);
     circle(0 - heart.w / 2, 0, heart.w);
     circle(0, 0 - heart.w / 2, heart.w);
     pop();
 }
+
+function moveHearts() {
+    let heartPositions = [height / 4, height / 2, 3 * height / 4];
+    heart.x--;
+    drawHeart(heartPositions[0]);
+    drawHeart(heartPositions[1]);
+    drawHeart(heartPositions[2]);
+}
+
+function spawnHearts() {
+    console.log("i am here")
+    let heartPositions = [height / 4, height / 2, 3 * height / 4];
+    timer--;
+    console.log(timer)
+    if (timer <= 0) {
+        console.log("I got here")
+        timer = 60;
+    }
+
+    drawHeart(heartPositions[0]);
+    drawHeart(heartPositions[1]);
+    drawHeart(heartPositions[2]);
+    heart.x--;
+
+
+}
+
+//TODO
+//Spawn hearts
+//If collide with heart, destroy heart and move car forward
+//If car reaches end of the screen, win
+//Spawnmountains
+//Title and end screen?
