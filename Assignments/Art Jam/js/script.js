@@ -115,6 +115,8 @@ function drawCar() {
 
     fill(red, green, blue);
 
+
+
     //Draw base (rectangle)
     rect(car.xPos, car.yPos, car.baseWidth, car.baseHeight);
 
@@ -142,9 +144,14 @@ function drawCar() {
 }
 
 function followMouse() {
+
+    //Center car on cursor and make cursor invisible
+    let centeredCursor = mouseX - car.baseWidth/2;
+    noCursor();
+
     //Follow mouse y position and constrain it to the borders, taking into consideration the car's size
     car.yPos = constrain(mouseY, car.baseHeight, height - 1.5 * car.baseHeight);
-    car.xPos = constrain(mouseX, 0, width - car.baseWidth);
+    car.xPos = constrain(centeredCursor, 0, width - car.baseWidth);
 }
 
 function drawMountains() {
