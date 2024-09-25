@@ -44,6 +44,16 @@ let mountain = {
 
 let heart = {
     w: 30,
+    fill: "#ff96e6",
+
+    fills: {
+      red: "#ff0000",
+      orange: "#ff0000",
+      yellow: "#ff0000",
+      green: "#ff0000",
+      blue: "#ff0000",
+      purple: "#ff0000"
+    },
     diagonal: {
         x: 320,
         y: 455,
@@ -295,8 +305,8 @@ function moveMountains() {
 
 function drawHeart(x, y, w) {
     push();
-    fill(255, 150, 230)
     noStroke();
+    fill(heart.fill);
     rectMode(CENTER);
     translate(x, y);
     rotate(PI / 4);
@@ -376,14 +386,12 @@ function transformCornerHeart(){
 }
 
 function moveStrafeHeart(){
-
     heart.strafe.x += random(-10, 10)*0.5;
-
     heart.strafe.x = constrain(heart.strafe.x, heart.strafe.size, width - heart.strafe.size);
-
     drawHeart(heart.strafe.x, heart.strafe.y, heart.strafe.size);
-
 }
+
+
 
 
 //TODO
@@ -391,4 +399,4 @@ function moveStrafeHeart(){
 //Spawn 3 more hearts
 //rando heart spawner in corners
 //ad strafe
-//rando shake
+//sin wave w rotating heart 
