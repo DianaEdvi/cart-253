@@ -16,8 +16,8 @@ let canvas = {
 let car = {
     xPos: 10,
     yPos: 320,
-    baseWidth: 80,
-    baseHeight: 20,
+    baseWidth: 60,
+    baseHeight: 15,
 
     fill: {
         r: 0,
@@ -45,16 +45,24 @@ let heart = {
     diagonal: {
         x: 320,
         y: 455,
+        size: 30,
         movingLeft: false,
         movingDown: false
     },
     circle: {
         x: 320,
         y: 240,
+        size: 30,
+        radius: 200,
+        angle: 0,
+        speed: 0.02
+    },
+    big: {
+        x: 0,
+        y: 0,
+        size: 30,
     }
 }
-
-let timer = 60;
 
 
 /**
@@ -76,7 +84,7 @@ function draw() {
     drawCar();
     followMouse();
     moveDiagonalHeart();
-    moveCircleHeart();
+    moveCircleHeart();transformBigHeart();
 }
 
 function drawCar() {
@@ -108,7 +116,6 @@ function drawCar() {
         blue = 255;
     } else {
         red = map(mouseY, 4 * height / 5, 480, 0, 255);
-        console.log(4 * height / 5)
         green = 0;
         blue = 255;
     }
@@ -177,7 +184,6 @@ function drawMountains() {
 }
 
 // function drawMountainsTwo() {
-//     console.log("i have been called")
 //     //Draw first mountain
 //     push();
 //     fill(160, 75, 50);
@@ -222,30 +228,28 @@ function moveMountains() {
     }
 
     if (counter <= -640) {
-        console.log("i am here")
-        console.log(counter)
         mountain.mountainOneX = canvas.canvasWidth;
         mountain.mountainTwoX = canvas.canvasWidth + mountain.mountainOneWidth;
     }
 
 }
 
-function drawHeart(x, y) {
+function drawHeart(x, y, w) {
     push();
     fill(255, 150, 230)
     noStroke();
     rectMode(CENTER);
     translate(x, y);
     rotate(PI / 4);
-    rect(0, 0, heart.w);
-    circle(0 - heart.w / 2, 0, heart.w);
-    circle(0, 0 - heart.w / 2, heart.w);
+    rect(0, 0, w);
+    circle(0 - w / 2, 0, w);
+    circle(0, 0 - w / 2, w);
     pop();
 }
 
 
 function moveDiagonalHeart() {
-    drawHeart(heart.diagonal.x, heart.diagonal.y);
+    drawHeart(heart.diagonal.x, heart.diagonal.y, heart.diagonal.size);
     heart.diagonal.x = constrain(heart.diagonal.x, 0, width - heart.w);
     heart.diagonal.y = constrain(heart.diagonal.y, heart.w, height - heart.w);
 
@@ -262,24 +266,33 @@ function moveDiagonalHeart() {
     }
 
     if (heart.diagonal.x >= width - heart.w) {
-        console.log("hit right");
         heart.diagonal.movingLeft = true;
     } else if (heart.diagonal.x <= heart.w) {
-        console.log("hit left");
         heart.diagonal.movingLeft = false;
     }
     if (heart.diagonal.y >= height - heart.w) {
-        console.log("hit top");
         heart.diagonal.movingDown = true;
     } else if (heart.diagonal.y <= heart.w) {
-        console.log("hit bottom");
         heart.diagonal.movingDown = false;
     }
 }
 
+//Move the heart that goes in a circle
 function moveCircleHeart() {
-    drawHeart(200, 240);
-    // heart.size.size =
+    //Maps the heart's x position to a sin wave and the y to a cosine wave, effectively pathing a circle
+    const x = map(sin(heart.circle.angle), -1, 1, heart.circle.x - heart.circle.radius, heart.circle.x + heart.circle.radius);
+    const y = map(cos(heart.circle.angle), -1, 1, heart.circle.y - heart.circle.radius, heart.circle.y + heart.circle.radius);
+    drawHeart(x, y, heart.circle.size);
+
+    //Make the heart move
+    heart.circle.angle += heart.circle.speed;
+}
+
+//Increase and decrease the size of big heart depending on mouseX position
+function transformBigHeart(){
+    heart.big.size = map(mouseX, 0, width, 0, 100);
+    heart.big.size = constrain(heart.big.size, 10, 100);
+    drawHeart(width/2, height/2, heart.big.size);
 
 }
 
