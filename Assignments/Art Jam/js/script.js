@@ -12,7 +12,9 @@ let canvas = {
     canvasWidth: 640,
     canvasHeight: 480
 }
-
+let state = "title";
+let titleString = "Welcome to Gaymobile";
+let playString = "Click on the car to PLAY!";
 let car = {
     xPos: 10,
     yPos: 320,
@@ -61,6 +63,7 @@ let heart = {
         x: 0,
         y: 0,
         size: 30,
+        speed: 0.1
     }
 }
 
@@ -70,6 +73,11 @@ let heart = {
  */
 function setup() {
     createCanvas(canvas.canvasWidth, canvas.canvasHeight);
+
+    //Text settings
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    textFont("Courier New");
 }
 
 
@@ -77,6 +85,15 @@ function setup() {
  * OOPS I DIDN'T DESCRIBE WHAT MY DRAW DOES!
  */
 function draw() {
+    if (state == "title"){
+        title();
+    }
+    else if (state == "game"){
+        game();
+    }
+}
+
+function game(){
     background(145, 220, 230);
     // drawMountains();
     // moveMountains();
@@ -84,7 +101,8 @@ function draw() {
     drawCar();
     followMouse();
     moveDiagonalHeart();
-    moveCircleHeart();transformBigHeart();
+    moveCircleHeart();
+    transformBigHeart();
 }
 
 function drawCar() {
@@ -121,8 +139,6 @@ function drawCar() {
     }
 
     fill(red, green, blue);
-
-
 
     //Draw base (rectangle)
     rect(car.xPos, car.yPos, car.baseWidth, car.baseHeight);
@@ -290,10 +306,29 @@ function moveCircleHeart() {
 
 //Increase and decrease the size of big heart depending on mouseX position
 function transformBigHeart(){
-    heart.big.size = map(mouseX, 0, width, 0, 100);
-    heart.big.size = constrain(heart.big.size, 10, 100);
+    heart.big.size = map(mouseX, 0, width, 0, 150);
+    heart.big.size = constrain(heart.big.size, 10, 150);
     drawHeart(width/2, height/2, heart.big.size);
+}
 
+function title(){
+    background("pink");
+    push();
+    fill("black");
+    text(titleString, width/2, height/2);
+    text(playString, width/2, 3*height/5);
+    pop();
+
+    car.baseWidth = 80;
+    car.baseHeight = 20;
+    car.yPos = 50;
+
+
+    drawCar();
+
+    if (mouseIsPressed){
+        state = "game";
+    }
 }
 
 
