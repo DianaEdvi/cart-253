@@ -64,7 +64,27 @@ let heart = {
         y: 0,
         size: 30,
         speed: 0.1
+    },
+    corner: {
+        x: 40,
+        y: 40,
+        size: 40,
+        timer: 60,
+        clockSpeed: 1,
+        isActive: false,
+        currentX: 0,
+        currentY: 0
+    },
+    strafe: {
+        x: 0,
+        y: 384,
+        size: 30,
+        speed: 0.1,
+        minStrafe: 0.5,
+        maxStrafe: 1.5
     }
+
+
 }
 
 
@@ -93,16 +113,39 @@ function draw() {
     }
 }
 
+function title(){
+    background("pink");
+    push();
+    fill("black");
+    text(titleString, width/2, height/2);
+    text(playString, width/2, 3*height/5);
+    pop();
+
+    car.baseWidth = 80;
+    car.baseHeight = 20;
+    car.yPos = 50;
+
+    drawCar();
+
+    if (mouseIsPressed){
+        state = "game";
+    }
+}
+
 function game(){
     background(145, 220, 230);
     // drawMountains();
     // moveMountains();
     drawGround();
-    drawCar();
     followMouse();
     moveDiagonalHeart();
     moveCircleHeart();
     transformBigHeart();
+    // transformCornerHeart();
+    moveStrafeHeart();
+
+    drawCar();
+
 }
 
 function drawCar() {
@@ -311,31 +354,41 @@ function transformBigHeart(){
     drawHeart(width/2, height/2, heart.big.size);
 }
 
-function title(){
-    background("pink");
-    push();
-    fill("black");
-    text(titleString, width/2, height/2);
-    text(playString, width/2, 3*height/5);
-    pop();
+function transformCornerHeart(){
 
-    car.baseWidth = 80;
-    car.baseHeight = 20;
-    car.yPos = 50;
+    let xPositions = [heart.corner.x, width - heart.corner.x];
+    let yPositions = [heart.corner.y, height - heart.corner.y];
 
+    heart.corner.timer -= heart.corner.clockSpeed;
 
-    drawCar();
-
-    if (mouseIsPressed){
-        state = "game";
+    if (heart.corner.timer === 0){
+        console.log("time");
+        heart.corner.timer = 60;
     }
+
+    if (mouseX >= width/2){
+        let xPos = floor(random(0,2));
+        let yPos = floor(random(0,2));
+
+        drawHeart(xPositions[xPos], yPositions[yPos], heart.corner.size);
+        heart.corner.timer = 60;
+    }
+}
+
+function moveStrafeHeart(){
+
+    heart.strafe.x += random(-10, 10)*0.5;
+
+    heart.strafe.x = constrain(heart.strafe.x, heart.strafe.size, width - heart.strafe.size);
+
+    drawHeart(heart.strafe.x, heart.strafe.y, heart.strafe.size);
+
 }
 
 
 //TODO
 
-//Spawn hearts
-//If collide with heart, destroy heart and move car forward
-//If car reaches end of the screen, win
-//Spawnmountains
-//Title and end screen?
+//Spawn 3 more hearts
+//rando heart spawner in corners
+//ad strafe
+//rando shake
