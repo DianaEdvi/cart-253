@@ -15,6 +15,7 @@ let canvas = {
 let state = "title";
 let titleString = "Welcome to Gaymobile";
 let playString = "Click on the car to PLAY!";
+let infoString = "Click on hearts to make the LGBTQ+ flag!"
 let car = {
     xPos: 10,
     yPos: 320,
@@ -165,6 +166,7 @@ function game(){
 
     drawCar();
 
+
 }
 
 function drawCar() {
@@ -290,6 +292,7 @@ function drawGround() {
     noStroke();
     rect(0, canvas.canvasHeight - 75, canvas.canvasWidth, 75);
     pop;
+    gameRules();
 }
 
 function moveMountains() {
@@ -419,6 +422,14 @@ function moveDoubleHeart(){
     //I added a 3 and it made chaos, idk what it is but its cool so I'm keeping it
     heart.double.angle += heart.double.speed + 3;
 
+}
+
+function gameRules() {
+    push();
+    textSize(20);
+    fill("black");
+    text(infoString, 320, 445);
+    pop();
 }
 
 
