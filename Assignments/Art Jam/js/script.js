@@ -68,7 +68,9 @@ let heart = {
         size: 30,
         radius: 200,
         angle: 0,
-        speed: 0.02
+        speed: 0.02,
+        circumferenceX: 0,
+        circumferenceY: 0
     },
     big: {
         x: 320,
@@ -96,7 +98,7 @@ let heart = {
     },
     double: {
         x: 150,
-        y: 100,
+        y: 150,
         size: 30,
         speed: 0.1,
         angle: 0,
@@ -362,13 +364,20 @@ function moveDiagonalHeart() {
 
 //Move the heart that goes in a circle
 function moveCircleHeart() {
+    let xPos = heart.circle.x;
+    let yPos = heart.circle.y;
     //Maps the heart's x position to a sin wave and the y to a cosine wave, effectively pathing a circle
-    const x = map(sin(heart.circle.angle), -1, 1, heart.circle.x - heart.circle.radius, heart.circle.x + heart.circle.radius);
-    const y = map(cos(heart.circle.angle), -1, 1, heart.circle.y - heart.circle.radius, heart.circle.y + heart.circle.radius);
+    const x = map(sin(heart.circle.angle), -1, 1, xPos - heart.circle.radius, xPos + heart.circle.radius);
+    const y = map(cos(heart.circle.angle), -1, 1, yPos - heart.circle.radius, yPos + heart.circle.radius);
     drawHeart(x, y, heart.circle.size);
+
 
     //Make the heart move
     heart.circle.angle += heart.circle.speed;
+    // console.log(x, y);
+    heart.circle.circumferenceX = x;
+    heart.circle.circumferenceY = y;
+
 }
 
 //Increase and decrease the size of big heart depending on mouseX position
@@ -440,7 +449,11 @@ function gameRules() {
 
 
 function checkMouseOnHeart(x, y, size, name) {
-    let distance = dist(mouseX, mouseY, x, y);
+    let distance;
+    // if (name === "double") {
+    //     distance = dist(mouseX, mouseY, 150, 150);
+    // }
+    distance = dist(mouseX, mouseY, x, y);
 
     size = 2 * size / 3;
     if (distance < size && mouseIsPressed) {
@@ -453,29 +466,19 @@ function checkMouseOnHeart(x, y, size, name) {
     } else if (name === "circle") {
     } else if (name === "strafe") {
     } else if (name === "corner") {
-        if (heart.corner.visible) {
-
-        }
     } else if (name === "double") {
     }
-    // if (mouseClicked()) {
-    //     console.log("click")
-    // }
 
 }
 
 function heartTracker() {
     checkMouseOnHeart(heart.big.x, heart.big.y, heart.big.size, "big");
     checkMouseOnHeart(heart.diagonal.x, heart.diagonal.y, heart.diagonal.size, "diagonal");
-    checkMouseOnHeart(heart.circle.x, heart.circle.y, heart.circle.size, "circle");
+    checkMouseOnHeart(heart.circle.circumferenceX, heart.circle.circumferenceY, heart.circle.size, "circle");
     checkMouseOnHeart(heart.strafe.x, heart.strafe.y, heart.strafe.size, "strafe");
     checkMouseOnHeart(heart.corner.x, heart.corner.y, heart.corner.size, "corner");
     checkMouseOnHeart(heart.double.x, heart.double.y, heart.double.size, "double");
 
-}
-
-function mouseClicked() {
-    return true;
 }
 
 
@@ -493,8 +496,11 @@ function mouseClicked() {
 //diagonal good
 //big good
 //strafe good
-//corner half good
+//corner good
+
+//bugs
 //circle no
 //double half good
+//car color
 
 
