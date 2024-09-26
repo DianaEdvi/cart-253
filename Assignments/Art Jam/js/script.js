@@ -42,7 +42,6 @@ let mountain = {
     mountainTwoWidth: 640,
     // mountainThreeWidth:
 }
-
 let heart = {
     w: 30,
     // fill: "#ff96e6",
@@ -52,7 +51,8 @@ let heart = {
         size: 30,
         movingLeft: false,
         movingDown: false,
-        fill: "#ff96e6"
+        fill: "#ff96e6",
+        colorCounter: 0
     },
     circle: {
         x: 320,
@@ -63,14 +63,16 @@ let heart = {
         speed: 0.02,
         circumferenceX: 0,
         circumferenceY: 0,
-        fill: "#ff96e6"
+        fill: "#ff96e6",
+        colorCounter: 0
     },
     big: {
         x: 320,
         y: 240,
         size: 30,
         speed: 0.1,
-        fill: "#ff96e6"
+        fill: "#ff96e6",
+        colorCounter: 0
     },
     corner: {
         x: 40,
@@ -81,7 +83,8 @@ let heart = {
         visible: true,
         xIndex: 0,
         yIndex: 0,
-        fill: "#ff96e6"
+        fill: "#ff96e6",
+        colorCounter: 0
     },
     strafe: {
         x: 550,
@@ -90,7 +93,8 @@ let heart = {
         speed: 0.1,
         minStrafe: 0.5,
         maxStrafe: 1.5,
-        fill: "#ff96e6"
+        fill: "#ff96e6",
+        colorCounter: 0
     },
     double: {
         x: 150,
@@ -101,7 +105,8 @@ let heart = {
         amplitude: 100,
         middle: 0,
         areOverlapped: false,
-        fill: "#ff96e6"
+        fill: "#ff96e6",
+        colorCounter: 0
     }
 
 
@@ -452,8 +457,9 @@ function gameRules() {
 }
 
 
-function checkMouseOnHeart(x, y, size, name, f) {
+function checkMouseOnHeart(x, y, size, name, colorCounter) {
     let distance = dist(mouseX, mouseY, x, y);
+    let colors = ["red", "orange", "yellow", "green", "blue", "purple"];
 
     size = 2 * size / 3;
     if (distance < size && mouseIsPressed) {
@@ -462,6 +468,11 @@ function checkMouseOnHeart(x, y, size, name, f) {
         //Check for special cases:
         if (name === "diagonal") {
             console.log("should be red")
+            heart.diagonal.colorCounter++;
+            console.log(heart.diagonal.colorCounter)
+            if (heart.diagonal.colorCounter === 7) {
+                heart.diagonal.colorCounter = 0;
+            }
             heart.diagonal.fill = "red";
         } else if (name === "big") {
         } else if (name === "circle") {
@@ -476,12 +487,12 @@ function checkMouseOnHeart(x, y, size, name, f) {
 }
 
 function heartTracker() {
-    checkMouseOnHeart(heart.big.x, heart.big.y, heart.big.size, "big", heart.big.fill);
-    checkMouseOnHeart(heart.diagonal.x, heart.diagonal.y, heart.diagonal.size, "diagonal", heart.diagonal.fill);
-    checkMouseOnHeart(heart.circle.circumferenceX, heart.circle.circumferenceY, heart.circle.size, "circle", heart.circle.fill); //copied variable to avoid bugs
-    checkMouseOnHeart(heart.strafe.x, heart.strafe.y, heart.strafe.size, "strafe", heart.strafe.fill);
-    checkMouseOnHeart(heart.corner.x, heart.corner.y, heart.corner.size, "corner", heart.corner.fill);
-    checkMouseOnHeart(heart.double.x, heart.double.middle, heart.double.size, "double", heart.double.fill); //copied variable to avoid bugs
+    checkMouseOnHeart(heart.big.x, heart.big.y, heart.big.size, "big", heart.big.fill, heart.big.colorCounter);
+    checkMouseOnHeart(heart.diagonal.x, heart.diagonal.y, heart.diagonal.size, "diagonal", heart.diagonal.fill, heart.diagonal.colorCounter);
+    checkMouseOnHeart(heart.circle.circumferenceX, heart.circle.circumferenceY, heart.circle.size, "circle", heart.circle.fill, heart.circle.colorCounter); //copied variable to avoid bugs
+    checkMouseOnHeart(heart.strafe.x, heart.strafe.y, heart.strafe.size, "strafe", heart.strafe.fill, heart.strafe.colorCounter);
+    checkMouseOnHeart(heart.corner.x, heart.corner.y, heart.corner.size, "corner", heart.corner.fill, heart.corner.colorCounter);
+    checkMouseOnHeart(heart.double.x, heart.double.middle, heart.double.size, "double", heart.double.fill, heart.double.colorCounter); //copied variable to avoid bugs
 
 }
 
