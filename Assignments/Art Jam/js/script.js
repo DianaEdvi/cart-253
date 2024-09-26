@@ -79,14 +79,15 @@ let heart = {
         x: 40,
         y: 40,
         size: 40,
-        timer: 60,
+        timer: 80,
         clockSpeed: 1,
         isActive: false,
         currentX: 0,
-        currentY: 0
+        currentY: 0,
+        visible: true,
     },
     strafe: {
-        x: 0,
+        x: 40,
         y: 384,
         size: 30,
         speed: 0.1,
@@ -96,6 +97,8 @@ let heart = {
 
 
 }
+
+let timerFinished = false;
 
 
 /**
@@ -108,6 +111,7 @@ function setup() {
     textSize(32);
     textAlign(CENTER, CENTER);
     textFont("Courier New");
+
 }
 
 
@@ -115,12 +119,15 @@ function setup() {
  * OOPS I DIDN'T DESCRIBE WHAT MY DRAW DOES!
  */
 function draw() {
-    if (state == "title"){
+    if (state === "title"){
         title();
     }
-    else if (state == "game"){
+    else if (state === "game"){
         game();
     }
+
+    console.log("Timer finished: " + timerFinished)
+
 }
 
 function title(){
@@ -151,7 +158,7 @@ function game(){
     moveDiagonalHeart();
     moveCircleHeart();
     transformBigHeart();
-    // transformCornerHeart();
+    transformCornerHeart();
     moveStrafeHeart();
 
     drawCar();
@@ -368,21 +375,39 @@ function transformCornerHeart(){
 
     let xPositions = [heart.corner.x, width - heart.corner.x];
     let yPositions = [heart.corner.y, height - heart.corner.y];
+    let xPos = 0;
+    let yPos = 0;
 
     heart.corner.timer -= heart.corner.clockSpeed;
+    console.log(heart.corner.timer);
 
+    if (heart.corner.visible === true){
+        drawHeart(xPositions[xPos], yPositions[xPos], heart.corner.size);
+    }
+
+    //Calculates every 60 frames
     if (heart.corner.timer === 0){
-        console.log("time");
-        heart.corner.timer = 60;
+        if (heart.corner.visible){
+            heart.corner.visible = false;
+        }
+        else if (!heart.corner.visible){
+            heart.corner.visible = true;
+        }
+
+        timerFinished = true;
+        console.log("time" + heart.corner.timer);
+        heart.corner.timer = 80;
+        //find position
+        xPos = floor(random(0,2));
+        yPos = floor(random(0,2));
     }
 
-    if (mouseX >= width/2){
-        let xPos = floor(random(0,2));
-        let yPos = floor(random(0,2));
 
-        drawHeart(xPositions[xPos], yPositions[yPos], heart.corner.size);
-        heart.corner.timer = 60;
-    }
+    // if (mouseX >= width/2){
+
+    //
+    //     drawHeart(xPositions[xPos], yPositions[yPos], heart.corner.size);
+    // }
 }
 
 function moveStrafeHeart(){
@@ -399,4 +424,16 @@ function moveStrafeHeart(){
 //Spawn 3 more hearts
 //rando heart spawner in corners
 //ad strafe
-//sin wave w rotating heart 
+//sin wave w rotating heart
+
+//per frame
+//draw heart
+//check if timer hits 0
+//make heart disappear and set new position
+//if yes, set new heart position (boolean if?)
+//if no, do nothing
+
+//not per frame (once)
+//position determined and stays
+
+
