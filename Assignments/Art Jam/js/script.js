@@ -45,22 +45,14 @@ let mountain = {
 
 let heart = {
     w: 30,
-    fill: "#ff96e6",
-
-    fills: {
-        red: "#ff0000",
-        orange: "#ff0000",
-        yellow: "#ff0000",
-        green: "#ff0000",
-        blue: "#ff0000",
-        purple: "#ff0000"
-    },
+    // fill: "#ff96e6",
     diagonal: {
         x: 320,
         y: 455,
         size: 30,
         movingLeft: false,
-        movingDown: false
+        movingDown: false,
+        fill: "#ff96e6"
     },
     circle: {
         x: 320,
@@ -70,13 +62,15 @@ let heart = {
         angle: 0,
         speed: 0.02,
         circumferenceX: 0,
-        circumferenceY: 0
+        circumferenceY: 0,
+        fill: "#ff96e6"
     },
     big: {
         x: 320,
         y: 240,
         size: 30,
-        speed: 0.1
+        speed: 0.1,
+        fill: "#ff96e6"
     },
     corner: {
         x: 40,
@@ -86,7 +80,8 @@ let heart = {
         clockSpeed: 1,
         visible: true,
         xIndex: 0,
-        yIndex: 0
+        yIndex: 0,
+        fill: "#ff96e6"
     },
     strafe: {
         x: 550,
@@ -94,7 +89,8 @@ let heart = {
         size: 30,
         speed: 0.1,
         minStrafe: 0.5,
-        maxStrafe: 1.5
+        maxStrafe: 1.5,
+        fill: "#ff96e6"
     },
     double: {
         x: 150,
@@ -104,7 +100,8 @@ let heart = {
         angle: 0,
         amplitude: 100,
         middle: 0,
-        areOverlapped: false
+        areOverlapped: false,
+        fill: "#ff96e6"
     }
 
 
@@ -321,10 +318,10 @@ function moveMountains() {
 
 }
 
-function drawHeart(x, y, w) {
+function drawHeart(x, y, w, f) {
     push();
     noStroke();
-    fill(heart.fill);
+    fill(f);
     rectMode(CENTER);
     translate(x, y);
     rotate(PI / 4);
@@ -336,7 +333,7 @@ function drawHeart(x, y, w) {
 
 
 function moveDiagonalHeart() {
-    drawHeart(heart.diagonal.x, heart.diagonal.y, heart.diagonal.size);
+    drawHeart(heart.diagonal.x, heart.diagonal.y, heart.diagonal.size, heart.diagonal.fill);
     heart.diagonal.x = constrain(heart.diagonal.x, 0, width - heart.w);
     heart.diagonal.y = constrain(heart.diagonal.y, heart.w, height - heart.w);
 
@@ -371,7 +368,7 @@ function moveCircleHeart() {
     //Maps the heart's x position to a sin wave and the y to a cosine wave, effectively pathing a circle
     const x = map(sin(heart.circle.angle), -1, 1, xPos - heart.circle.radius, xPos + heart.circle.radius);
     const y = map(cos(heart.circle.angle), -1, 1, yPos - heart.circle.radius, yPos + heart.circle.radius);
-    drawHeart(x, y, heart.circle.size);
+    drawHeart(x, y, heart.circle.size, heart.circle.fill);
 
 
     //Make the heart move
@@ -386,7 +383,7 @@ function moveCircleHeart() {
 function transformBigHeart() {
     heart.big.size = map(mouseX, 0, width, 0, 150);
     heart.big.size = constrain(heart.big.size, 10, 150);
-    drawHeart(heart.big.x, heart.big.y, heart.big.size);
+    drawHeart(heart.big.x, heart.big.y, heart.big.size, heart.big.fill);
 }
 
 function transformCornerHeart() {
@@ -419,7 +416,7 @@ function transformCornerHeart() {
 
     //Draw heart if it is meant to be visible
     if (heart.corner.visible === true) {
-        drawHeart(heart.corner.x, heart.corner.y, heart.corner.size);
+        drawHeart(heart.corner.x, heart.corner.y, heart.corner.size, heart.corner.fill);
 
     }
 }
@@ -428,14 +425,14 @@ function transformCornerHeart() {
 function moveStrafeHeart() {
     heart.strafe.x += random(-10, 10) * 0.5;
     heart.strafe.x = constrain(heart.strafe.x, heart.strafe.size, width - heart.strafe.size);
-    drawHeart(heart.strafe.x, heart.strafe.y, heart.strafe.size);
+    drawHeart(heart.strafe.x, heart.strafe.y, heart.strafe.size, heart.strafe.fill);
 }
 
 //Draws a heart that moves in a sine wave and rotates on itself
 function moveDoubleHeart() {
     //Sine wave
     const y = map(sin(heart.double.angle), -1, 1, heart.double.x - heart.double.amplitude, heart.double.x + heart.double.amplitude);
-    drawHeart(heart.double.x, y, heart.double.size);
+    drawHeart(heart.double.x, y, heart.double.size, heart.double.fill);
     //I added a 3 and it made chaos, idk what it is but its cool so I'm keeping it
     heart.double.angle += heart.double.speed + 3;
 
@@ -455,37 +452,36 @@ function gameRules() {
 }
 
 
-function checkMouseOnHeart(x, y, size, name) {
-    let distance;
-    // if (name === "double") {
-    //     distance = dist(mouseX, mouseY, 150, 150);
-    // }
-    distance = dist(mouseX, mouseY, x, y);
+function checkMouseOnHeart(x, y, size, name, f) {
+    let distance = dist(mouseX, mouseY, x, y);
 
     size = 2 * size / 3;
     if (distance < size && mouseIsPressed) {
         console.log("mouse in center: " + mouseX, mouseY);
+
+        //Check for special cases:
+        if (name === "diagonal") {
+            console.log("should be red")
+            heart.diagonal.fill = "red";
+        } else if (name === "big") {
+        } else if (name === "circle") {
+        } else if (name === "strafe") {
+        } else if (name === "corner") {
+        } else if (name === "double") {
+
+        }
     }
 
-    //Check for special cases:
-    if (name === "diagonal") {
-    } else if (name === "big") {
-    } else if (name === "circle") {
-    } else if (name === "strafe") {
-    } else if (name === "corner") {
-    } else if (name === "double") {
-
-    }
 
 }
 
 function heartTracker() {
-    checkMouseOnHeart(heart.big.x, heart.big.y, heart.big.size, "big");
-    checkMouseOnHeart(heart.diagonal.x, heart.diagonal.y, heart.diagonal.size, "diagonal");
-    checkMouseOnHeart(heart.circle.circumferenceX, heart.circle.circumferenceY, heart.circle.size, "circle"); //copied variable to avoid bugs
-    checkMouseOnHeart(heart.strafe.x, heart.strafe.y, heart.strafe.size, "strafe");
-    checkMouseOnHeart(heart.corner.x, heart.corner.y, heart.corner.size, "corner");
-    checkMouseOnHeart(heart.double.x, heart.double.middle, heart.double.size, "double"); //copied variable to avoid bugs
+    checkMouseOnHeart(heart.big.x, heart.big.y, heart.big.size, "big", heart.big.fill);
+    checkMouseOnHeart(heart.diagonal.x, heart.diagonal.y, heart.diagonal.size, "diagonal", heart.diagonal.fill);
+    checkMouseOnHeart(heart.circle.circumferenceX, heart.circle.circumferenceY, heart.circle.size, "circle", heart.circle.fill); //copied variable to avoid bugs
+    checkMouseOnHeart(heart.strafe.x, heart.strafe.y, heart.strafe.size, "strafe", heart.strafe.fill);
+    checkMouseOnHeart(heart.corner.x, heart.corner.y, heart.corner.size, "corner", heart.corner.fill);
+    checkMouseOnHeart(heart.double.x, heart.double.middle, heart.double.size, "double", heart.double.fill); //copied variable to avoid bugs
 
 }
 
