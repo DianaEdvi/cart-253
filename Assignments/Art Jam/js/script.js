@@ -81,10 +81,9 @@ let heart = {
         size: 40,
         timer: 80,
         clockSpeed: 1,
-        isActive: false,
-        currentX: 0,
-        currentY: 0,
         visible: true,
+        xIndex: 0,
+        yIndex: 0
     },
     strafe: {
         x: 40,
@@ -98,8 +97,8 @@ let heart = {
 
 }
 
-let timerFinished = false;
-
+// let xIndex = 0;
+// let yIndex = 0;
 
 /**
  * OH LOOK I DIDN'T DESCRIBE SETUP!!
@@ -125,9 +124,6 @@ function draw() {
     else if (state === "game"){
         game();
     }
-
-    console.log("Timer finished: " + timerFinished)
-
 }
 
 function title(){
@@ -375,18 +371,15 @@ function transformCornerHeart(){
 
     let xPositions = [heart.corner.x, width - heart.corner.x];
     let yPositions = [heart.corner.y, height - heart.corner.y];
-    let xPos = 0;
-    let yPos = 0;
+
 
     heart.corner.timer -= heart.corner.clockSpeed;
-    console.log(heart.corner.timer);
+    // console.log(heart.corner.timer);
 
-    if (heart.corner.visible === true){
-        drawHeart(xPositions[xPos], yPositions[xPos], heart.corner.size);
-    }
 
     //Calculates every 60 frames
     if (heart.corner.timer === 0){
+        //Check if heart is visible/not visible and set to opposite
         if (heart.corner.visible){
             heart.corner.visible = false;
         }
@@ -394,20 +387,17 @@ function transformCornerHeart(){
             heart.corner.visible = true;
         }
 
-        timerFinished = true;
-        console.log("time" + heart.corner.timer);
+        //reset timer to 80
         heart.corner.timer = 80;
         //find position
-        xPos = floor(random(0,2));
-        yPos = floor(random(0,2));
+        heart.corner.xIndex = floor(random(0,2));
+        heart.corner.yIndex = floor(random(0,2));
+    }
+    //Draw heart if it is meant to be visible
+    if (heart.corner.visible === true){
+        drawHeart(xPositions[heart.corner.xIndex], yPositions[heart.corner.yIndex], heart.corner.size);
     }
 
-
-    // if (mouseX >= width/2){
-
-    //
-    //     drawHeart(xPositions[xPos], yPositions[yPos], heart.corner.size);
-    // }
 }
 
 function moveStrafeHeart(){
