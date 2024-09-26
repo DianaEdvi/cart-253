@@ -103,6 +103,8 @@ let heart = {
         speed: 0.1,
         angle: 0,
         amplitude: 100,
+        middle: 0,
+        areOverlapped: false
     }
 
 
@@ -374,7 +376,7 @@ function moveCircleHeart() {
 
     //Make the heart move
     heart.circle.angle += heart.circle.speed;
-    // console.log(x, y);
+    //Assign x and y position to separate variables because we are dealing with angles here
     heart.circle.circumferenceX = x;
     heart.circle.circumferenceY = y;
 
@@ -437,6 +439,11 @@ function moveDoubleHeart() {
     //I added a 3 and it made chaos, idk what it is but its cool so I'm keeping it
     heart.double.angle += heart.double.speed + 3;
 
+    // console.log(y);
+    if (y > 135 && y < 165) {
+        heart.double.middle = y;
+    }
+
 }
 
 function gameRules() {
@@ -467,6 +474,7 @@ function checkMouseOnHeart(x, y, size, name) {
     } else if (name === "strafe") {
     } else if (name === "corner") {
     } else if (name === "double") {
+
     }
 
 }
@@ -474,10 +482,10 @@ function checkMouseOnHeart(x, y, size, name) {
 function heartTracker() {
     checkMouseOnHeart(heart.big.x, heart.big.y, heart.big.size, "big");
     checkMouseOnHeart(heart.diagonal.x, heart.diagonal.y, heart.diagonal.size, "diagonal");
-    checkMouseOnHeart(heart.circle.circumferenceX, heart.circle.circumferenceY, heart.circle.size, "circle");
+    checkMouseOnHeart(heart.circle.circumferenceX, heart.circle.circumferenceY, heart.circle.size, "circle"); //copied variable to avoid bugs
     checkMouseOnHeart(heart.strafe.x, heart.strafe.y, heart.strafe.size, "strafe");
     checkMouseOnHeart(heart.corner.x, heart.corner.y, heart.corner.size, "corner");
-    checkMouseOnHeart(heart.double.x, heart.double.y, heart.double.size, "double");
+    checkMouseOnHeart(heart.double.x, heart.double.middle, heart.double.size, "double"); //copied variable to avoid bugs
 
 }
 
@@ -485,22 +493,13 @@ function heartTracker() {
 //TODO
 
 //Win condition
-//Check if mouse is in each heart (diff recognition per heart)
 //Change color of clicked heart
 //Each additional click moves along the rainbow
 //If all 6 colors are on the screen, win
 //end screen
 //parallax mountains?
 
-
-//diagonal good
-//big good
-//strafe good
-//corner good
-
 //bugs
-//circle no
-//double half good
 //car color
 
 
