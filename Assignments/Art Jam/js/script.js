@@ -86,19 +86,24 @@ let heart = {
         yIndex: 0
     },
     strafe: {
-        x: 40,
+        x: 550,
         y: 384,
         size: 30,
         speed: 0.1,
         minStrafe: 0.5,
         maxStrafe: 1.5
+    },
+    double: {
+        x: 150,
+        y: 100,
+        size: 30,
+        speed: 0.1,
+        angle: 0,
+        amplitude: 100,
     }
 
 
 }
-
-// let xIndex = 0;
-// let yIndex = 0;
 
 /**
  * OH LOOK I DIDN'T DESCRIBE SETUP!!
@@ -156,6 +161,7 @@ function game(){
     transformBigHeart();
     transformCornerHeart();
     moveStrafeHeart();
+    moveDoubleHeart();
 
     drawCar();
 
@@ -369,15 +375,14 @@ function transformBigHeart(){
 
 function transformCornerHeart(){
 
+    //Hold the four corner positions
     let xPositions = [heart.corner.x, width - heart.corner.x];
     let yPositions = [heart.corner.y, height - heart.corner.y];
 
-
+    //Decrease timer
     heart.corner.timer -= heart.corner.clockSpeed;
-    // console.log(heart.corner.timer);
 
-
-    //Calculates every 60 frames
+    //Calculates whether timer finished and changes visibility and position accordingly
     if (heart.corner.timer === 0){
         //Check if heart is visible/not visible and set to opposite
         if (heart.corner.visible){
@@ -397,13 +402,23 @@ function transformCornerHeart(){
     if (heart.corner.visible === true){
         drawHeart(xPositions[heart.corner.xIndex], yPositions[heart.corner.yIndex], heart.corner.size);
     }
-
 }
 
+//Draw's a heart that moves randomly in a strafing manner
 function moveStrafeHeart(){
     heart.strafe.x += random(-10, 10)*0.5;
     heart.strafe.x = constrain(heart.strafe.x, heart.strafe.size, width - heart.strafe.size);
     drawHeart(heart.strafe.x, heart.strafe.y, heart.strafe.size);
+}
+
+//Draws a heart that moves in a sine wave and rotates on itself
+function moveDoubleHeart(){
+    //Sine wave
+    const y = map(sin(heart.double.angle), -1, 1, heart.double.x - heart.double.amplitude, heart.double.x + heart.double.amplitude);
+    drawHeart(heart.double.x, y, heart.double.size);
+    //I added a 3 and it made chaos, idk what it is but its cool so I'm keeping it
+    heart.double.angle += heart.double.speed + 3;
+
 }
 
 
@@ -411,19 +426,12 @@ function moveStrafeHeart(){
 
 //TODO
 
-//Spawn 3 more hearts
-//rando heart spawner in corners
-//ad strafe
-//sin wave w rotating heart
-
-//per frame
-//draw heart
-//check if timer hits 0
-//make heart disappear and set new position
-//if yes, set new heart position (boolean if?)
-//if no, do nothing
-
-//not per frame (once)
-//position determined and stays
+//Win condition
+    //Check if mouse is in each heart (diff recognition per heart)
+    //Change color of clicked heart
+    //Each additional click moves along the rainbow
+    //If all 6 colors are on the screen, win
+//end screen
+//parallax mountains?
 
 
