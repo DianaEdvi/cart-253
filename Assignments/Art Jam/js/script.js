@@ -19,7 +19,7 @@ let infoString = "Click on hearts to make the LGBTQ+ flag!"
 let car = {
     xPos: 10,
     yPos: 320,
-    baseWidth: 60,
+    baseWidth: 40,
     baseHeight: 15,
 
     fill: {
@@ -48,12 +48,12 @@ let heart = {
     fill: "#ff96e6",
 
     fills: {
-      red: "#ff0000",
-      orange: "#ff0000",
-      yellow: "#ff0000",
-      green: "#ff0000",
-      blue: "#ff0000",
-      purple: "#ff0000"
+        red: "#ff0000",
+        orange: "#ff0000",
+        yellow: "#ff0000",
+        green: "#ff0000",
+        blue: "#ff0000",
+        purple: "#ff0000"
     },
     diagonal: {
         x: 320,
@@ -71,8 +71,8 @@ let heart = {
         speed: 0.02
     },
     big: {
-        x: 0,
-        y: 0,
+        x: 320,
+        y: 240,
         size: 30,
         speed: 0.1
     },
@@ -124,20 +124,19 @@ function setup() {
  * OOPS I DIDN'T DESCRIBE WHAT MY DRAW DOES!
  */
 function draw() {
-    if (state === "title"){
+    if (state === "title") {
         title();
-    }
-    else if (state === "game"){
+    } else if (state === "game") {
         game();
     }
 }
 
-function title(){
+function title() {
     background("pink");
     push();
     fill("black");
-    text(titleString, width/2, height/2);
-    text(playString, width/2, 3*height/5);
+    text(titleString, width / 2, height / 2);
+    text(playString, width / 2, 3 * height / 5);
     pop();
 
     car.baseWidth = 80;
@@ -146,13 +145,15 @@ function title(){
 
     drawCar();
 
-    if (mouseIsPressed){
+    if (mouseIsPressed) {
         state = "game";
     }
 }
 
-function game(){
+function game() {
     background(145, 220, 230);
+    car.baseWidth = 60;
+    car.baseHeight = 15;
     // drawMountains();
     // moveMountains();
     drawGround();
@@ -163,6 +164,7 @@ function game(){
     transformCornerHeart();
     moveStrafeHeart();
     moveDoubleHeart();
+    heartTracker();
 
     drawCar();
 
@@ -233,7 +235,7 @@ function drawCar() {
 function followMouse() {
 
     //Center car on cursor and make cursor invisible
-    let centeredCursor = mouseX - car.baseWidth/2;
+    let centeredCursor = mouseX - car.baseWidth / 2;
     noCursor();
 
     //Follow mouse y position and constrain it to the borders, taking into consideration the car's size
@@ -370,13 +372,13 @@ function moveCircleHeart() {
 }
 
 //Increase and decrease the size of big heart depending on mouseX position
-function transformBigHeart(){
+function transformBigHeart() {
     heart.big.size = map(mouseX, 0, width, 0, 150);
     heart.big.size = constrain(heart.big.size, 10, 150);
-    drawHeart(width/2, height/2, heart.big.size);
+    drawHeart(heart.big.x, heart.big.y, heart.big.size);
 }
 
-function transformCornerHeart(){
+function transformCornerHeart() {
 
     //Hold the four corner positions
     let xPositions = [heart.corner.x, width - heart.corner.x];
@@ -386,36 +388,40 @@ function transformCornerHeart(){
     heart.corner.timer -= heart.corner.clockSpeed;
 
     //Calculates whether timer finished and changes visibility and position accordingly
-    if (heart.corner.timer === 0){
+    if (heart.corner.timer === 0) {
         //Check if heart is visible/not visible and set to opposite
-        if (heart.corner.visible){
+        if (heart.corner.visible) {
             heart.corner.visible = false;
-        }
-        else if (!heart.corner.visible){
+        } else if (!heart.corner.visible) {
             heart.corner.visible = true;
         }
 
         //reset timer to 80
         heart.corner.timer = 80;
         //find position
-        heart.corner.xIndex = floor(random(0,2));
-        heart.corner.yIndex = floor(random(0,2));
+        heart.corner.xIndex = floor(random(0, 2));
+        heart.corner.yIndex = floor(random(0, 2));
+        heart.corner.x = xPositions[heart.corner.xIndex];
+        heart.corner.y = yPositions[heart.corner.yIndex];
     }
+
+
     //Draw heart if it is meant to be visible
-    if (heart.corner.visible === true){
-        drawHeart(xPositions[heart.corner.xIndex], yPositions[heart.corner.yIndex], heart.corner.size);
+    if (heart.corner.visible === true) {
+        drawHeart(heart.corner.x, heart.corner.y, heart.corner.size);
+
     }
 }
 
 //Draw's a heart that moves randomly in a strafing manner
-function moveStrafeHeart(){
-    heart.strafe.x += random(-10, 10)*0.5;
+function moveStrafeHeart() {
+    heart.strafe.x += random(-10, 10) * 0.5;
     heart.strafe.x = constrain(heart.strafe.x, heart.strafe.size, width - heart.strafe.size);
     drawHeart(heart.strafe.x, heart.strafe.y, heart.strafe.size);
 }
 
 //Draws a heart that moves in a sine wave and rotates on itself
-function moveDoubleHeart(){
+function moveDoubleHeart() {
     //Sine wave
     const y = map(sin(heart.double.angle), -1, 1, heart.double.x - heart.double.amplitude, heart.double.x + heart.double.amplitude);
     drawHeart(heart.double.x, y, heart.double.size);
@@ -433,16 +439,62 @@ function gameRules() {
 }
 
 
+function checkMouseOnHeart(x, y, size, name) {
+    let distance = dist(mouseX, mouseY, x, y);
+
+    size = 2 * size / 3;
+    if (distance < size && mouseIsPressed) {
+        console.log("mouse in center: " + mouseX, mouseY);
+    }
+
+    //Check for special cases:
+    if (name === "diagonal") {
+    } else if (name === "big") {
+    } else if (name === "circle") {
+    } else if (name === "strafe") {
+    } else if (name === "corner") {
+        if (heart.corner.visible) {
+
+        }
+    } else if (name === "double") {
+    }
+    // if (mouseClicked()) {
+    //     console.log("click")
+    // }
+
+}
+
+function heartTracker() {
+    checkMouseOnHeart(heart.big.x, heart.big.y, heart.big.size, "big");
+    checkMouseOnHeart(heart.diagonal.x, heart.diagonal.y, heart.diagonal.size, "diagonal");
+    checkMouseOnHeart(heart.circle.x, heart.circle.y, heart.circle.size, "circle");
+    checkMouseOnHeart(heart.strafe.x, heart.strafe.y, heart.strafe.size, "strafe");
+    checkMouseOnHeart(heart.corner.x, heart.corner.y, heart.corner.size, "corner");
+    checkMouseOnHeart(heart.double.x, heart.double.y, heart.double.size, "double");
+
+}
+
+function mouseClicked() {
+    return true;
+}
 
 
 //TODO
 
 //Win condition
-    //Check if mouse is in each heart (diff recognition per heart)
-    //Change color of clicked heart
-    //Each additional click moves along the rainbow
-    //If all 6 colors are on the screen, win
+//Check if mouse is in each heart (diff recognition per heart)
+//Change color of clicked heart
+//Each additional click moves along the rainbow
+//If all 6 colors are on the screen, win
 //end screen
 //parallax mountains?
+
+
+//diagonal good
+//big good
+//strafe good
+//corner half good
+//circle no
+//double half good
 
 
