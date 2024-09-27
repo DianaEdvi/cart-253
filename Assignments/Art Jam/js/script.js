@@ -456,31 +456,35 @@ function gameRules() {
     pop();
 }
 
+let hasClicked = false;
 
 function checkMouseOnHeart(x, y, size, name, colorCounter) {
     let distance = dist(mouseX, mouseY, x, y);
     let colors = ["red", "orange", "yellow", "green", "blue", "purple"];
 
     size = 2 * size / 3;
-    if (distance < size && mouseIsPressed) {
+    if (distance < size && mouseIsPressed && !hasClicked) {
+
+        // console.log(mouseReleased() + "boo");
         console.log("mouse in center: " + mouseX, mouseY);
+        if (heart.diagonal.colorCounter === 7) {
+            heart.diagonal.colorCounter = 0;
+        }
 
         //Check for special cases:
         if (name === "diagonal") {
             console.log("should be red")
             heart.diagonal.colorCounter++;
             console.log(heart.diagonal.colorCounter)
-            if (heart.diagonal.colorCounter === 7) {
-                heart.diagonal.colorCounter = 0;
-            }
-            heart.diagonal.fill = "red";
+
+            heart.diagonal.fill = colorChecker(heart.diagonal.colorCounter);
         } else if (name === "big") {
         } else if (name === "circle") {
         } else if (name === "strafe") {
         } else if (name === "corner") {
         } else if (name === "double") {
-
         }
+        hasClicked = true;
     }
 
 
@@ -496,6 +500,27 @@ function heartTracker() {
 
 }
 
+//Reset clicked flag to ensure the logic is only handled once per click
+function mouseReleased() {
+    hasClicked = false;
+    return true;
+}
+
+function colorChecker(colorCounter) {
+    if (colorCounter === 1) {
+        return "red";
+    } else if (colorCounter === 2) {
+        return "orange";
+    } else if (colorCounter === 3) {
+        return "yellow";
+    } else if (colorCounter === 4) {
+        return "green";
+    } else if (colorCounter === 5) {
+        return "blue";
+    } else if (colorCounter === 6) {
+        return "purple";
+    }
+}
 
 //TODO
 
