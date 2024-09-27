@@ -15,7 +15,9 @@ let canvas = {
 let state = "title";
 let titleString = "Welcome to Gaymobile";
 let playString = "Click on the car to PLAY!";
-let infoString = "Click on hearts to make the LGBTQ+ flag!"
+let infoString = "Click on hearts to make the LGBTQ+ colors!"
+let winString = "You win!! You have successfully spread love for them gays <3"
+let playAgainString = "Click anywhere to play again"
 let car = {
     xPos: 10,
     yPos: 320,
@@ -108,9 +110,9 @@ let heart = {
         fill: "#ff96e6",
         colorCounter: 0
     }
-
-
 }
+
+let hasClicked = false;
 
 /**
  * OH LOOK I DIDN'T DESCRIBE SETUP!!
@@ -134,6 +136,8 @@ function draw() {
         title();
     } else if (state === "game") {
         game();
+    } else if (state === "end") {
+        end();
     }
 }
 
@@ -170,11 +174,42 @@ function game() {
     transformCornerHeart();
     moveStrafeHeart();
     moveDoubleHeart();
-    heartTracker();
-
     drawCar();
+    if (heartTracker()) {
+        state = "end";
+        console.log("win");
+    }
+}
 
+function end() {
+    background("pink");
+    push();
+    fill("black");
+    textWrap(WORD);
+    textAlign(CENTER, CENTER);
+    text(winString, width / 9, height / 3, 500);
+    text(playAgainString, width / 2, 3 * height / 4);
+    pop();
 
+    if (keyIsPressed) {
+        state = "title";
+        mouseIsPressed = false;
+
+        //Recet all states
+        heart.diagonal.fill = "#ff96e6";
+        heart.big.fill = "#ff96e6";
+        heart.corner.fill = "#ff96e6";
+        heart.strafe.fill = "#ff96e6";
+        heart.circle.fill = "#ff96e6";
+        heart.double.fill = "#ff96e6";
+
+        heart.diagonal.colorCounter = 0;
+        heart.big.colorCounter = 0;
+        heart.corner.colorCounter = 0;
+        heart.strafe.colorCounter = 0;
+        heart.circle.colorCounter = 0;
+        heart.double.colorCounter = 0;
+    }
 }
 
 function drawCar() {
@@ -456,22 +491,16 @@ function gameRules() {
     pop();
 }
 
-let hasClicked = false;
 
-function checkMouseOnHeart(x, y, size, name, colorCounter) {
+function clickOnHeart(x, y, size, name, colorCounter) {
     let distance = dist(mouseX, mouseY, x, y);
-    let colors = ["red", "orange", "yellow", "green", "blue", "purple"];
 
     size = 2 * size / 3;
     if (distance < size && mouseIsPressed && !hasClicked) {
 
         // console.log(mouseReleased() + "boo");
         // console.log("mouse in center: " + mouseX, mouseY);
-
-        //Checks if counter has reached the end and if so, resets it to 0
-        if (heart.diagonal.colorCounter === 6) {
-            heart.diagonal.colorCounter = 0;
-        }
+        hasClicked = true;
 
         //Check for special cases:
         if (name === "diagonal") {
@@ -489,6 +518,7 @@ function checkMouseOnHeart(x, y, size, name, colorCounter) {
             if (heart.big.colorCounter === 6) {
                 heart.big.colorCounter = 0;
             }
+
         } else if (name === "circle") {
             heart.circle.colorCounter++;
             heart.circle.fill = colorChecker(heart.circle.colorCounter);
@@ -518,20 +548,36 @@ function checkMouseOnHeart(x, y, size, name, colorCounter) {
                 heart.double.colorCounter = 0;
             }
         }
-        hasClicked = true;
     }
-
 
 }
 
 function heartTracker() {
-    checkMouseOnHeart(heart.big.x, heart.big.y, heart.big.size, "big", heart.big.fill, heart.big.colorCounter);
-    checkMouseOnHeart(heart.diagonal.x, heart.diagonal.y, heart.diagonal.size, "diagonal", heart.diagonal.fill, heart.diagonal.colorCounter);
-    checkMouseOnHeart(heart.circle.circumferenceX, heart.circle.circumferenceY, heart.circle.size, "circle", heart.circle.fill, heart.circle.colorCounter); //copied variable to avoid bugs
-    checkMouseOnHeart(heart.strafe.x, heart.strafe.y, heart.strafe.size, "strafe", heart.strafe.fill, heart.strafe.colorCounter);
-    checkMouseOnHeart(heart.corner.x, heart.corner.y, heart.corner.size, "corner", heart.corner.fill, heart.corner.colorCounter);
-    checkMouseOnHeart(heart.double.x, heart.double.middle, heart.double.size, "double", heart.double.fill, heart.double.colorCounter); //copied variable to avoid bugs
+    clickOnHeart(heart.big.x, heart.big.y, heart.big.size, "big", heart.big.fill, heart.big.colorCounter);
+    clickOnHeart(heart.diagonal.x, heart.diagonal.y, heart.diagonal.size, "diagonal", heart.diagonal.fill, heart.diagonal.colorCounter);
+    clickOnHeart(heart.circle.circumferenceX, heart.circle.circumferenceY, heart.circle.size, "circle", heart.circle.fill, heart.circle.colorCounter); //copied variable to avoid bugs
+    clickOnHeart(heart.strafe.x, heart.strafe.y, heart.strafe.size, "strafe", heart.strafe.fill, heart.strafe.colorCounter);
+    clickOnHeart(heart.corner.x, heart.corner.y, heart.corner.size, "corner", heart.corner.fill, heart.corner.colorCounter);
+    clickOnHeart(heart.double.x, heart.double.middle, heart.double.size, "double", heart.double.fill, heart.double.colorCounter); //copied variable to avoid bugs
 
+
+    // console.log(colors);
+    let colors = [heart.big.fill, heart.diagonal.fill, heart.circle.fill, heart.strafe.fill, heart.corner.fill, heart.double.fill];
+
+    //Checks if there are any duplicates in the array
+    for (let i = 0; i < colors.length; i++) {
+        if (colors[i] === "#ff96e6") {
+            console.log("no win");
+            return false;
+        }
+        for (let j = i + 1; j < colors.length; j++) {
+            if (colors[i] === colors[j]) {
+                console.log("no win")
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 //Reset clicked flag to ensure the logic is only handled once per click
@@ -541,6 +587,7 @@ function mouseReleased() {
 }
 
 function colorChecker(colorCounter) {
+
     if (colorCounter === 1) {
         return "red";
     } else if (colorCounter === 2) {
@@ -554,13 +601,13 @@ function colorChecker(colorCounter) {
     } else if (colorCounter === 6) {
         return "purple";
     }
+
+
 }
 
 //TODO
 
 //Win condition
-//Change color of clicked heart
-//Each additional click moves along the rainbow
 //If all 6 colors are on the screen, win
 //end screen
 //parallax mountains?
