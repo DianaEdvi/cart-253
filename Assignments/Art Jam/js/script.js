@@ -8,22 +8,22 @@
 
 "use strict";
 
-let canvas = {
-    canvasWidth: 640,
-    canvasHeight: 480
-}
+//State of the game
 let state = "title";
+
+//Strings within the game
 let titleString = "Welcome to Gaymobile";
 let playString = "Click on the car to PLAY!";
 let infoString = "Click on hearts to make the LGBTQ+ colors!"
 let winString = "You win!! You have successfully spread love for them gays <3"
-let playAgainString = "Click anywhere to play again"
+let playAgainString = "Click on any key to play again"
+
+//Car that will act as the cursor
 let car = {
     xPos: 10,
     yPos: 320,
     baseWidth: 40,
     baseHeight: 15,
-
     fill: {
         r: 0,
         g: 0,
@@ -31,22 +31,25 @@ let car = {
     }
 }
 
-//Establishes mountain properties
+//Mountains that will be in the background
 let mountain = {
-    fill: "brown",
     //Coordinates for the bottom left corner of the mountains
     //Mountain One width:
-    mountainOneX: 0,
-    mountainOneY: 480,
-    mountainTwoX: 160,
-    mountainTwoY: 480,
-    mountainOneWidth: 320,
-    mountainTwoWidth: 640,
-    // mountainThreeWidth:
+    one: {
+        x: 0,
+        y: 480,
+        f: "#964b32"
+    },
+    two: {
+        x: 160,
+        y: 480,
+        f: "#be5a46"
+    },
 }
+
+//Heart that will be the item(s) to click
 let heart = {
-    w: 30,
-    // fill: "#ff96e6",
+    //Heart that bounces off the sides
     diagonal: {
         x: 320,
         y: 455,
@@ -56,6 +59,7 @@ let heart = {
         fill: "#ff96e6",
         colorCounter: 0
     },
+    //Heart that moves in a circle
     circle: {
         x: 320,
         y: 240,
@@ -68,6 +72,7 @@ let heart = {
         fill: "#ff96e6",
         colorCounter: 0
     },
+    //Heart that grows and shrinks
     big: {
         x: 320,
         y: 240,
@@ -76,6 +81,7 @@ let heart = {
         fill: "#ff96e6",
         colorCounter: 0
     },
+    //Heart that appears in random corners
     corner: {
         x: 40,
         y: 40,
@@ -88,6 +94,7 @@ let heart = {
         fill: "#ff96e6",
         colorCounter: 0
     },
+    //Heart that strafes left to right randomly
     strafe: {
         x: 550,
         y: 384,
@@ -98,6 +105,7 @@ let heart = {
         fill: "#ff96e6",
         colorCounter: 0
     },
+    //Heart that appears as double
     double: {
         x: 150,
         y: 150,
@@ -106,19 +114,19 @@ let heart = {
         angle: 0,
         amplitude: 100,
         middle: 0,
-        areOverlapped: false,
         fill: "#ff96e6",
         colorCounter: 0
     }
 }
 
+//Check if mouse clicked
 let hasClicked = false;
 
 /**
- * OH LOOK I DIDN'T DESCRIBE SETUP!!
+ * Create the canvas, set up text settings
  */
 function setup() {
-    createCanvas(canvas.canvasWidth, canvas.canvasHeight);
+    createCanvas(640, 480);
 
     //Text settings
     textSize(32);
@@ -127,11 +135,11 @@ function setup() {
 
 }
 
-
 /**
- * OOPS I DIDN'T DESCRIBE WHAT MY DRAW DOES!
- */
+ * Depending on the current state, run the function
+ * to handle the state. */
 function draw() {
+    //Check the state and call the appropriate function
     if (state === "title") {
         title();
     } else if (state === "game") {
@@ -141,7 +149,15 @@ function draw() {
     }
 }
 
+/**
+ * Create title screen
+ * Set the car's size, position and draw it
+ * Draw's text
+ * Depending on if mouse is pressed, continue to the game state
+ */
 function title() {
+    //Create title screen
+    push();
     background("pink");
     push();
     fill("black");
@@ -149,36 +165,64 @@ function title() {
     text(playString, width / 2, 3 * height / 5);
     pop();
 
+    //Sets the car's size and position
     car.baseWidth = 80;
-    car.baseHeight = 20;
+    car.baseHeight = 20; //Height of bottom rectangle, not full height
     car.yPos = 50;
 
+    //Draw car
     drawCar();
 
+    //Change state if mouse is pressed
     if (mouseIsPressed) {
         state = "game";
     }
 }
 
+/**
+ * The game portion of the project
+ * Draws the background and sets the car's dimensions
+ * Calls all drawing functions
+ * Calls heart functionality function
+ * Checks win condition and transfers states accordingly
+ */
 function game() {
+    //Draw background
     background(145, 220, 230);
+
+    //Set car dimensions
     car.baseWidth = 45;
     car.baseHeight = 12;
 
+    //Draw objects
     drawMountains();
     drawGround();
     drawCar();
+
+    //Assign cursor to car
     followMouse();
+
+    //Draw in hearts and make them move
     moveHearts();
 
+    //Checks if win condition is met
     if (heartTracker()) {
         state = "end";
         console.log("win");
     }
 }
 
+/**
+ * Creates end screen
+ * Draws text
+ * Checks if key is pressed and changes to end state accordingly
+ * Resets all fill and counter properties, as well as the car's position
+ */
 function end() {
+    //Draw background
     background("pink");
+
+    //Write text
     push();
     fill("black");
     textWrap(WORD);
@@ -187,11 +231,11 @@ function end() {
     text(playAgainString, width / 2, 3 * height / 4);
     pop();
 
+    //Check if any button on the keyboard is pressed and changes the state to title accordingly
     if (keyIsPressed) {
         state = "title";
-        mouseIsPressed = false;
 
-        //Recet all states
+        //Reset all heart fill states
         heart.diagonal.fill = "#ff96e6";
         heart.big.fill = "#ff96e6";
         heart.corner.fill = "#ff96e6";
@@ -199,6 +243,7 @@ function end() {
         heart.circle.fill = "#ff96e6";
         heart.double.fill = "#ff96e6";
 
+        //Reset all heart colorCounter states
         heart.diagonal.colorCounter = 0;
         heart.big.colorCounter = 0;
         heart.corner.colorCounter = 0;
@@ -206,15 +251,13 @@ function end() {
         heart.circle.colorCounter = 0;
         heart.double.colorCounter = 0;
 
+        //Reset's car's x position
         car.xPos = 10;
     }
 }
 
 function drawCar() {
-    //Car's colors
-    let red;
-    let green;
-    let blue;
+
     noStroke();
 
     //Draw cabin
@@ -223,36 +266,36 @@ function drawCar() {
     //Separated into 5 in order to include the full rainbow
     //Red 255, Green increases, blue 0
     if (mouseY <= height / 5) {
-        red = 255;
-        green = map(mouseY, 0, height / 5, 0, 255);
-        blue = 0;
+        car.r = 255;
+        car.g = map(mouseY, 0, height / 5, 0, 255);
+        car.b = 0;
     }
     //Red decreases, Green 255, blue 0
     else if (mouseY > height / 5 && mouseY < 2 * height / 5) {
-        red = map(mouseY, height / 5, 2 * height / 5, 255, 0);
-        green = 255;
-        blue = 0;
+        car.r = map(mouseY, height / 5, 2 * height / 5, 255, 0);
+        car.g = 255;
+        car.b = 0;
     }
     //Red 0, Green 255, blue increases
     else if (mouseY > 2 * height / 5 && mouseY < 3 * height / 5) {
-        red = 0;
-        green = 255;
-        blue = map(mouseY, 2 * height / 5, 3 * height / 5, 0, 255);
+        car.r = 0;
+        car.g = 255;
+        car.b = map(mouseY, 2 * height / 5, 3 * height / 5, 0, 255);
     }
     //Red 0, Green decreases, blue 255
     else if (mouseY > 3 * height / 5 && mouseY < 4 * height / 5) {
-        red = 0;
-        green = map(mouseY, 3 * height / 5, 4 * height / 5, 255, 0);
-        blue = 255;
+        car.r = 0;
+        car.g = map(mouseY, 3 * height / 5, 4 * height / 5, 255, 0);
+        car.b = 255;
     }
     //Red increases, Green 0, blue 255
     else {
-        red = map(mouseY, 4 * height / 5, 480, 0, 255);
-        green = 0;
-        blue = 255;
+        car.r = map(mouseY, 4 * height / 5, 480, 0, 255);
+        car.g = 0;
+        car.b = 255;
     }
 
-    fill(red, green, blue);
+    fill(car.r, car.g, car.b);
 
     //Draw base (rectangle)
     rect(car.xPos, car.yPos, car.baseWidth, car.baseHeight);
@@ -283,22 +326,22 @@ function drawCar() {
 function drawMountains() {
     //Draw first mountain
     push();
-    fill(160, 75, 50);
+    fill(mountain.one.f);
     noStroke();
     //Positions triangle
-    triangle(mountain.mountainOneX, canvas.canvasHeight,
-        mountain.mountainOneX + canvas.canvasWidth / 4, 0,
-        mountain.mountainOneX + canvas.canvasWidth / 2, canvas.canvasHeight);
+    triangle(mountain.one.x, height,
+        mountain.one.x + width / 4, 0,
+        mountain.one.x + width / 2, height);
     pop;
 
     //Draw second mountain
     push();
-    fill(190, 90, 70);
+    fill(mountain.two.f);
     noStroke();
     //Positions triangle
-    triangle(mountain.mountainTwoX, mountain.mountainTwoY,
-        mountain.mountainTwoX + canvas.canvasWidth / 2, 0.25 * canvas.canvasHeight,
-        mountain.mountainTwoX + canvas.canvasWidth, canvas.canvasHeight);
+    triangle(mountain.two.x, mountain.two.y,
+        mountain.two.x + width / 2, 0.25 * height,
+        mountain.two.x + width, height);
     pop;
 }
 
@@ -306,7 +349,7 @@ function drawGround() {
     push();
     fill("#515151");
     noStroke();
-    rect(0, canvas.canvasHeight - 75, canvas.canvasWidth, 75);
+    rect(0, height - 75, width, 75);
     pop;
     writeGameRules();
 }
@@ -356,8 +399,8 @@ function moveHearts() {
 
 function moveDiagonalHeart() {
     drawHeart(heart.diagonal.x, heart.diagonal.y, heart.diagonal.size, heart.diagonal.fill);
-    heart.diagonal.x = constrain(heart.diagonal.x, 0, width - heart.w);
-    heart.diagonal.y = constrain(heart.diagonal.y, heart.w, height - heart.w);
+    heart.diagonal.x = constrain(heart.diagonal.x, 0, width - heart.diagonal.size);
+    heart.diagonal.y = constrain(heart.diagonal.y, heart.diagonal.size, height - heart.diagonal.size);
 
     if (!heart.diagonal.movingLeft) {
         heart.diagonal.x++;
@@ -371,14 +414,14 @@ function moveDiagonalHeart() {
         heart.diagonal.y--;
     }
 
-    if (heart.diagonal.x >= width - heart.w) {
+    if (heart.diagonal.x >= width - heart.diagonal.size) {
         heart.diagonal.movingLeft = true;
-    } else if (heart.diagonal.x <= heart.w) {
+    } else if (heart.diagonal.x <= heart.diagonal.size) {
         heart.diagonal.movingLeft = false;
     }
-    if (heart.diagonal.y >= height - heart.w) {
+    if (heart.diagonal.y >= height - heart.diagonal.size) {
         heart.diagonal.movingDown = true;
-    } else if (heart.diagonal.y <= heart.w) {
+    } else if (heart.diagonal.y <= heart.diagonal.size) {
         heart.diagonal.movingDown = false;
     }
 }
@@ -579,5 +622,6 @@ function colorChecker(colorCounter) {
 
 //TODO
 //clean up code
+//Front page car
 
 
