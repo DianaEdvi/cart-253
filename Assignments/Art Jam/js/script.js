@@ -221,23 +221,32 @@ function drawCar() {
     push();
     //Changes the color of the car according to the mouseY
     //Separated into 5 in order to include the full rainbow
+    //Red 255, Green increases, blue 0
     if (mouseY <= height / 5) {
         red = 255;
         green = map(mouseY, 0, height / 5, 0, 255);
         blue = 0;
-    } else if (mouseY > height / 5 && mouseY < 2 * height / 5) {
-        red = map(mouseY, height / 5, 2 * height / 5, 0, 255);
+    }
+    //Red decreases, Green 255, blue 0
+    else if (mouseY > height / 5 && mouseY < 2 * height / 5) {
+        red = map(mouseY, height / 5, 2 * height / 5, 255, 0);
         green = 255;
         blue = 0;
-    } else if (mouseY > 2 * height / 5 && mouseY < 3 * height / 5) {
+    }
+    //Red 0, Green 255, blue increases
+    else if (mouseY > 2 * height / 5 && mouseY < 3 * height / 5) {
         red = 0;
         green = 255;
         blue = map(mouseY, 2 * height / 5, 3 * height / 5, 0, 255);
-    } else if (mouseY > 3 * height / 5 && mouseY < 4 * height / 5) {
+    }
+    //Red 0, Green decreases, blue 255
+    else if (mouseY > 3 * height / 5 && mouseY < 4 * height / 5) {
         red = 0;
         green = map(mouseY, 3 * height / 5, 4 * height / 5, 255, 0);
         blue = 255;
-    } else {
+    }
+    //Red increases, Green 0, blue 255
+    else {
         red = map(mouseY, 4 * height / 5, 480, 0, 255);
         green = 0;
         blue = 255;
@@ -456,7 +465,6 @@ function moveDoubleHeart() {
 
 }
 
-
 function clickOnHeart(x, y, size, name, colorCounter) {
     let distance = dist(mouseX, mouseY, x, y);
 
@@ -570,9 +578,6 @@ function colorChecker(colorCounter) {
 }
 
 //TODO
-//bugs
-//car color
-//parallax mountains?
-
+//clean up code
 
 
