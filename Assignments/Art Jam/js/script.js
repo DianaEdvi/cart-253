@@ -164,17 +164,13 @@ function game() {
     background(145, 220, 230);
     car.baseWidth = 45;
     car.baseHeight = 12;
-    // drawMountains();
-    // moveMountains();
+
+    drawMountains();
     drawGround();
-    followMouse();
-    moveDiagonalHeart();
-    moveCircleHeart();
-    transformBigHeart();
-    transformCornerHeart();
-    moveStrafeHeart();
-    moveDoubleHeart();
     drawCar();
+    followMouse();
+    moveHearts();
+
     if (heartTracker()) {
         state = "end";
         console.log("win");
@@ -209,6 +205,8 @@ function end() {
         heart.strafe.colorCounter = 0;
         heart.circle.colorCounter = 0;
         heart.double.colorCounter = 0;
+
+        car.xPos = 10;
     }
 }
 
@@ -273,17 +271,6 @@ function drawCar() {
     pop;
 }
 
-function followMouse() {
-
-    //Center car on cursor and make cursor invisible
-    let centeredCursor = mouseX - car.baseWidth / 2;
-    noCursor();
-
-    //Follow mouse y position and constrain it to the borders, taking into consideration the car's size
-    car.yPos = constrain(mouseY, car.baseHeight, height - 1.5 * car.baseHeight);
-    car.xPos = constrain(centeredCursor, 0, width - car.baseWidth);
-}
-
 function drawMountains() {
     //Draw first mountain
     push();
@@ -306,56 +293,13 @@ function drawMountains() {
     pop;
 }
 
-// function drawMountainsTwo() {
-//     //Draw first mountain
-//     push();
-//     fill(160, 75, 50);
-//     noStroke();
-//     //Positions triangle
-//     triangle(canvas.canvasWidth + mountain.mountainOneX, canvas.canvasHeight,
-//         canvas.canvasWidth + mountain.mountainOneX + canvas.canvasWidth / 4, 0,
-//         canvas.canvasWidth + mountain.mountainOneX + canvas.canvasWidth / 2, canvas.canvasHeight);
-//     pop;
-//
-//     //Draw second mountain
-//     push();
-//     fill(190, 90, 70);
-//     noStroke();
-//     //Positions triangle
-//     triangle(canvas.canvasWidth + mountain.mountainTwoX, mountain.mountainTwoY,
-//         canvas.canvasWidth + mountain.mountainTwoX + canvas.canvasWidth / 2, 0.25 * canvas.canvasHeight,
-//         canvas.canvasWidth + mountain.mountainTwoX + canvas.canvasWidth, canvas.canvasHeight);
-//     pop;
-// }
-
-//Draw ground
 function drawGround() {
     push();
-    fill("green");
+    fill("#515151");
     noStroke();
     rect(0, canvas.canvasHeight - 75, canvas.canvasWidth, 75);
     pop;
-    gameRules();
-}
-
-function moveMountains() {
-    mountain.mountainOneX -= 3;
-    mountain.mountainTwoX -= 3;
-    let counter = 0;
-    counter -= 3;
-
-
-    if (mountain.mountainOneX <= -10) {
-        drawMountainsTwo();
-        mountain.mountainOneX = canvas.canvasWidth;
-        mountain.mountainTwoX = canvas.canvasWidth + mountain.mountainOneWidth;
-    }
-
-    if (counter <= -640) {
-        mountain.mountainOneX = canvas.canvasWidth;
-        mountain.mountainTwoX = canvas.canvasWidth + mountain.mountainOneWidth;
-    }
-
+    writeGameRules();
 }
 
 function drawHeart(x, y, w, f) {
@@ -371,6 +315,35 @@ function drawHeart(x, y, w, f) {
     pop();
 }
 
+function writeGameRules() {
+    push();
+    textSize(20);
+    fill("black");
+    text(infoString, 320, 445);
+    pop();
+}
+
+function followMouse() {
+
+    //Center car on cursor and make cursor invisible
+    let centeredCursor = mouseX - car.baseWidth / 2;
+    noCursor();
+
+    //Follow mouse y position and constrain it to the borders, taking into consideration the car's size
+    car.yPos = constrain(mouseY, car.baseHeight, height - 1.5 * car.baseHeight);
+    car.xPos = constrain(centeredCursor, 0, width - car.baseWidth);
+}
+
+function moveHearts() {
+    moveDiagonalHeart();
+    moveCircleHeart();
+    transformBigHeart();
+    transformCornerHeart();
+    moveStrafeHeart();
+    moveDoubleHeart();
+
+
+}
 
 function moveDiagonalHeart() {
     drawHeart(heart.diagonal.x, heart.diagonal.y, heart.diagonal.size, heart.diagonal.fill);
@@ -483,14 +456,6 @@ function moveDoubleHeart() {
 
 }
 
-function gameRules() {
-    push();
-    textSize(20);
-    fill("black");
-    text(infoString, 320, 445);
-    pop();
-}
-
 
 function clickOnHeart(x, y, size, name, colorCounter) {
     let distance = dist(mouseX, mouseY, x, y);
@@ -549,7 +514,6 @@ function clickOnHeart(x, y, size, name, colorCounter) {
             }
         }
     }
-
 }
 
 function heartTracker() {
@@ -606,13 +570,9 @@ function colorChecker(colorCounter) {
 }
 
 //TODO
-
-//Win condition
-//If all 6 colors are on the screen, win
-//end screen
-//parallax mountains?
-
 //bugs
 //car color
+//parallax mountains?
+
 
 
