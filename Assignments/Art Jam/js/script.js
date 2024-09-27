@@ -158,8 +158,8 @@ function title() {
 
 function game() {
     background(145, 220, 230);
-    car.baseWidth = 60;
-    car.baseHeight = 15;
+    car.baseWidth = 45;
+    car.baseHeight = 12;
     // drawMountains();
     // moveMountains();
     drawGround();
@@ -466,23 +466,57 @@ function checkMouseOnHeart(x, y, size, name, colorCounter) {
     if (distance < size && mouseIsPressed && !hasClicked) {
 
         // console.log(mouseReleased() + "boo");
-        console.log("mouse in center: " + mouseX, mouseY);
-        if (heart.diagonal.colorCounter === 7) {
+        // console.log("mouse in center: " + mouseX, mouseY);
+
+        //Checks if counter has reached the end and if so, resets it to 0
+        if (heart.diagonal.colorCounter === 6) {
             heart.diagonal.colorCounter = 0;
         }
 
         //Check for special cases:
         if (name === "diagonal") {
-            console.log("should be red")
+            // console.log(heart.diagonal.colorCounter)
             heart.diagonal.colorCounter++;
-            console.log(heart.diagonal.colorCounter)
-
             heart.diagonal.fill = colorChecker(heart.diagonal.colorCounter);
+            //Checks if counter has reached the end and if so, resets it to 0
+            if (heart.diagonal.colorCounter === 6) {
+                heart.diagonal.colorCounter = 0;
+            }
         } else if (name === "big") {
+            heart.big.colorCounter++;
+            heart.big.fill = colorChecker(heart.big.colorCounter);
+            //Checks if counter has reached the end and if so, resets it to 0
+            if (heart.big.colorCounter === 6) {
+                heart.big.colorCounter = 0;
+            }
         } else if (name === "circle") {
+            heart.circle.colorCounter++;
+            heart.circle.fill = colorChecker(heart.circle.colorCounter);
+            //Checks if counter has reached the end and if so, resets it to 0
+            if (heart.circle.colorCounter === 6) {
+                heart.circle.colorCounter = 0;
+            }
         } else if (name === "strafe") {
+            heart.strafe.colorCounter++;
+            heart.strafe.fill = colorChecker(heart.strafe.colorCounter);
+            //Checks if counter has reached the end and if so, resets it to 0
+            if (heart.strafe.colorCounter === 6) {
+                heart.strafe.colorCounter = 0;
+            }
         } else if (name === "corner") {
+            heart.corner.colorCounter++;
+            heart.corner.fill = colorChecker(heart.corner.colorCounter);
+            //Checks if counter has reached the end and if so, resets it to 0
+            if (heart.corner.colorCounter === 6) {
+                heart.corner.colorCounter = 0;
+            }
         } else if (name === "double") {
+            heart.double.colorCounter++;
+            heart.double.fill = colorChecker(heart.double.colorCounter);
+            //Checks if counter has reached the end and if so, resets it to 0
+            if (heart.double.colorCounter === 6) {
+                heart.double.colorCounter = 0;
+            }
         }
         hasClicked = true;
     }
