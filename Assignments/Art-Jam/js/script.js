@@ -400,10 +400,6 @@ function writeGameRules() {
     //Displays string at position x, y
     text(infoString, 320, 435);
     text(infoString2, 320, 465);
-
-    pop();
-
-    push();
     pop();
 }
 
