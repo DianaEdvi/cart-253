@@ -13,3 +13,6 @@ The player wins if all the colors of the LGBTQ+ flag are visible (red, orange, y
 
 ## Credits
 This project uses [p5.js](https://p5js.org).
+
+## Note
+My commits are visible under the "Assignments" folder, not the Art-Jam folder. 
