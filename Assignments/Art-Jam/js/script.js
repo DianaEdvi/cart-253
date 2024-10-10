@@ -17,6 +17,7 @@ let state = "title";
 let titleString = "Welcome to GAYMOBILE.";
 let playString = "Click on the car to PLAY!";
 let infoString = "Click on hearts to make the LGBTQ+ colors!"
+let infoString2 = "Some hearts require good timing!"
 let winString = "You win!! You have successfully spread love for them gays <3"
 let playAgainString = "Click on any key to play again"
 
@@ -397,7 +398,8 @@ function writeGameRules() {
     //Color of text
     fill("black");
     //Displays string at position x, y
-    text(infoString, 320, 445);
+    text(infoString, 320, 435);
+    text(infoString2, 320, 465);
     pop();
 }
 
