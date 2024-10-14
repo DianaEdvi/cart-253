@@ -55,7 +55,7 @@ function drawFly() {
  * @param midDark the second-darkest shade in the pallette
  * @param dark the darkest shade in the pallette
  */
-function drawBackground(light, midLight, mid, midDark, dark) {
+function drawHouseBackground(light, midLight, mid, midDark, dark) {
     background(light);
     noStroke();
 
@@ -127,6 +127,111 @@ function drawBackground(light, midLight, mid, midDark, dark) {
 
 }
 
+/**
+ * Draw's the background image, consisting of the frog's tree home
+ * @param light the lightest shade in the pallett
+ * @param midLight the second-lightest shade in the pallette
+ * @param mid the mid-tone in the pallette
+ * @param midDark the second-darkest shade in the pallette
+ * @param dark the darkest shade in the pallette
+ */
+function drawTreeBackground(light, midLight, mid, midDark, dark) {
+    noStroke();
+    background(light);
+
+    //Draw bushes
+    //This was fun.
+    fill(dark);
+    ellipse(300, 450, 100);
+    ellipse(350, 450, 100);
+    ellipse(500, 400, 170);
+    ellipse(700, 450, 170);
+    ellipse(770, 450, 170);
+    ellipse(850, 400, 190);
+    ellipse(1150, 490, 200);
+    ellipse(1100, 490, 200);
+    ellipse(1000, 490, 200);
+    ellipse(1200, 475, 200);
+
+    push();
+    fill(dark);
+    //Little cirlces
+    ellipse(250, 450, 50);
+    ellipse(225, 450, 50);
+    ellipse(270, 420, 50);
+    ellipse(350, 400, 50);
+    ellipse(450, 350, 50);
+    ellipse(425, 350, 50);
+    ellipse(460, 325, 50);
+    ellipse(555, 325, 50);
+    ellipse(575, 350, 50);
+    ellipse(650, 375, 50);
+    ellipse(750, 350, 50);
+    ellipse(850, 300, 50);
+    ellipse(935, 360, 50);
+    ellipse(950, 400, 50);
+    ellipse(1050, 400, 50);
+    ellipse(1150, 400, 50);
+    ellipse(1175, 400, 50);
+
+    //Big circles
+    ellipse(300, 400, 75);
+    ellipse(400, 400, 75);
+    ellipse(500, 300, 75);
+    ellipse(600, 400, 75);
+    ellipse(700, 375, 75);
+    ellipse(800, 320, 75);
+    ellipse(900, 320, 75);
+    ellipse(1000, 400, 75);
+    ellipse(1100, 375, 75);
+    ellipse(1200, 350, 75);
+    pop();
+
+    //Draw ground
+    push();
+    fill(mid);
+    ellipse(width / 2, height / 2 + 250, width, 500);
+    pop();
+
+    //Draw pond
+    push();
+    fill(light);
+    ellipse(550, 600, 275, 100);
+    pop();
+
+    //Draw lilypad
+    push();
+    fill(midLight);
+    ellipse(580, 600, 75, 40);
+    pop();
+
+    push();
+    fill(light);
+    triangle(570, 600, 500, 575, 450, 625);
+    pop();
+
+    //Draw tree trunk
+    push();
+    fill(midDark);
+    rect(250, 50, 100, height - 100, 20);
+    rect(1150, 75, 100, height - 100, 20);
+    pop();
+
+    //Draw leaves
+    push();
+    fill(dark);
+    ellipse(300, 100, 400);
+    ellipse(1200, 200, 300);
+    pop();
+
+    //Draw sun
+    push();
+    fill(midLight);
+    ellipse(900, 100, 100);
+    pop();
+}
+
+
 function drawUI() {
     //Draw left side of game UI
     push();
@@ -146,7 +251,7 @@ function drawUI() {
 
 // Color Pallettes
 "#ebf9ff"
-"#acd6f6"
+"#87a9c5"
 "#52a5de"
 "#18284a"
 "#070810"

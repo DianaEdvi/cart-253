@@ -12,33 +12,60 @@ let clickYPosition = 0;
 
 
 function drawDecoratingGame() {
-    drawBackground(
+    drawTreeBackground(
         "#f4c4d4",
         "#ea92ab",
         "#af7fc2",
         "#8c76be",
-        "#61567d");
-    drawBackground(
+        "#61567d")
+    drawTreeBackground(
         "#d1cb95",
         "#40985e",
         "#1a644e",
         "#04373b",
         "#0a1a2f")
-    drawBackground(
+    drawTreeBackground(
+        "#ebf9ff",
+        "#87a9c5",
+        "#52a5de",
+        "#18284a",
+        "#070810")
+    drawTreeBackground(
+        "#d5d5d5",
+        "#b0b0b0",
+        "#878787",
+        "#5b5b5b",
+        "#3a3a3a")
+    drawUI();
+    followMouse();
+}
+
+function tempDrawBack() {
+    drawHouseBackground(
+        "#f4c4d4",
+        "#ea92ab",
+        "#af7fc2",
+        "#8c76be",
+        "#61567d");
+    drawHouseBackground(
+        "#d1cb95",
+        "#40985e",
+        "#1a644e",
+        "#04373b",
+        "#0a1a2f")
+    drawHouseBackground(
         "#cae4f6",
         "#87a9c5",
         "#52a5de",
         "#18284a",
         "#070810")
-    drawBackground(
+    drawHouseBackground(
         "#d5d5d5",
         "#9c9c9c",
         "#878787",
         "#5b5b5b",
         "#3a3a3a")
 
-    drawUI();
-    followMouse();
 }
 
 function mouseClicked(event) {
