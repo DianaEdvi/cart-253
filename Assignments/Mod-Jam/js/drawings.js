@@ -1,5 +1,6 @@
 "use strict";
 
+let backgroundPallette = {}
 
 function drawCircle() {
     push();
@@ -45,3 +46,115 @@ function drawFly() {
     ellipse(fly.x, fly.y, fly.size);
     pop();
 }
+
+function drawBackground(light, midLight, mid, midDark, dark) {
+    background(light);
+    noStroke();
+
+
+    //Draw house
+    push;
+    fill(midDark);
+    ellipse(width / 2, height / 2 + 100, width - 200, height + 200);
+    pop;
+
+    //Draw wall
+    push;
+    fill(dark);
+    ellipse(width / 2, height / 2 + 350, width - 300, height + 550);
+    pop;
+
+    //Draw chimney
+    push;
+    fill(dark);
+    rect(1050, 75, 50, 75);
+    pop;
+
+    //Draw smoke
+    push();
+    fill(midLight);
+    ellipse(1075, 55, 40);
+    ellipse(1090, 20, 60);
+    ellipse(1130, 0, 50);
+    pop();
+
+
+    //Draw water
+    push();
+    fill(light);
+    quad(width / 4, 600, 3 * width / 4, 600, 1225, 900, 200, 900,);
+    pop();
+
+
+    //Draw floor
+    push();
+    fill(mid);
+    ellipse(width / 2, height / 2 + 150, width, 200);
+    pop();
+
+    //Draw window pane
+    push();
+    fill(light);
+    stroke(midLight);
+    strokeWeight(7);
+    ellipse(width / 2, height / 2 - 200, 100);
+    pop();
+
+    //Draw window frame
+    push();
+    fill(midLight);
+    rect(width / 2 - 3.5, height / 2 - 250, 7, 100);
+    rect(width / 2 - 50, height / 2 - 205, 100, 7);
+    pop();
+
+    //Draw lily pads
+    push();
+    fill(midLight);
+    ellipse(900, 725, 100, 75);
+    ellipse(450, 750, 100, 75);
+    pop();
+
+    push();
+    fill(light);
+    triangle(925, 725, 1000, 650, 1000, 750);
+    triangle(425, 750, 375, 700, 375, 775);
+    pop();
+
+
+}
+
+function drawUI() {
+    //Draw left side of game UI
+    push();
+    noStroke();
+    fill("blue");
+    rect(0, 0, 225, height);
+    pop();
+
+    //Draw right side of UI
+    push();
+    noStroke();
+    fill("blue");
+    rect(width - 225, 0, 225, height);
+    pop();
+}
+
+
+// Color Pallettes
+"#fda9a9"
+"#f3eded"
+"#b9eedc"
+"#96beb1"
+"#82939b"
+
+"#d1cb95"
+"#40985e"
+"#1a644e"
+"#04373b"
+"#0a1a2f"
+
+"#f4c4d4"
+"#ea92ab"
+"#af7fc2"
+"#8c76be"
+"#61567d"

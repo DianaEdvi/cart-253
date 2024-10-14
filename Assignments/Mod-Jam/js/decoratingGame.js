@@ -12,7 +12,13 @@ let clickYPosition = 0;
 
 
 function drawDecoratingGame() {
-    background("blue");
+    drawBackground(
+        "#f4c4d4",
+        "#ea92ab",
+        "#af7fc2",
+        "#8c76be",
+        "#61567d");
+    drawUI();
     followMouse();
 }
 
