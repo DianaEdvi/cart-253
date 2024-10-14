@@ -248,6 +248,78 @@ function drawUI() {
     pop();
 }
 
+function drawSelections() {
+    let backgroundStr = "Select a background to decorate";
+    let colorStr = "And a color palette";
+    let readyStr = "Ready!";
+    let menuTxt = "Menu";
+    background("#96beb1");
+
+
+    //Draw done button
+    push();
+    fill("#fda9a9");
+    rect(1235, 650, 130, 80);
+    pop();
+
+    //Draw menu button
+    push();
+    fill("#fda9a9");
+    rect(75, 650, 130, 80);
+    pop();
+
+    //Draw text
+    push();
+    textAlign(CENTER);
+    textSize(32);
+    stroke("black");
+    strokeWeight(2);
+    text(backgroundStr, width / 2, 100);
+    text(colorStr, width / 2, 575);
+    text(readyStr, 1300, 700);
+    text(menuTxt, 140, 700);
+    pop();
+
+    //Draw images
+    push();
+    imageMode(CENTER);
+    image(images.img1.img, images.img1.x, images.img1.y, images.img1.w, images.img1.h);
+    image(images.img2.img, images.img2.x, images.img2.y, images.img2.w, images.img2.h);
+    image(images.img3.img, images.img3.x, images.img3.y, images.img3.w, images.img3.h);
+    image(images.img4.img, images.img4.x, images.img4.y, images.img4.w, images.img4.h);
+    image(images.img5.img, images.img5.x, images.img5.y, images.img5.w, images.img5.h);
+    pop();
+
+    //Draw palettes
+    push();
+
+    pop();
+
+
+}
+
+function drawOutlines(background, palette) {
+    push();
+    stroke("black");
+    strokeWeight(5);
+    noFill();
+    rectMode(CENTER);
+    if (background === "left") {
+        rect(images.img1.x, images.img1.y, images.img1.w, images.img1.h);
+    } else if (background === "right") {
+        rect(images.img2.x, images.img2.y, images.img2.w, images.img2.h);
+    }
+
+    if (palette === "purple") {
+        rect(images.img3.x, images.img3.y, images.img3.w, images.img3.h);
+    } else if (palette === "green") {
+        rect(images.img4.x, images.img4.y, images.img4.w, images.img4.h);
+    } else if (palette === "blue") {
+        rect(images.img5.x, images.img5.y, images.img5.w, images.img5.h);
+    }
+
+    pop();
+}
 
 // Color Pallettes
 "#ebf9ff"
@@ -274,3 +346,9 @@ function drawUI() {
 "#878787"
 "#5b5b5b"
 "#3a3a3a"
+
+"#fda9a9"
+"#f3eded"
+"#b9eedc"
+"#96beb1"
+"#586c78"
