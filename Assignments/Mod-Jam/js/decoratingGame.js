@@ -18,6 +18,25 @@ function drawDecoratingGame() {
         "#af7fc2",
         "#8c76be",
         "#61567d");
+    drawBackground(
+        "#d1cb95",
+        "#40985e",
+        "#1a644e",
+        "#04373b",
+        "#0a1a2f")
+    drawBackground(
+        "#cae4f6",
+        "#87a9c5",
+        "#52a5de",
+        "#18284a",
+        "#070810")
+    drawBackground(
+        "#d5d5d5",
+        "#9c9c9c",
+        "#878787",
+        "#5b5b5b",
+        "#3a3a3a")
+
     drawUI();
     followMouse();
 }

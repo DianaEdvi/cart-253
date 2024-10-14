@@ -47,10 +47,17 @@ function drawFly() {
     pop();
 }
 
+/**
+ * Draws the background image, consisting of the frog's house
+ * @param light the lightest shade in the pallett
+ * @param midLight the second-lightest shade in the pallette
+ * @param mid the mid-tone in the pallette
+ * @param midDark the second-darkest shade in the pallette
+ * @param dark the darkest shade in the pallette
+ */
 function drawBackground(light, midLight, mid, midDark, dark) {
     background(light);
     noStroke();
-
 
     //Draw house
     push;
@@ -78,13 +85,11 @@ function drawBackground(light, midLight, mid, midDark, dark) {
     ellipse(1130, 0, 50);
     pop();
 
-
     //Draw water
     push();
     fill(light);
     quad(width / 4, 600, 3 * width / 4, 600, 1225, 900, 200, 900,);
     pop();
-
 
     //Draw floor
     push();
@@ -120,7 +125,6 @@ function drawBackground(light, midLight, mid, midDark, dark) {
     triangle(425, 750, 375, 700, 375, 775);
     pop();
 
-
 }
 
 function drawUI() {
@@ -141,11 +145,12 @@ function drawUI() {
 
 
 // Color Pallettes
-"#fda9a9"
-"#f3eded"
-"#b9eedc"
-"#96beb1"
-"#82939b"
+"#ebf9ff"
+"#acd6f6"
+"#52a5de"
+"#18284a"
+"#070810"
+
 
 "#d1cb95"
 "#40985e"
@@ -158,3 +163,9 @@ function drawUI() {
 "#af7fc2"
 "#8c76be"
 "#61567d"
+
+"#d5d5d5"
+"#b0b0b0"
+"#878787"
+"#5b5b5b"
+"#3a3a3a"
