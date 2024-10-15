@@ -1,6 +1,7 @@
 "use strict";
 
-let backgroundPallette = {}
+let outlineActive = false;
+
 
 function drawCircle() {
     push();
@@ -74,6 +75,7 @@ function drawHouseBackground(light, midLight, mid, midDark, dark) {
     //Draw chimney
     push;
     fill(dark);
+    rectMode(CORNER);
     rect(1050, 75, 50, 75);
     pop;
 
@@ -108,6 +110,7 @@ function drawHouseBackground(light, midLight, mid, midDark, dark) {
     //Draw window frame
     push();
     fill(midLight);
+    rectMode(CORNER);
     rect(width / 2 - 3.5, height / 2 - 250, 7, 100);
     rect(width / 2 - 50, height / 2 - 205, 100, 7);
     pop();
@@ -213,6 +216,7 @@ function drawTreeBackground(light, midLight, mid, midDark, dark) {
     //Draw tree trunk
     push();
     fill(midDark);
+    rectMode(CORNER);
     rect(250, 50, 100, height - 100, 20);
     rect(1150, 75, 100, height - 100, 20);
     pop();
@@ -233,39 +237,50 @@ function drawTreeBackground(light, midLight, mid, midDark, dark) {
 
 
 function drawUI() {
-    //Draw left side of game UI
+    //Draw side of game UI
     push();
     noStroke();
     fill("blue");
+    rectMode(CORNER);
+    rect(width - 225, 0, 225, height);
     rect(0, 0, 225, height);
     pop();
 
-    //Draw right side of UI
+    //Draw done and menu button
     push();
-    noStroke();
-    fill("blue");
-    rect(width - 225, 0, 225, height);
+    rectMode(CORNER);
+    stroke("black");
+    strokeWeight(2);
+    fill("#fda9a9");
+    rect(1260, 650, 140, 80, 20);
+    rect(45, 650, 140, 80, 20);
+    pop();
+
+    //State buttons text
+    push();
+    textAlign(CENTER);
+    textSize(32);
+    stroke("black");
+    strokeWeight(2);
+    fill("#96beb1");
+    text("Finished!", 1330, 700);
+    text("Menu", 115, 700);
     pop();
 }
 
-function drawSelections() {
+function drawOptions() {
     let backgroundStr = "Select a background to decorate";
     let colorStr = "And a color palette";
     let readyStr = "Ready!";
     let menuTxt = "Menu";
     background("#96beb1");
 
-
-    //Draw done button
+    //Draw done and menu button
     push();
+    rectMode(CORNER);
     fill("#fda9a9");
-    rect(1235, 650, 130, 80);
-    pop();
-
-    //Draw menu button
-    push();
-    fill("#fda9a9");
-    rect(75, 650, 130, 80);
+    rect(1235, 650, 130, 80, 20);
+    rect(75, 650, 130, 80, 20);
     pop();
 
     //Draw text
@@ -280,6 +295,17 @@ function drawSelections() {
     text(menuTxt, 140, 700);
     pop();
 
+    //State buttons text
+    push();
+    textAlign(CENTER);
+    textSize(32);
+    stroke("black");
+    strokeWeight(2);
+    fill("#96beb1");
+    text(readyStr, 1300, 700);
+    text(menuTxt, 140, 700);
+    pop();
+
     //Draw images
     push();
     imageMode(CENTER);
@@ -289,16 +315,9 @@ function drawSelections() {
     image(images.img4.img, images.img4.x, images.img4.y, images.img4.w, images.img4.h);
     image(images.img5.img, images.img5.x, images.img5.y, images.img5.w, images.img5.h);
     pop();
-
-    //Draw palettes
-    push();
-
-    pop();
-
-
 }
 
-function drawOutlines(background, palette) {
+function drawOutlines(background) {
     push();
     stroke("black");
     strokeWeight(5);
@@ -317,9 +336,27 @@ function drawOutlines(background, palette) {
     } else if (colorSelect === "blue") {
         rect(images.img5.x, images.img5.y, images.img5.w, images.img5.h);
     }
-
     pop();
 }
+
+function drawMenu() {
+    background("#96beb1");
+    push();
+    fill("#fda9a9");
+    rectMode(CENTER);
+    rect(width / 2, height / 2, 400, 200, 20);
+    pop;
+
+    push();
+    textAlign(CENTER);
+    fill("#96beb1");
+    stroke("black");
+    strokeWeight(4);
+    textSize(100);
+    text("PLAY", width / 2, height / 2 + 30);
+    pop();
+}
+
 
 // Color Pallettes
 "#ebf9ff"

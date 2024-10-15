@@ -1,9 +1,9 @@
 "use strict";
 
-let state = "decorate";
+let state = "";
 
 function preload() {
-    preLoadDecoratingGame();
+    preloadOptions();
 }
 
 /**
@@ -11,30 +11,57 @@ function preload() {
  */
 function setup() {
     createCanvas(1440, 810);
-    state = "choose";
+    state = "title";
     // setupDecoratingGame();
     setupFrogFrogFrog();
 }
 
 function draw() {
     if (state === "title") {
-        background("red");
+        drawMenu();
     } else if (state === "frog") {
         drawFrogFrogFrog();
     } else if (state === "choose") {
         selectionState();
+        // drawOptions();
     } else if (state === "decorate") {
-        drawDecoratingGame();
-    } else if (state === "end") {
+        decorationController();
+    } else if (state === "finished") {
         background("black");
     }
 }
 
+function menuController() {
+    //RESET EVERYTHING
+    resetGame();
 
-function drawMenu() {
+    //Button handling (play)
+    if (mouseX > 520 && mouseX < 920 && mouseY > 305 && mouseY < 505 && state === "title") {
+        state = "choose";
+    }
+}
+
+function mouseClicked() {
+    if (state === "title") {
+        menuController();
+    } else if (state === "choose") {
+        outlineSelections();
+        buttonHandler();
+    } else if (state === "decorate") {
+        decorationController();
+    } else if (state === "finished") {
+        finishedController();
+    }
 
 }
 
-function drawEnd() {
+function resetGame() {
+    state = "title";
+    backgroundImage = "";
+    colorSelect = "";
+}
+
+
+function finishedController() {
 
 }
