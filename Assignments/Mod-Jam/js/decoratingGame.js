@@ -11,7 +11,15 @@ let clickXPosition = 0;
 let clickYPosition = 0;
 
 let backgroundImage = "";
-let palette = "";
+let colorSelect = "";
+
+let palette = {
+    light: "",
+    midLight: "",
+    mid: "",
+    midDark: "",
+    dark: ""
+}
 
 let images = {
     img1: {
@@ -63,70 +71,24 @@ function setupDecoratingGame() {
 }
 
 function drawDecoratingGame() {
+    setOptions();
     drawUI();
     followMouse();
 }
 
-function tempDrawBack() {
-    drawHouseBackground(
-        "#f4c4d4",
-        "#ea92ab",
-        "#af7fc2",
-        "#8c76be",
-        "#61567d");
-    drawHouseBackground(
-        "#d1cb95",
-        "#40985e",
-        "#1a644e",
-        "#04373b",
-        "#0a1a2f")
-    drawHouseBackground(
-        "#cae4f6",
-        "#87a9c5",
-        "#52a5de",
-        "#18284a",
-        "#070810")
-    drawHouseBackground(
-        "#d5d5d5",
-        "#9c9c9c",
-        "#878787",
-        "#5b5b5b",
-        "#3a3a3a")
-
+function setOptions() {
+    if (backgroundImage === "left") {
+        drawHouseBackground(palette.light, palette.midLight, palette.mid, palette.midDark, palette.dark);
+    } else if (backgroundImage === "right") {
+        drawTreeBackground(palette.light, palette.midLight, palette.mid, palette.midDark, palette.dark);
+    }
 }
 
-function drawTreeTemp() {
-    drawTreeBackground(
-        "#f4c4d4",
-        "#ea92ab",
-        "#af7fc2",
-        "#8c76be",
-        "#61567d")
-    drawTreeBackground(
-        "#d1cb95",
-        "#40985e",
-        "#1a644e",
-        "#04373b",
-        "#0a1a2f")
-    drawTreeBackground(
-        "#ebf9ff",
-        "#87a9c5",
-        "#52a5de",
-        "#18284a",
-        "#070810")
-    drawTreeBackground(
-        "#d5d5d5",
-        "#b0b0b0",
-        "#878787",
-        "#5b5b5b",
-        "#3a3a3a")
-}
 
 function mouseClicked(event) {
     if (state === "choose") {
         chooseOptions();
     }
-
 }
 
 function followMouse() {
@@ -144,17 +106,6 @@ function followMouse() {
     }
 }
 
-function selectBackground(image) {
-    let button = createButton("Select");
-
-    button.mousePressed(changeBackground);
-
-}
-
-function changeBackground() {
-    console.log("button pressed");
-}
-
 function selectionState() {
     drawSelections();
     drawOutlines(backgroundImage, palette);
@@ -170,29 +121,59 @@ function moveObject() {
     }
 }
 
+/**
+ * Checks if the mouse is within the bounds of the image and updates the background logic (image and color) accordingly
+ * Also handles logic to return to menu and continue to the game
+ */
 function chooseOptions() {
-    //Outline if clicked on
+    //Outline an image if it is clicked on
+    //Left image
     if (mouseX > images.img1.x - images.img1.w / 2 && mouseX < images.img1.x + images.img1.w / 2 && mouseY > images.img1.y - images.img1.h / 2 && mouseY < images.img1.y + images.img1.h / 2) {
-        console.log("click left image");
         backgroundImage = "left";
-    } else if (mouseX > images.img2.x - images.img2.w / 2 && mouseX < images.img2.x + images.img2.w / 2 && mouseY > images.img2.y - images.img2.h / 2 && mouseY < images.img2.y + images.img2.h / 2) {
-        console.log("click right image");
-        backgroundImage = "right";
-    } else if (mouseX > images.img3.x - images.img3.w / 2 && mouseX < images.img3.x + images.img3.w / 2 && mouseY > images.img3.y - images.img3.h / 2 && mouseY < images.img3.y + images.img3.h / 2) {
-        console.log("click purple");
-        palette = "purple";
-    } else if (mouseX > images.img4.x - images.img4.w / 2 && mouseX < images.img4.x + images.img4.w / 2 && mouseY > images.img4.y - images.img4.h / 2 && mouseY < images.img4.y + images.img4.h / 2) {
-        console.log("click green");
-        palette = "green";
-    } else if (mouseX > images.img5.x - images.img5.w / 2 && mouseX < images.img5.x + images.img5.w / 2 && mouseY > images.img5.y - images.img5.h / 2 && mouseY < images.img5.y + images.img5.h / 2) {
-        console.log("click blue");
-        palette = "blue";
     }
+    //Right image
+    else if (mouseX > images.img2.x - images.img2.w / 2 && mouseX < images.img2.x + images.img2.w / 2 && mouseY > images.img2.y - images.img2.h / 2 && mouseY < images.img2.y + images.img2.h / 2) {
+        backgroundImage = "right";
+    }
+    //Purple palette
+    else if (mouseX > images.img3.x - images.img3.w / 2 && mouseX < images.img3.x + images.img3.w / 2 && mouseY > images.img3.y - images.img3.h / 2 && mouseY < images.img3.y + images.img3.h / 2) {
+        colorSelect = "purple";
 
+        palette.light = "#f4c4d4";
+        palette.midLight = "#ea92ab";
+        palette.mid = "#af7fc2";
+        palette.midDark = "#8c76be";
+        palette.dark = "#61567d";
+    }
+    //Green palette
+    else if (mouseX > images.img4.x - images.img4.w / 2 && mouseX < images.img4.x + images.img4.w / 2 && mouseY > images.img4.y - images.img4.h / 2 && mouseY < images.img4.y + images.img4.h / 2) {
+        colorSelect = "green";
+
+        palette.light = "#d1cb95";
+        palette.midLight = "#40985e";
+        palette.mid = "#1a644e";
+        palette.midDark = "#04373b";
+        palette.dark = "#0a1a2f";
+
+    }
+    //Blue palette
+    else if (mouseX > images.img5.x - images.img5.w / 2 && mouseX < images.img5.x + images.img5.w / 2 && mouseY > images.img5.y - images.img5.h / 2 && mouseY < images.img5.y + images.img5.h / 2) {
+        colorSelect = "blue";
+
+        palette.light = "#cae4f6";
+        palette.midLight = "#87a9c5";
+        palette.mid = "#52a5de";
+        palette.midDark = "#18284a";
+        palette.dark = "#070810";
+    }
 
     //State management
     if (mouseX > 1235 && mouseX < 1365 && mouseY > 650 && mouseY < 730) {
         console.log("done clicked");
+        if (backgroundImage !== "" && colorSelect !== "") {
+            state = "decorate";
+        }
+
     } else if (mouseX > 75 && mouseX < 205 && mouseY > 650 && mouseY < 730) {
         console.log("menu");
     }

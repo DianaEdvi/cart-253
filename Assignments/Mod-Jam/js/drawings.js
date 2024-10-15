@@ -310,11 +310,11 @@ function drawOutlines(background, palette) {
         rect(images.img2.x, images.img2.y, images.img2.w, images.img2.h);
     }
 
-    if (palette === "purple") {
+    if (colorSelect === "purple") {
         rect(images.img3.x, images.img3.y, images.img3.w, images.img3.h);
-    } else if (palette === "green") {
+    } else if (colorSelect === "green") {
         rect(images.img4.x, images.img4.y, images.img4.w, images.img4.h);
-    } else if (palette === "blue") {
+    } else if (colorSelect === "blue") {
         rect(images.img5.x, images.img5.y, images.img5.w, images.img5.h);
     }
 
