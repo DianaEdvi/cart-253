@@ -15,10 +15,9 @@ function setupDecoratingGame() {
 }
 
 
-function decorationController() {
+function drawDecoration() {
     drawBackground();
     drawUI();
-    followMouse();
 }
 
 function followMouse() {
@@ -46,6 +45,19 @@ function moveObject() {
     }
 }
 
+function buttonHandlerDecorate() {
+
+    if (mouseX > 45 && mouseX < 185 && mouseY > 650 && mouseY < 730 && state === "decorate") {
+        state = "title";
+    } else if (mouseX > 1260 && mouseX < 1400 && mouseY > 650 && mouseY < 730 && state === "decorate") {
+        state = "finished";
+    }
+
+
+}
+
+rect(1260, 650, 140, 80, 20);
+rect(45, 650, 140, 80, 20);
 
 
 

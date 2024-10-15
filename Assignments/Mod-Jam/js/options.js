@@ -58,9 +58,9 @@ function preloadOptions() {
 }
 
 
-function selectionState() {
+function drawOptions() {
     drawBackground();
-    drawOptions();
+    drawSelections();
     drawOutlines(backgroundImage, palette);
 }
 
@@ -121,7 +121,7 @@ function drawBackground() {
     }
 }
 
-function buttonHandler() {
+function buttonHandlerOptions() {
 
     //Button handling (menu and ready)
     if (mouseX > 1235 && mouseX < 1365 && mouseY > 650 && mouseY < 730 && state === "choose") {

@@ -268,7 +268,7 @@ function drawUI() {
     pop();
 }
 
-function drawOptions() {
+function drawSelections() {
     let backgroundStr = "Select a background to decorate";
     let colorStr = "And a color palette";
     let readyStr = "Ready!";

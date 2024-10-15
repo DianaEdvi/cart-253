@@ -22,10 +22,9 @@ function draw() {
     } else if (state === "frog") {
         drawFrogFrogFrog();
     } else if (state === "choose") {
-        selectionState();
-        // drawOptions();
+        drawOptions();
     } else if (state === "decorate") {
-        decorationController();
+        drawDecoration();
     } else if (state === "finished") {
         background("black");
     }
@@ -34,7 +33,9 @@ function draw() {
 function menuController() {
     //RESET EVERYTHING
     resetGame();
+}
 
+function buttonHandlerMenu() {
     //Button handling (play)
     if (mouseX > 520 && mouseX < 920 && mouseY > 305 && mouseY < 505 && state === "title") {
         state = "choose";
@@ -44,11 +45,13 @@ function menuController() {
 function mouseClicked() {
     if (state === "title") {
         menuController();
+        buttonHandlerMenu();
     } else if (state === "choose") {
         outlineSelections();
-        buttonHandler();
+        buttonHandlerOptions();
     } else if (state === "decorate") {
-        decorationController();
+        drawDecoration();
+        buttonHandlerDecorate();
     } else if (state === "finished") {
         finishedController();
     }
@@ -65,3 +68,6 @@ function resetGame() {
 function finishedController() {
 
 }
+
+//Bugs
+//Color of text is being funky
