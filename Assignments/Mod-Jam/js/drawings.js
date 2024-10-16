@@ -61,7 +61,18 @@ let buttons = {
         txtSize: 80,
         state: "finished",
         key: 5
+    },
+    goOutside: {
+        x: 115,
+        y: 100,
+        w: 150,
+        h: 150,
+        txt: "Go \nOutside",
+        txtSize: 32,
+        state: "finished",
+        key: 6
     }
+
 }
 
 let readyStr = "Ready!";
@@ -298,7 +309,6 @@ function drawTreeBackground(light, midLight, mid, midDark, dark) {
     pop();
 }
 
-
 function drawUI() {
     //Draw side of game UI
     push();
@@ -309,7 +319,8 @@ function drawUI() {
     rect(0, 0, 230, height);
     pop();
 
-    drawButton(buttons.menuDecorate);
+    drawButton(buttons.goOutside);
+    drawButton(buttons.menuDecorate); //When these are swapped, menu also doesnt work
     drawButton(buttons.finished);
 }
 
@@ -405,22 +416,29 @@ function buttonHandler(button) {
     //Button handling (play)
     if (mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY && clicked === true) {
         if (button.key === 0) {
+            console.log("ahh");
             state = "choose";
         } else if (button.key === 1) {
+            console.log("bbb");
             state = "title";
             resetGame();
-        } else if (button.key === 2) {
+        } else if (button.key === 2) { //Does not get triggered for some reason
             console.log("clickeddd");
             state = "decorate";
         } else if (button.key === 3) {
+            console.log("ddd");
             state = "title";
             resetGame();
-        } else if (button.key === 4) {
+        } else if (button.key === 4) { //Does not get triggered for some reason
             console.log("boooo");
             state = "finished";
         } else if (button.key === 5) {
+            console.log("eee");
             state = "title";
             resetGame();
+        } else if (button.key === 6) {
+            console.log("fff");
+            state = "frog";
         }
     }
     clicked = false;
