@@ -2,6 +2,70 @@
 
 let outlineActive = false;
 
+let buttons = {
+    play: {
+        x: 720,
+        y: 405,
+        w: 400,
+        h: 200,
+        txt: "PLAY",
+        txtSize: 100,
+        state: "title",
+        key: 0
+    },
+    menuChoose: {
+        x: 150,
+        y: 700,
+        w: 150,
+        h: 80,
+        txt: "Menu",
+        txtSize: 32,
+        state: "choose",
+        key: 1
+    },
+    ready: {
+        x: 1300,
+        y: 700,
+        w: 150,
+        h: 80,
+        txt: "Ready!",
+        txtSize: 32,
+        state: "choose",
+        key: 2
+    },
+    menuDecorate: {
+        x: 115,
+        y: 700,
+        w: 150,
+        h: 80,
+        txt: "Menu",
+        txtSize: 32,
+        state: "decorate",
+        key: 3
+    }, finished: {
+        x: 1325,
+        y: 700,
+        w: 150,
+        h: 80,
+        txt: "Finished!",
+        txtSize: 32,
+        state: "decorate",
+        key: 4
+    },
+    playAgain: {
+        x: 720,
+        y: 405,
+        w: 500,
+        h: 200,
+        txt: "PLAY AGAIN!",
+        txtSize: 80,
+        state: "finished",
+        key: 5
+    }
+}
+
+let readyStr = "Ready!";
+
 
 function drawCircle() {
     push();
@@ -127,7 +191,6 @@ function drawHouseBackground(light, midLight, mid, midDark, dark) {
     triangle(925, 725, 1000, 650, 1000, 750);
     triangle(425, 750, 375, 700, 375, 775);
     pop();
-
 }
 
 /**
@@ -242,46 +305,22 @@ function drawUI() {
     noStroke();
     fill("blue");
     rectMode(CORNER);
-    rect(width - 225, 0, 225, height);
-    rect(0, 0, 225, height);
+    rect(width - 225, 0, 230, height);
+    rect(0, 0, 230, height);
     pop();
 
-    //Draw done and menu button
-    push();
-    rectMode(CORNER);
-    stroke("black");
-    strokeWeight(2);
-    fill("#fda9a9");
-    rect(1260, 650, 140, 80, 20);
-    rect(45, 650, 140, 80, 20);
-    pop();
-
-    //State buttons text
-    push();
-    textAlign(CENTER);
-    textSize(32);
-    stroke("black");
-    strokeWeight(2);
-    fill("#96beb1");
-    text("Finished!", 1330, 700);
-    text("Menu", 115, 700);
-    pop();
+    drawButton(buttons.menuDecorate);
+    drawButton(buttons.finished);
 }
 
 function drawSelections() {
     let backgroundStr = "Select a background to decorate";
     let colorStr = "And a color palette";
-    let readyStr = "Ready!";
-    let menuTxt = "Menu";
+    // let menuTxt = "Menu";
     background("#96beb1");
 
-    //Draw done and menu button
-    push();
-    rectMode(CORNER);
-    fill("#fda9a9");
-    rect(1235, 650, 130, 80, 20);
-    rect(75, 650, 130, 80, 20);
-    pop();
+    drawButton(buttons.menuChoose);
+    drawButton(buttons.ready);
 
     //Draw text
     push();
@@ -291,19 +330,6 @@ function drawSelections() {
     strokeWeight(2);
     text(backgroundStr, width / 2, 100);
     text(colorStr, width / 2, 575);
-    text(readyStr, 1300, 700);
-    text(menuTxt, 140, 700);
-    pop();
-
-    //State buttons text
-    push();
-    textAlign(CENTER);
-    textSize(32);
-    stroke("black");
-    strokeWeight(2);
-    fill("#96beb1");
-    text(readyStr, 1300, 700);
-    text(menuTxt, 140, 700);
     pop();
 
     //Draw images
@@ -341,51 +367,62 @@ function drawOutlines(background) {
 
 function drawMenu() {
     background("#96beb1");
-    push();
-    fill("#fda9a9");
-    rectMode(CENTER);
-    rect(width / 2, height / 2, 400, 200, 20);
-    pop;
-
-    push();
-    textAlign(CENTER);
-    fill("#96beb1");
-    stroke("black");
-    strokeWeight(4);
-    textSize(100);
-    text("PLAY", width / 2, height / 2 + 30);
-    pop();
+    drawButton(buttons.play);
 }
 
+function drawEnd() {
+    background("black");
+    drawButton(buttons.playAgain);
 
-// Color Pallettes
-"#ebf9ff"
-"#87a9c5"
-"#52a5de"
-"#18284a"
-"#070810"
+}
 
+function drawButton(button) {
+    push();
+    //Draw rect
+    rectMode(CENTER);
+    fill("#fda9a9");
+    rect(button.x, button.y, button.w, button.h, 20);
 
-"#d1cb95"
-"#40985e"
-"#1a644e"
-"#04373b"
-"#0a1a2f"
+    //Draw text
+    textAlign(CENTER, CENTER);
+    textSize(button.txtSize);
+    stroke("black");
+    strokeWeight(2);
+    fill("#96beb1");
+    text(button.txt, button.x, button.y);
+    pop();
 
-"#f4c4d4"
-"#ea92ab"
-"#af7fc2"
-"#8c76be"
-"#61567d"
+    buttonHandler(button);
+}
 
-"#d5d5d5"
-"#b0b0b0"
-"#878787"
-"#5b5b5b"
-"#3a3a3a"
+//IDK wtf is going on over here
+function buttonHandler(button) {
+    const minX = button.x - button.w / 2;
+    const maxX = button.x + button.w / 2;
+    const minY = button.y - button.h / 2;
+    const maxY = button.y + button.h / 2;
 
-"#fda9a9"
-"#f3eded"
-"#b9eedc"
-"#96beb1"
-"#586c78"
+    //Button handling (play)
+    if (mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY && clicked === true) {
+        if (button.key === 0) {
+            state = "choose";
+        } else if (button.key === 1) {
+            state = "title";
+            resetGame();
+        } else if (button.key === 2) {
+            console.log("clickeddd");
+            state = "decorate";
+        } else if (button.key === 3) {
+            state = "title";
+            resetGame();
+        } else if (button.key === 4) {
+            console.log("boooo");
+            state = "finished";
+        } else if (button.key === 5) {
+            state = "title";
+            resetGame();
+        }
+    }
+    clicked = false;
+
+}

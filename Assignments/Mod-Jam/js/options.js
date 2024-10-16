@@ -59,7 +59,7 @@ function preloadOptions() {
 
 
 function drawOptions() {
-    drawBackground();
+    setBackground();
     drawSelections();
     drawOutlines(backgroundImage, palette);
 }
@@ -113,7 +113,7 @@ function outlineSelections() {
 
 }
 
-function drawBackground() {
+function setBackground() {
     if (backgroundImage === "left") {
         drawHouseBackground(palette.light, palette.midLight, palette.mid, palette.midDark, palette.dark);
     } else if (backgroundImage === "right") {
@@ -121,16 +121,18 @@ function drawBackground() {
     }
 }
 
-function buttonHandlerOptions() {
+function buttonHandlerOptions(button) {
+    const minX = button.x - button.w / 2;
+    const maxX = button.x + button.w / 2;
+    const minY = button.y - button.h / 2;
+    const maxY = button.y + button.h / 2;
 
     //Button handling (menu and ready)
-    if (mouseX > 1235 && mouseX < 1365 && mouseY > 650 && mouseY < 730 && state === "choose") {
+    if (mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY && state === "choose") {
         if (backgroundImage !== "" && colorSelect !== "") {
             state = "decorate";
         }
-
-    } else if (mouseX > 75 && mouseX < 205 && mouseY > 650 && mouseY < 730 && state === "choose") {
-        state = "title";
-        resetGame();
+    } else if (mouseX > 1260 && mouseX < 1400 && mouseY > 650 && mouseY < 730 && state === "decorate") {
+        state = "finished";
     }
 }

@@ -1,6 +1,7 @@
 "use strict";
 
 let state = "";
+let clicked = false;
 
 function preload() {
     preloadOptions();
@@ -22,11 +23,11 @@ function draw() {
     } else if (state === "frog") {
         drawFrogFrogFrog();
     } else if (state === "choose") {
-        drawOptions();
+        drawOptions(); //sets options and draws selection menu and outlines
     } else if (state === "decorate") {
         drawDecoration();
     } else if (state === "finished") {
-        background("black");
+        drawEnd();
     }
 }
 
@@ -35,39 +36,30 @@ function menuController() {
     resetGame();
 }
 
-function buttonHandlerMenu() {
-    //Button handling (play)
-    if (mouseX > 520 && mouseX < 920 && mouseY > 305 && mouseY < 505 && state === "title") {
-        state = "choose";
-    }
-}
-
 function mouseClicked() {
+    clicked = true;
     if (state === "title") {
         menuController();
-        buttonHandlerMenu();
+        // buttonHandlerMenu();
     } else if (state === "choose") {
-        outlineSelections();
-        buttonHandlerOptions();
+        outlineSelections(); //sets palette and background
+        buttonHandlerOptions(buttons.ready);
+        // check = buttonCheck();
     } else if (state === "decorate") {
-        drawDecoration();
-        buttonHandlerDecorate();
+        buttonHandlerOptions(buttons.finished);
+        // buttonHandlerDecorate();
     } else if (state === "finished") {
         finishedController();
     }
-
 }
 
 function resetGame() {
-    state = "title";
     backgroundImage = "";
     colorSelect = "";
 }
 
-
 function finishedController() {
-
 }
 
 //Bugs
-//Color of text is being funky
+//Color of text is being funky and outline of buttons goes wank
