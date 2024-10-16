@@ -15,18 +15,21 @@
 
 "use strict";
 
+let fliesCaught = 0;
+
+
 // Our frog
 const frog = {
     // The frog's body has a position and size
     body: {
         x: 320,
-        y: 520,
+        y: 600,
         size: 150
     },
     // The frog's tongue has a position, size, speed, and state
     tongue: {
         x: undefined,
-        y: 480,
+        y: 560,
         size: 20,
         speed: 20,
         // Determines how the tongue moves each frame
@@ -44,13 +47,14 @@ const fly = {
 };
 
 function drawFrogFrogFrog() {
-    background("#87ceeb");
+    background("#52a5de");
     moveFly();
     drawFly();
     moveFrog();
     moveTongue();
     drawFrog();
     checkTongueFlyOverlap();
+    drawFrogUI();
 }
 
 function setupFrogFrogFrog() {
@@ -69,7 +73,6 @@ function moveFly() {
         resetFly();
     }
 }
-
 
 /**
  * Resets the fly to the left with a random y
@@ -128,6 +131,9 @@ function checkTongueFlyOverlap() {
         resetFly();
         // Bring back the tongue
         frog.tongue.state = "inbound";
+        //Increment flies eaten counter
+        fliesCaught++;
+
     }
 }
 
@@ -139,3 +145,4 @@ function mousePressed() {
         frog.tongue.state = "outbound";
     }
 }
+

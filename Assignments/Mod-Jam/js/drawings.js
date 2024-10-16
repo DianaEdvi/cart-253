@@ -1,6 +1,5 @@
 "use strict";
 
-let outlineActive = false;
 
 let buttons = {
     play: {
@@ -71,8 +70,36 @@ let buttons = {
         txtSize: 32,
         state: "finished",
         key: 6
+    },
+    goInside: {
+        x: 1300,
+        y: 710,
+        w: 150,
+        h: 150,
+        txt: "Go \ninside",
+        txtSize: 32,
+        state: "decorate",
+        key: 7
     }
+}
 
+const UI = {
+    frogUI: {
+        bar: {
+            x: 720,
+            y: 710,
+            w: 1440,
+            h: 200
+        },
+        txt: {
+            x: 720,
+            y: 710,
+            size: 50,
+            txt: "Flies caught: "
+        },
+
+
+    },
 }
 
 let readyStr = "Ready!";
@@ -121,6 +148,28 @@ function drawFly() {
     fill("#000000");
     ellipse(fly.x, fly.y, fly.size);
     pop();
+}
+
+function drawFrogUI() {
+    //Draw bottom bar
+    push();
+    fill("#40985e");
+    rectMode(CENTER);
+    rect(UI.frogUI.bar.x, UI.frogUI.bar.y, UI.frogUI.bar.w, UI.frogUI.bar.h);
+    pop();
+
+    //Draw button
+    drawButton(buttons.goInside);
+
+    //Display flies caught text 
+    push();
+    fill("#18284a")
+    stroke(2);
+    textAlign(CENTER, CENTER);
+    textSize(UI.frogUI.txt.size);
+    text(UI.frogUI.txt.txt + fliesCaught, UI.frogUI.txt.x, UI.frogUI.txt.y);
+    pop();
+
 }
 
 /**
@@ -406,41 +455,28 @@ function drawButton(button) {
     buttonHandler(button);
 }
 
-//IDK wtf is going on over here
-function buttonHandler(button) {
-    const minX = button.x - button.w / 2;
-    const maxX = button.x + button.w / 2;
-    const minY = button.y - button.h / 2;
-    const maxY = button.y + button.h / 2;
-
-    //Button handling (play)
-    if (mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY && clicked === true) {
-        if (button.key === 0) {
-            console.log("ahh");
-            state = "choose";
-        } else if (button.key === 1) {
-            console.log("bbb");
-            state = "title";
-            resetGame();
-        } else if (button.key === 2) { //Does not get triggered for some reason
-            console.log("clickeddd");
-            state = "decorate";
-        } else if (button.key === 3) {
-            console.log("ddd");
-            state = "title";
-            resetGame();
-        } else if (button.key === 4) { //Does not get triggered for some reason
-            console.log("boooo");
-            state = "finished";
-        } else if (button.key === 5) {
-            console.log("eee");
-            state = "title";
-            resetGame();
-        } else if (button.key === 6) {
-            console.log("fff");
-            state = "frog";
-        }
-    }
-    clicked = false;
-
-}
+"#ebf9ff"
+"#87a9c5"
+"#52a5de"
+"#18284a"
+"#070810"
+"#d1cb95"
+"#40985e"
+"#1a644e"
+"#04373b"
+"#0a1a2f"
+"#f4c4d4"
+"#ea92ab"
+"#af7fc2"
+"#8c76be"
+"#61567d"
+"#d5d5d5"
+"#b0b0b0"
+"#878787"
+"#5b5b5b"
+"#3a3a3a"
+"#fda9a9"
+"#f3eded"
+"#b9eedc"
+"#96beb1"
+"#586c78"

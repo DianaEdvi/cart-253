@@ -2,6 +2,8 @@
 
 let state = "";
 let clicked = false;
+let totalFlies;
+
 
 function preload() {
     preloadOptions();
@@ -61,5 +63,48 @@ function resetGame() {
 function finishedController() {
 }
 
+//IDK wtf is going on over here
+function buttonHandler(button) {
+    const minX = button.x - button.w / 2;
+    const maxX = button.x + button.w / 2;
+    const minY = button.y - button.h / 2;
+    const maxY = button.y + button.h / 2;
+
+    //Button handling (play)
+    if (mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY && clicked === true) {
+        if (button.key === 0) {
+            console.log("ahh");
+            state = "choose";
+        } else if (button.key === 1) {
+            console.log("bbb");
+            state = "title";
+            resetGame();
+        } else if (button.key === 2) { //Does not get triggered for some reason
+            console.log("clickeddd");
+            state = "decorate";
+        } else if (button.key === 3) {
+            console.log("ddd");
+            state = "title";
+            resetGame();
+        } else if (button.key === 4) { //Does not get triggered for some reason
+            console.log("boooo");
+            state = "finished";
+        } else if (button.key === 5) {
+            console.log("eee");
+            state = "title";
+            resetGame();
+        } else if (button.key === 6) {
+            console.log("fff");
+            state = "frog";
+        }
+    }
+    clicked = false;
+}
+
+
 //Bugs
 //Color of text is being funky and outline of buttons goes wank
+
+//Optional todo
+//Price index in frogfrogfrog
+//Fly swarm in frogfrogfrog
