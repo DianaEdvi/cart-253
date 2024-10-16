@@ -2,7 +2,7 @@
 
 let state = "";
 let clicked = false;
-let totalFlies;
+let totalFlies = 0;
 
 
 function preload() {
@@ -96,6 +96,11 @@ function buttonHandler(button) {
         } else if (button.key === 6) {
             console.log("fff");
             state = "frog";
+        } else if (button.key === 7) {
+            console.log("ggg");
+            state = "decorate";
+            resetCounter();
+            console.log(totalFlies);
         }
     }
     clicked = false;
@@ -108,3 +113,4 @@ function buttonHandler(button) {
 //Optional todo
 //Price index in frogfrogfrog
 //Fly swarm in frogfrogfrog
+//Make tongue catching more intuitive

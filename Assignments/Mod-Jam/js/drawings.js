@@ -161,7 +161,7 @@ function drawFrogUI() {
     //Draw button
     drawButton(buttons.goInside);
 
-    //Display flies caught text 
+    //Display flies caught text
     push();
     fill("#18284a")
     stroke(2);

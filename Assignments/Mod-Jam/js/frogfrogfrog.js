@@ -133,8 +133,12 @@ function checkTongueFlyOverlap() {
         frog.tongue.state = "inbound";
         //Increment flies eaten counter
         fliesCaught++;
-
     }
+}
+
+function resetCounter() {
+    totalFlies += fliesCaught;
+    fliesCaught = 0;
 }
 
 /**
