@@ -46,6 +46,10 @@ const fly = {
     speed: 3
 };
 
+function preloadFrog() {
+    UI.frogUI.fly.img = loadImage("assets/images//decorations/fly.png");
+}
+
 function drawFrogFrogFrog() {
     background("#52a5de");
     moveFly();

@@ -10,9 +10,10 @@ let pec = "";
 
 function preload() {
     preloadOptions();
-    dec = loadImage("assets/images//decorations/rug_circle_1.png")
-    mec = loadImage("assets/images//decorations/table_short_1.png")
-    pec = loadImage("assets/images//decorations/fishbowl_2.png")
+    preloadFrog();
+    dec = loadImage("assets/images//decorations/rug_circle_1.png");
+    mec = loadImage("assets/images//decorations/table_short_1.png");
+    pec = loadImage("assets/images//decorations/fishbowl_2.png");
 }
 
 function drawTempImg() {

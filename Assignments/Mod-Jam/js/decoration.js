@@ -45,6 +45,15 @@ function moveObject() {
     }
 }
 
+class Decoration {
+    //image
+    //color
+    //cost
+
+    constructor() {
+    }
+}
+
 
 
 

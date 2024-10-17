@@ -95,10 +95,15 @@ const UI = {
             x: 720,
             y: 710,
             size: 50,
-            txt: "Flies caught: "
+            txt: " = "
         },
-
-
+        fly: {
+            x: 650,
+            y: 710,
+            w: 200,
+            h: 200,
+            img: ""
+        }
     },
 }
 
@@ -161,13 +166,15 @@ function drawFrogUI() {
     //Draw button
     drawButton(buttons.goInside);
 
-    //Display flies caught text
+    //Display flies caught text and image
     push();
     fill("#18284a")
     stroke(2);
     textAlign(CENTER, CENTER);
     textSize(UI.frogUI.txt.size);
     text(UI.frogUI.txt.txt + fliesCaught, UI.frogUI.txt.x, UI.frogUI.txt.y);
+    imageMode(CENTER);
+    image(UI.frogUI.fly.img, UI.frogUI.fly.x, UI.frogUI.fly.y, UI.frogUI.fly.w, UI.frogUI.fly.h);
     pop();
 
 }
