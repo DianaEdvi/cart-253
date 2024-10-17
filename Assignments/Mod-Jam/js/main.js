@@ -4,9 +4,21 @@ let state = "";
 let clicked = false;
 let totalFlies = 0;
 
+let dec = "";
+let mec = "";
+let pec = "";
 
 function preload() {
     preloadOptions();
+    dec = loadImage("assets/images//decorations/rug_circle_1.png")
+    mec = loadImage("assets/images//decorations/table_short_1.png")
+    pec = loadImage("assets/images//decorations/fishbowl_2.png")
+}
+
+function drawTempImg() {
+    image(dec, width / 2, height / 2 + 20, 500, 500);
+    image(mec, width / 2, height / 2, 500, 500);
+    image(pec, width / 2 + 100, height / 2 + 70, 300, 300);
 }
 
 /**
@@ -28,6 +40,7 @@ function draw() {
         drawOptions(); //sets options and draws selection menu and outlines
     } else if (state === "decorate") {
         drawDecoration();
+        drawTempImg();
     } else if (state === "finished") {
         drawEnd();
     }
@@ -109,6 +122,7 @@ function buttonHandler(button) {
 
 //Bugs
 //Color of text is being funky and outline of buttons goes wank
+//my buttons in general are wank
 
 //Optional todo
 //Price index in frogfrogfrog
