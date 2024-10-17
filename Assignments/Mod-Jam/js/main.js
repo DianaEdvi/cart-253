@@ -73,6 +73,8 @@ function mouseClicked() {
 function resetGame() {
     backgroundImage = "";
     colorSelect = "";
+    totalFlies = 0;
+    UI.decoUI.leftBar.panel.txt.txt = " =   " + totalFlies;
 }
 
 function finishedController() {
