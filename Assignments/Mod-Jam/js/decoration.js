@@ -14,6 +14,11 @@ let clickYPosition = 0;
 function setupDecoratingGame() {
 }
 
+function preloadDecoration() {
+    UI.decoUI.leftBar.panel.fly.img = loadImage("assets/images/decorations/fly.png");
+    UI.decoUI.leftBar.panel.trashcan.img = loadImage("assets/images/decorations/garbage.png");
+}
+
 
 function drawDecoration() {
     setBackground();

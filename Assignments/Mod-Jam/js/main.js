@@ -10,6 +10,7 @@ let pec = "";
 
 function preload() {
     preloadOptions();
+    preloadDecoration();
     preloadFrog();
     dec = loadImage("assets/images//decorations/rug_circle_1.png");
     mec = loadImage("assets/images//decorations/table_short_1.png");

@@ -105,6 +105,47 @@ const UI = {
             img: ""
         }
     },
+    decoUI: {
+        leftBar: {
+            x: 0,
+            y: 0,
+            w: 230,
+            h: 810,
+            fill: "blue",
+            panel: {
+                x: 115,
+                y: 417,
+                w: 200,
+                h: 450,
+                fill: "#ebf9ff",
+                trashcan: {
+                    x: 115,
+                    y: 500,
+                    w: 400,
+                    h: 400,
+                    img: ""
+                }, fly: {
+                    x: 60,
+                    y: 300,
+                    w: 200,
+                    h: 200,
+                    img: ""
+                },
+                txt: {
+                    x: 130,
+                    y: 300,
+                    txt: " =   0"
+                }
+            }
+        },
+        rightBar: {
+            x: 1210,
+            y: 0,
+            w: 230,
+            h: 810,
+            fill: "blue"
+        }
+    }
 }
 
 let readyStr = "Ready!";
@@ -366,14 +407,42 @@ function drawTreeBackground(light, midLight, mid, midDark, dark) {
 }
 
 function drawUI() {
-    //Draw side of game UI
+    //Draw left side of game UI
     push();
     noStroke();
-    fill("blue");
+    fill(UI.decoUI.leftBar.fill);
     rectMode(CORNER);
-    rect(width - 225, 0, 230, height);
-    rect(0, 0, 230, height);
+    rect(UI.decoUI.leftBar.x, UI.decoUI.leftBar.y, UI.decoUI.leftBar.w, UI.decoUI.leftBar.h);
     pop();
+
+    //Draw panel
+    push();
+    rectMode(CENTER);
+    fill(UI.decoUI.leftBar.panel.fill);
+    rect(UI.decoUI.leftBar.panel.x, UI.decoUI.leftBar.panel.y, UI.decoUI.leftBar.panel.w, UI.decoUI.leftBar.panel.h, 20);
+    pop();
+
+    //Draw panel's contents
+    push();
+    fill("black")
+    textSize(32);
+    strokeWeight(2);
+    imageMode(CENTER);
+    image(UI.decoUI.leftBar.panel.trashcan.img, UI.decoUI.leftBar.panel.trashcan.x, UI.decoUI.leftBar.panel.trashcan.y, UI.decoUI.leftBar.panel.trashcan.w, UI.decoUI.leftBar.panel.trashcan.h);
+    image(UI.decoUI.leftBar.panel.fly.img, UI.decoUI.leftBar.panel.fly.x, UI.decoUI.leftBar.panel.fly.y, UI.decoUI.leftBar.panel.fly.w, UI.decoUI.leftBar.panel.fly.h);
+    textAlign(CENTER, CENTER);
+    text(UI.decoUI.leftBar.panel.txt.txt, UI.decoUI.leftBar.panel.txt.x, UI.decoUI.leftBar.panel.txt.y);
+    pop();
+
+
+    //Draw right side of game UI
+    push();
+    noStroke();
+    fill(UI.decoUI.rightBar.fill);
+    rectMode(CORNER);
+    rect(UI.decoUI.rightBar.x, UI.decoUI.rightBar.y, UI.decoUI.rightBar.w, UI.decoUI.rightBar.h);
+    pop();
+
 
     drawButton(buttons.goOutside);
     drawButton(buttons.menuDecorate); //When these are swapped, menu also doesnt work

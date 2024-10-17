@@ -142,6 +142,7 @@ function checkTongueFlyOverlap() {
 
 function resetCounter() {
     totalFlies += fliesCaught;
+    UI.decoUI.leftBar.panel.txt.txt = " =   " + totalFlies;
     fliesCaught = 0;
 }
 
