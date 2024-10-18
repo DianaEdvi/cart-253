@@ -107,6 +107,7 @@ function drawDecoration() {
     for (let deco of decoObjects) {
         deco.updatePosition();
     }
+
 }
 
 function createNewDecoration(decoration, colorVariations, index) {
@@ -125,6 +126,7 @@ function keyPressed() {
         createNewDecoration(decorations.vaseTall, decorations.vaseTall.colorVariations, 2);
     }
 }
+
 
 class Decoration {
 
@@ -180,7 +182,11 @@ class Decoration {
 let selectedDeco = null;
 
 
-//ChatGPT helped me with this logic
+/**
+ * Iterates through the decoration objects in LIFO order because this is the order that they appear on the screen
+ * Checks if mouse is over an object and if so gives it higher draw priority (draws on top of other items)
+ * Then it implements the drag function
+ */
 function mousePressed() {
     // Iterate through decoObjects in reverse order so that the last drawn object is what is selected
     for (let i = decoObjects.length - 1; i >= 0; i--) {
@@ -198,10 +204,33 @@ function mousePressed() {
     }
 }
 
+/**
+ * Checks if the selected object is not null and freezes its position once the mouse is released
+ * Also checks if the released location is over the trashcan and deletes it if it is
+ */
 function mouseReleased() {
+    //If selected decoration is not null, stop dragging it
     if (selectedDeco) {
         selectedDeco.stopDrag();
-        selectedDeco = null; // Reset selected decoration
+        selectedDeco = null; // Reset selected decoration to null
+    }
+
+    //If mouse is over trashcan, delete object
+    destroyDecoration(decoObjects.indexOf(selectedDeco));
+}
+
+/**
+ * Destroys a Decoration object upon placing it within the bounds of the trashcan
+ * @param index the index of the object to be deleted
+ */
+function destroyDecoration(index) {
+    //Calculate the area of the trashcan
+    if (mouseX > UI.decoUI.leftBar.panel.trashcan.x - UI.decoUI.leftBar.panel.trashcan.w / 2
+        && mouseX < UI.decoUI.leftBar.panel.trashcan.x + UI.decoUI.leftBar.panel.trashcan.w / 2
+        && mouseY > UI.decoUI.leftBar.panel.trashcan.y - UI.decoUI.leftBar.panel.trashcan.h / 2
+        && mouseY < UI.decoUI.leftBar.panel.trashcan.y + UI.decoUI.leftBar.panel.trashcan.h / 2) {
+        //Delete the object
+        decoObjects.splice(index, 1);
     }
 }
 
