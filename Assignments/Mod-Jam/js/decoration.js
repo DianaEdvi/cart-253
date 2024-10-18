@@ -11,76 +11,94 @@ let decorations = {
         currentVariation: 0,
     },
     vaseShort: {
-        x: 0,
-        y: 0,
-        w: 0,
-        h: 0,
+        x: 720,
+        y: 405,
+        w: 200,
+        h: 200,
         img: "",
-        dragging: false
+        dragging: false,
+        colorVariations: [],
+        currentVariation: 0,
     },
     fishBowl: {
-        x: 0,
-        y: 0,
-        w: 0,
-        h: 0,
+        x: 720,
+        y: 405,
+        w: 200,
+        h: 200,
         img: "",
-        dragging: false
+        dragging: false,
+        colorVariations: [],
+        currentVariation: 0,
     },
     fishTank: {
-        x: 0,
-        y: 0,
-        w: 0,
-        h: 0,
+        x: 720,
+        y: 405,
+        w: 200,
+        h: 200,
         img: "",
-        dragging: false
+        dragging: false,
+        colorVariations: [],
+        currentVariation: 0,
     },
     tableShort: {
-        x: 0,
-        y: 0,
-        w: 0,
-        h: 0,
+        x: 720,
+        y: 405,
+        w: 200,
+        h: 200,
         img: "",
-        dragging: false
+        dragging: false,
+        colorVariations: [],
+        currentVariation: 0,
     },
     tableLong: {
-        x: 0,
-        y: 0,
-        w: 0,
-        h: 0,
+        x: 720,
+        y: 405,
+        w: 200,
+        h: 200,
         img: "",
-        dragging: false
+        dragging: false,
+        colorVariations: [],
+        currentVariation: 0,
     },
     rugCircle: {
-        x: 0,
-        y: 0,
-        w: 0,
-        h: 0,
+        x: 720,
+        y: 405,
+        w: 200,
+        h: 200,
         img: "",
-        dragging: false
+        dragging: false,
+        colorVariations: [],
+        currentVariation: 0,
     },
     rugLong: {
-        x: 0,
-        y: 0,
-        w: 0,
-        h: 0,
+        x: 720,
+        y: 405,
+        w: 200,
+        h: 200,
         img: "",
-        dragging: false
+        dragging: false,
+        colorVariations: [],
+        currentVariation: 0,
     },
     miscSnail: {
-        x: 0,
-        y: 0,
-        w: 0,
-        h: 0,
+        x: 720,
+        y: 405,
+        w: 200,
+        h: 200,
         img: "",
-        dragging: false
+        dragging: false,
+        colorVariations: [],
+        currentVariation: 0,
     },
     miscStatue: {
-        x: 0,
-        y: 0,
-        w: 0,
-        h: 0,
+        x: 720,
+        y: 405,
+        w: 200,
+        h: 200,
         img: "",
-        dragging: false
+        dragging: false,
+        colorVariations: [],
+        currentVariation: 0,
     },
 }
 
@@ -89,15 +107,64 @@ let decoObjects = [];
 function setupDecoratingGame() {
 }
 
+/**
+ * Preloads all the images used by the decoration game
+ */
 function preloadDecoration() {
+    //Preload UI images
     UI.decoUI.leftBar.panel.fly.img = loadImage("assets/images/decorations/fly.png");
     UI.decoUI.leftBar.panel.trashcan.img = loadImage("assets/images/decorations/garbage.png");
 
-    //Preload all these goddamn images. There must be a better way
+    //Preload decoration images
     decorations.vaseTall.colorVariations = [
         loadImage("assets/images/decorations/vase_tall_1.png"),
         loadImage("assets/images/decorations/vase_tall_2.png"),
         loadImage("assets/images/decorations/vase_tall_3.png"),
+    ]
+    decorations.vaseShort.colorVariations = [
+        loadImage("assets/images/decorations/vase_short_1.png"),
+        loadImage("assets/images/decorations/vase_short_2.png"),
+        loadImage("assets/images/decorations/vase_short_3.png"),
+    ]
+    decorations.fishBowl.colorVariations = [
+        loadImage("assets/images/decorations/fishbowl_1.png"),
+        loadImage("assets/images/decorations/fishbowl_2.png"),
+        loadImage("assets/images/decorations/fishbowl_3.png"),
+    ]
+    decorations.fishTank.colorVariations = [
+        loadImage("assets/images/decorations/fishTank_1.png"),
+        loadImage("assets/images/decorations/fishTank_2.png"),
+        loadImage("assets/images/decorations/fishTank_3.png"),
+    ]
+    decorations.miscStatue.colorVariations = [
+        loadImage("assets/images/decorations/grandma_statue_1.png"),
+        loadImage("assets/images/decorations/grandma_statue_2.png"),
+        loadImage("assets/images/decorations/grandma_statue_3.png"),
+    ]
+    decorations.miscSnail.colorVariations = [
+        loadImage("assets/images/decorations/snail_clock_1.png"),
+        loadImage("assets/images/decorations/snail_clock_2.png"),
+        loadImage("assets/images/decorations/snail_clock_3.png"),
+    ]
+    decorations.rugCircle.colorVariations = [
+        loadImage("assets/images/decorations/rug_circle_1.png"),
+        loadImage("assets/images/decorations/rug_circle_2.png"),
+        loadImage("assets/images/decorations/rug_circle_3.png"),
+    ]
+    decorations.rugLong.colorVariations = [
+        loadImage("assets/images/decorations/rug_long_1.png"),
+        loadImage("assets/images/decorations/rug_long_2.png"),
+        loadImage("assets/images/decorations/rug_long_3.png"),
+    ]
+    decorations.tableLong.colorVariations = [
+        loadImage("assets/images/decorations/table_long_1.png"),
+        loadImage("assets/images/decorations/table_long_2.png"),
+        loadImage("assets/images/decorations/table_long_3.png"),
+    ]
+    decorations.tableShort.colorVariations = [
+        loadImage("assets/images/decorations/table_short_1.png"),
+        loadImage("assets/images/decorations/table_short_2.png"),
+        loadImage("assets/images/decorations/table_short_3.png"),
     ]
 }
 
@@ -119,11 +186,11 @@ function createNewDecoration(decoration, colorVariations, index) {
 
 function keyPressed() {
     if (key === ' ') {
-        createNewDecoration(decorations.vaseTall, decorations.vaseTall.colorVariations, 0);
+        createNewDecoration(decorations.fishBowl, decorations.fishBowl.colorVariations, 0);
     } else if (key === 'r') {
-        createNewDecoration(decorations.vaseTall, decorations.vaseTall.colorVariations, 1);
+        createNewDecoration(decorations.rugLong, decorations.rugLong.colorVariations, 1);
     } else if (key === 'e') {
-        createNewDecoration(decorations.vaseTall, decorations.vaseTall.colorVariations, 2);
+        createNewDecoration(decorations.tableLong, decorations.tableLong.colorVariations, 2);
     }
 }
 
