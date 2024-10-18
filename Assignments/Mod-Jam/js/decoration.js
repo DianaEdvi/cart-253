@@ -187,7 +187,7 @@ let selectedDeco = null;
  * Checks if mouse is over an object and if so gives it higher draw priority (draws on top of other items)
  * Then it implements the drag function
  */
-function mousePressed() {
+function mousePressedDecorate() {
     // Iterate through decoObjects in reverse order so that the last drawn object is what is selected
     for (let i = decoObjects.length - 1; i >= 0; i--) {
         let deco = decoObjects[i];
@@ -208,7 +208,7 @@ function mousePressed() {
  * Checks if the selected object is not null and freezes its position once the mouse is released
  * Also checks if the released location is over the trashcan and deletes it if it is
  */
-function mouseReleased() {
+function mouseReleasedDecorate() {
     //If selected decoration is not null, stop dragging it
     if (selectedDeco) {
         selectedDeco.stopDrag();

@@ -149,7 +149,7 @@ function resetCounter() {
 /**
  * Launch the tongue on click (if it's not launched yet)
  */
-function mousePressed() {
+function mousePressedFrog() {
     if (frog.tongue.state === "idle") {
         frog.tongue.state = "outbound";
     }

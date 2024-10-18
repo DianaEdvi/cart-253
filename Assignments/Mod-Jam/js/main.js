@@ -111,6 +111,18 @@ function buttonHandler(button) {
     clicked = false;
 }
 
+function mousePressed() {
+    if (state === "frog") {
+        mousePressedFrog();
+    } else if (state === "decorate") {
+        mousePressedDecorate();
+    }
+}
+
+function mouseReleased() {
+    mouseReleasedDecorate();
+}
+
 
 //Bugs
 //Color of text is being funky and outline of buttons goes wank
