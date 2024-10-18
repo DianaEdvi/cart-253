@@ -111,7 +111,7 @@ const UI = {
             y: 0,
             w: 230,
             h: 810,
-            fill: "blue",
+            fill: "#40985e",
             panel: {
                 x: 115,
                 y: 417,
@@ -143,7 +143,7 @@ const UI = {
             y: 0,
             w: 230,
             h: 810,
-            fill: "blue"
+            fill: "#40985e"
         }
     }
 }
