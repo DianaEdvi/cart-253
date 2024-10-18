@@ -7,6 +7,7 @@ let totalFlies = 0;
 let dec = "";
 let mec = "";
 let pec = "";
+let deco;
 
 function preload() {
     preloadOptions();
@@ -31,6 +32,7 @@ function setup() {
     state = "title";
     // setupDecoratingGame();
     setupFrogFrogFrog();
+    setupDecoratingGame();
 }
 
 function draw() {
