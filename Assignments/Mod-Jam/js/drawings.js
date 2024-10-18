@@ -143,7 +143,30 @@ const UI = {
             y: 0,
             w: 230,
             h: 810,
-            fill: "#40985e"
+            fill: "#40985e",
+            panel: {
+                x: 1325,
+                y: 417,
+                w: 200,
+                h: 450,
+                fill: "#ebf9ff",
+            },
+            label: {
+                panel: {
+                    x: 1325,
+                    y: 100,
+                    w: 150,
+                    h: 100,
+                    fill: "#082b15"
+                },
+                txt: {
+                    x: 1325,
+                    y: 100,
+                    fill: "#ebf9ff",
+                    size: 32,
+                    txt: "SHOP"
+                }
+            }
         }
     }
 }
@@ -406,7 +429,7 @@ function drawTreeBackground(light, midLight, mid, midDark, dark) {
     pop();
 }
 
-function drawUI() {
+function drawDecoUI() {
     //Draw left side of game UI
     push();
     noStroke();
@@ -415,7 +438,7 @@ function drawUI() {
     rect(UI.decoUI.leftBar.x, UI.decoUI.leftBar.y, UI.decoUI.leftBar.w, UI.decoUI.leftBar.h);
     pop();
 
-    //Draw panel
+    //Draw left panel
     push();
     rectMode(CENTER);
     fill(UI.decoUI.leftBar.panel.fill);
@@ -441,6 +464,29 @@ function drawUI() {
     fill(UI.decoUI.rightBar.fill);
     rectMode(CORNER);
     rect(UI.decoUI.rightBar.x, UI.decoUI.rightBar.y, UI.decoUI.rightBar.w, UI.decoUI.rightBar.h);
+    pop();
+
+    //Draw right panel
+    push();
+    rectMode(CENTER);
+    fill(UI.decoUI.rightBar.panel.fill);
+    rect(UI.decoUI.rightBar.panel.x, UI.decoUI.rightBar.panel.y, UI.decoUI.rightBar.panel.w, UI.decoUI.rightBar.panel.h, 20);
+    pop();
+
+    //Draw shop panel
+    push();
+    noStroke();
+    rectMode(CENTER);
+    fill(UI.decoUI.rightBar.label.panel.fill);
+    rect(UI.decoUI.rightBar.label.panel.x, UI.decoUI.rightBar.label.panel.y, UI.decoUI.rightBar.label.panel.w, UI.decoUI.rightBar.label.panel.h, 20);
+    pop();
+
+    //Draw shop text
+    push();
+    textAlign(CENTER, CENTER);
+    textSize(UI.decoUI.rightBar.label.txt.size);
+    fill(UI.decoUI.rightBar.label.txt.fill);
+    text(UI.decoUI.rightBar.label.txt.txt, UI.decoUI.rightBar.label.txt.x, UI.decoUI.rightBar.label.txt.y);
     pop();
 
 

@@ -174,7 +174,7 @@ function preloadDecoration() {
  */
 function drawDecoration() {
     setBackground();
-    drawUI();
+    drawDecoUI();
     for (let deco of decoObjects) {
         deco.updatePosition();
     }

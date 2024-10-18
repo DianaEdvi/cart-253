@@ -73,13 +73,6 @@ mousePressed()
 
 # Pseudocode for Game
 
-```
-
-
-
-
-```
-
 Notes, my plan is not pretty.
 
 How the game will look
@@ -179,6 +172,32 @@ funtion tutorial
     Store the pop ups in an array somehow
     Loop through all of them until done 
     Make everything else unclickable until then 
+    
+    
+    
+    
+    
+
+shop: 
+
+container (white panel)
+    item block 
+        main image (variation 1)
+        arrows pointing down
+    sub block
+        three variation images
+        three buy buttons
+        arrows pointing up 
+    scroll wheel on the right 
+        
+conditions: 
+all item blocks must be contained within the panel 
+sub blocks must appear between a item block and the next one 
+clicking the arrow pointing down reveals the sub block
+clicking the arrow pointing up closes the sub block 
+clicking buy places that item in the middle of the screen
+    also deducts the cost of the fly from totalFlies 
+                
     
 
 
