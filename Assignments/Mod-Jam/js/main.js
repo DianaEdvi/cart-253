@@ -7,7 +7,6 @@ let totalFlies = 0;
 let dec = "";
 let mec = "";
 let pec = "";
-let deco;
 
 function preload() {
     preloadOptions();

@@ -14,10 +14,12 @@ let decorations = {
     vaseTall: {
         x: 500,
         y: 300,
-        w: 400,
-        h: 400,
+        w: 200,
+        h: 200,
         img: "",
-        dragging: false
+        dragging: false,
+        colorVariations: [],
+        currentVariation: 0,
     },
     vaseShort: {
         x: 0,
@@ -93,9 +95,18 @@ let decorations = {
     },
 }
 
+let deco;
+let deco2;
+let deco3;
+
+
+let decoObjects = [];
 
 function setupDecoratingGame() {
-    deco = new Decoration(decorations.vaseTall);
+    deco = new Decoration(decorations.vaseTall, decorations.vaseTall.colorVariations);
+    deco2 = new Decoration(decorations.vaseTall, decorations.vaseTall.colorVariations);
+    deco3 = new Decoration(decorations.vaseTall, decorations.vaseTall.colorVariations);
+    decoObjects.push(deco, deco2, deco3);
 }
 
 function preloadDecoration() {
@@ -103,15 +114,23 @@ function preloadDecoration() {
     UI.decoUI.leftBar.panel.trashcan.img = loadImage("assets/images/decorations/garbage.png");
 
     //Preload all these goddamn images. There must be a better way
-    decorations.vaseTall.img = loadImage("assets/images/decorations/vase_tall_1.png");
+
+    decorations.vaseTall.colorVariations = [
+        loadImage("assets/images/decorations/vase_tall_1.png"),
+        loadImage("assets/images/decorations/vase_tall_2.png"),
+        loadImage("assets/images/decorations/vase_tall_3.png"),
+
+    ]
+
 }
 
 
 function drawDecoration() {
     setBackground();
     drawUI();
+    deco.changeColor(2);
     deco.updatePosition();
-    deco.display();
+    // deco.display();
     console.log(deco.isMouseOver());
 }
 
@@ -142,18 +161,18 @@ function moveObject() {
 
 class Decoration {
 
-    constructor(decoration) {
+    constructor(decoration, colorVariations) {
         this.x = decoration.x;
         this.y = decoration.y;
         this.w = decoration.w;
         this.h = decoration.h;
-        this.img = decoration.img;
-
+        this.colorVariations = colorVariations;
+        this.currentVariation = decoration.currentVariation;
     }
 
     display() {
         imageMode(CENTER);
-        image(this.img, this.x, this.y, this.w, this.h);
+        image(this.colorVariations[this.currentVariation], this.x, this.y, this.w, this.h);
     }
 
     // Check if the mouse is over the decoration (bad)
@@ -179,6 +198,13 @@ class Decoration {
         if (this.dragging) {
             this.x = mouseX;
             this.y = mouseY;
+        }
+        this.display();
+    }
+
+    changeColor(index) {
+        if (index >= 0 && index < 3) {
+            this.currentVariation = index;
         }
     }
 
