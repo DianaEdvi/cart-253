@@ -1,19 +1,8 @@
 "use strict";
-
-let circleeee = {
-    x: 100,
-    y: 100,
-    size: 50
-}
-
-let holding = false;
-let clickXPosition = 0;
-let clickYPosition = 0;
-
 let decorations = {
     vaseTall: {
-        x: 500,
-        y: 300,
+        x: 720,
+        y: 405,
         w: 200,
         h: 200,
         img: "",
@@ -103,10 +92,10 @@ let deco3;
 let decoObjects = [];
 
 function setupDecoratingGame() {
-    deco = new Decoration(decorations.vaseTall, decorations.vaseTall.colorVariations);
-    deco2 = new Decoration(decorations.vaseTall, decorations.vaseTall.colorVariations);
-    deco3 = new Decoration(decorations.vaseTall, decorations.vaseTall.colorVariations);
-    decoObjects.push(deco, deco2, deco3);
+    // deco = new Decoration(decorations.vaseTall, decorations.vaseTall.colorVariations);
+    // deco2 = new Decoration(decorations.vaseTall, decorations.vaseTall.colorVariations);
+    // deco3 = new Decoration(decorations.vaseTall, decorations.vaseTall.colorVariations);
+    // decoObjects.push(deco, deco2, deco3);
 }
 
 function preloadDecoration() {
@@ -114,12 +103,10 @@ function preloadDecoration() {
     UI.decoUI.leftBar.panel.trashcan.img = loadImage("assets/images/decorations/garbage.png");
 
     //Preload all these goddamn images. There must be a better way
-
     decorations.vaseTall.colorVariations = [
         loadImage("assets/images/decorations/vase_tall_1.png"),
         loadImage("assets/images/decorations/vase_tall_2.png"),
         loadImage("assets/images/decorations/vase_tall_3.png"),
-
     ]
 
 }
@@ -128,34 +115,25 @@ function preloadDecoration() {
 function drawDecoration() {
     setBackground();
     drawUI();
-    deco.changeColor(2);
-    deco.updatePosition();
-    // deco.display();
-    console.log(deco.isMouseOver());
-}
+    // deco.changeColor(2);
+    // deco.updatePosition();
+    // decoCondition();
 
-function followMouse() {
-    //Follow mouse y position and constrain it to the borders, taking into consideration the car's size
-    circleeee.x = mouseX;
-    circleeee.y = mouseY;
-
-    if (holding === true) {
-        drawCircle();
-    } else {
-        circleeee.x = clickXPosition;
-        circleeee.y = clickYPosition;
-        drawCircle();
-
+    for (let deco of decoObjects) {
+        deco.updatePosition();
     }
 }
 
-function moveObject() {
-    if (holding === false) {
-        holding = true;
-    } else if (holding === true) {
-        holding = false;
-        clickXPosition = mouseX;
-        clickYPosition = mouseY;
+function createNewDecoration(decoration, colorVariations, index) {
+    //Create a new decoration at the center of the screen
+    let newDeco = new Decoration(decoration, colorVariations);
+    newDeco.changeColor(index);
+    decoObjects.push(newDeco);
+}
+
+function keyPressed() {
+    if (key === ' ') {
+        createNewDecoration(decorations.vaseTall, decorations.vaseTall.colorVariations, 0);
     }
 }
 
@@ -211,11 +189,15 @@ class Decoration {
 }
 
 function mousePressed() {
-    deco.startDrag();
+    for (let deco of decoObjects) {
+        deco.startDrag();
+    }
 }
 
 function mouseReleased() {
-    deco.stopDrag();
+    for (let deco of decoObjects) {
+        deco.stopDrag();
+    }
 }
 
 //To draw a deco onto the screen

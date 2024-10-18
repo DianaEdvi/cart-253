@@ -4,23 +4,10 @@ let state = "";
 let clicked = false;
 let totalFlies = 0;
 
-let dec = "";
-let mec = "";
-let pec = "";
-
 function preload() {
     preloadOptions();
     preloadDecoration();
     preloadFrog();
-    dec = loadImage("assets/images//decorations/rug_circle_1.png");
-    mec = loadImage("assets/images//decorations/table_short_1.png");
-    pec = loadImage("assets/images//decorations/fishbowl_2.png");
-}
-
-function drawTempImg() {
-    image(dec, width / 2, height / 2 + 20, 500, 500);
-    image(mec, width / 2, height / 2, 500, 500);
-    image(pec, width / 2 + 100, height / 2 + 70, 300, 300);
 }
 
 /**
@@ -43,7 +30,7 @@ function draw() {
         drawOptions(); //sets options and draws selection menu and outlines
     } else if (state === "decorate") {
         drawDecoration();
-        drawTempImg();
+        // drawTempImg();
     } else if (state === "finished") {
         drawEnd();
     }
