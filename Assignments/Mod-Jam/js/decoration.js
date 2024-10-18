@@ -84,18 +84,9 @@ let decorations = {
     },
 }
 
-let deco;
-let deco2;
-let deco3;
-
-
 let decoObjects = [];
 
 function setupDecoratingGame() {
-    // deco = new Decoration(decorations.vaseTall, decorations.vaseTall.colorVariations);
-    // deco2 = new Decoration(decorations.vaseTall, decorations.vaseTall.colorVariations);
-    // deco3 = new Decoration(decorations.vaseTall, decorations.vaseTall.colorVariations);
-    // decoObjects.push(deco, deco2, deco3);
 }
 
 function preloadDecoration() {
@@ -108,17 +99,11 @@ function preloadDecoration() {
         loadImage("assets/images/decorations/vase_tall_2.png"),
         loadImage("assets/images/decorations/vase_tall_3.png"),
     ]
-
 }
-
 
 function drawDecoration() {
     setBackground();
     drawUI();
-    // deco.changeColor(2);
-    // deco.updatePosition();
-    // decoCondition();
-
     for (let deco of decoObjects) {
         deco.updatePosition();
     }
@@ -134,6 +119,10 @@ function createNewDecoration(decoration, colorVariations, index) {
 function keyPressed() {
     if (key === ' ') {
         createNewDecoration(decorations.vaseTall, decorations.vaseTall.colorVariations, 0);
+    } else if (key === 'r') {
+        createNewDecoration(decorations.vaseTall, decorations.vaseTall.colorVariations, 1);
+    } else if (key === 'e') {
+        createNewDecoration(decorations.vaseTall, decorations.vaseTall.colorVariations, 2);
     }
 }
 
@@ -188,24 +177,33 @@ class Decoration {
 
 }
 
+let selectedDeco = null;
+
+
+//ChatGPT helped me with this logic
 function mousePressed() {
-    for (let deco of decoObjects) {
-        deco.startDrag();
+    // Iterate through decoObjects in reverse order so that the last drawn object is what is selected
+    for (let i = decoObjects.length - 1; i >= 0; i--) {
+        let deco = decoObjects[i];
+        if (deco.isMouseOver()) {
+            selectedDeco = deco; // Store the topmost decoration
+
+            // Remove selectedDeco from its current position
+            decoObjects.splice(i, 1);
+            // Add it to the end of the array (this gives it higher draw priority)
+            decoObjects.push(selectedDeco);
+            deco.startDrag();
+            break; // Exit loop after selecting one
+        }
     }
 }
 
 function mouseReleased() {
-    for (let deco of decoObjects) {
-        deco.stopDrag();
+    if (selectedDeco) {
+        selectedDeco.stopDrag();
+        selectedDeco = null; // Reset selected decoration
     }
 }
-
-//To draw a deco onto the screen
-//preload deco
-//instantiate new deco
-//call display
-
-
 
 
 
