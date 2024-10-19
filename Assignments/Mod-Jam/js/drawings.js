@@ -171,7 +171,7 @@ const UI = {
     }
 }
 
-let readyStr = "Ready!";
+// let readyStr = "Ready!";
 
 
 function drawCircle() {
@@ -430,20 +430,13 @@ function drawTreeBackground(light, midLight, mid, midDark, dark) {
 }
 
 function drawDecoUI() {
-    //Draw left side of game UI
-    push();
-    noStroke();
-    fill(UI.decoUI.leftBar.fill);
-    rectMode(CORNER);
-    rect(UI.decoUI.leftBar.x, UI.decoUI.leftBar.y, UI.decoUI.leftBar.w, UI.decoUI.leftBar.h);
-    pop();
 
-    //Draw left panel
-    push();
-    rectMode(CENTER);
-    fill(UI.decoUI.leftBar.panel.fill);
-    rect(UI.decoUI.leftBar.panel.x, UI.decoUI.leftBar.panel.y, UI.decoUI.leftBar.panel.w, UI.decoUI.leftBar.panel.h, 20);
-    pop();
+    //Draw left side of game UI
+
+    //Draw sidebar
+    drawSideBar(UI.decoUI.leftBar);
+    //Draw white panel
+    drawPanel(UI.decoUI.leftBar.panel);
 
     //Draw panel's contents
     push();
@@ -459,27 +452,14 @@ function drawDecoUI() {
 
 
     //Draw right side of game UI
-    push();
-    noStroke();
-    fill(UI.decoUI.rightBar.fill);
-    rectMode(CORNER);
-    rect(UI.decoUI.rightBar.x, UI.decoUI.rightBar.y, UI.decoUI.rightBar.w, UI.decoUI.rightBar.h);
-    pop();
 
-    //Draw right panel
-    push();
-    rectMode(CENTER);
-    fill(UI.decoUI.rightBar.panel.fill);
-    rect(UI.decoUI.rightBar.panel.x, UI.decoUI.rightBar.panel.y, UI.decoUI.rightBar.panel.w, UI.decoUI.rightBar.panel.h, 20);
-    pop();
+    //Draw sidebar
+    drawSideBar(UI.decoUI.rightBar);
+    //Draw white panel
+    drawPanel(UI.decoUI.rightBar.panel);
+    //Draw shop label panel
+    drawPanel(UI.decoUI.rightBar.label.panel);
 
-    //Draw shop panel
-    push();
-    noStroke();
-    rectMode(CENTER);
-    fill(UI.decoUI.rightBar.label.panel.fill);
-    rect(UI.decoUI.rightBar.label.panel.x, UI.decoUI.rightBar.label.panel.y, UI.decoUI.rightBar.label.panel.w, UI.decoUI.rightBar.label.panel.h, 20);
-    pop();
 
     //Draw shop text
     push();
@@ -493,6 +473,25 @@ function drawDecoUI() {
     drawButton(buttons.goOutside);
     drawButton(buttons.menuDecorate); //When these are swapped, menu also doesnt work
     drawButton(buttons.finished);
+}
+
+function drawSideBar(sidebar) {
+    push();
+    noStroke();
+    fill(sidebar.fill);
+    rectMode(CORNER);
+    rect(sidebar.x, sidebar.y, sidebar.w, sidebar.h);
+    pop();
+
+}
+
+function drawPanel(panel) {
+    push();
+    noStroke();
+    rectMode(CENTER);
+    fill(panel.fill);
+    rect(panel.x, panel.y, panel.w, panel.h, 20);
+    pop();
 }
 
 function drawSelections() {

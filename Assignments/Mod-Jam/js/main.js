@@ -64,6 +64,7 @@ function resetGame() {
     totalFlies = 0;
     UI.decoUI.leftBar.panel.txt.txt = " =   " + totalFlies;
 
+    //Destroy objects
     if (decoObjects !== null) {
         for (let i = 0; i < decoObjects.length; i++) {
             destroyDecoration(i);
