@@ -63,6 +63,12 @@ function resetGame() {
     colorSelect = "";
     totalFlies = 0;
     UI.decoUI.leftBar.panel.txt.txt = " =   " + totalFlies;
+
+    if (decoObjects !== null) {
+        for (let i = 0; i < decoObjects.length; i++) {
+            destroyDecoration(i);
+        }
+    }
 }
 
 function finishedController() {

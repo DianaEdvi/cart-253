@@ -318,6 +318,8 @@ function destroyDecoration(index) {
         && mouseY < UI.decoUI.leftBar.panel.trashcan.y + UI.decoUI.leftBar.panel.trashcan.h / 2) {
         //Delete the object
         decoObjects.splice(index, 1);
+    } else if (state === "title") {
+        decoObjects.splice(index, 1);
     }
 }
 
