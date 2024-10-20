@@ -6,14 +6,7 @@ let block = {
     w: 160,
     h: 100,
     fill: "#96beb1",
-    images: undefined,
-    // img: {
-    //     img: "",
-    //     x: 1195,
-    //     y: 180,
-    //     w: 140,
-    //     h: 140
-    // },
+    totalHeight: 0,
     price: {
         txt: {
             x: 1323,
@@ -96,15 +89,10 @@ class ShopItem {
     }
 }
 
-function drawShop(block, sprites) {
+function drawShop(block) {
     //Sub block
     push();
     drawPanel(block.subBlock);
-    // //Variation sprites
-    // image(sprites.var1.img, sprites.var1.x, sprites.var1.y, sprites.var1.w, sprites.var1.h);
-    // image(sprites.var2.img, sprites.var2.x, sprites.var2.y, sprites.var2.w, sprites.var2.h);
-    // image(sprites.var3.img, sprites.var3.x, sprites.var3.y, sprites.var3.w, sprites.var3.h);
-
     //Buy buttons
     drawBuyButton(block.subBlock.var1.button);
     drawBuyButton(block.subBlock.var2.button);
@@ -115,11 +103,6 @@ function drawShop(block, sprites) {
     push();
     drawPanel(block);
     pop();
-
-    // //Main sprite and fly
-    // image(sprites.mainSprite.img, sprites.mainSprite.x, sprites.mainSprite.y, sprites.mainSprite.w, sprites.mainSprite.h);
-    // console.log(sprites.mainSprite.x);
-    // image(block.price.flyImg.img, block.price.flyImg.x, block.price.flyImg.y, block.price.flyImg.w, block.price.flyImg.h);
 
     //text
     push();

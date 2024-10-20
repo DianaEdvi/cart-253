@@ -533,17 +533,12 @@ function preloadDecoration() {
         loadImage("assets/images/decorations/table_short_2.png"),
         loadImage("assets/images/decorations/table_short_3.png"),
     ]
-
-
-    // //Grandma statue
-    // temp.shopSprites.mainSprite.img = loadImage("assets/images/decorations/grandma_statue_1.png");
-    // temp.shopSprites.var1.img = loadImage("assets/images/decorations/grandma_statue_1.png");
-    // temp.shopSprites.var2.img = loadImage("assets/images/decorations/grandma_statue_2.png");
-    // temp.shopSprites.var3.img = loadImage("assets/images/decorations/grandma_statue_3.png");
-    //
-    // shopItems.push(new ShopItem(block, temp.shopSprites));
-
 }
+
+let initialHeight = 200;
+let blockOffset = 0;
+let rectHeight = 400;
+let rectSpacing = 20;
 
 /**
  * Draw's the decoration objects and UI onto the screen
@@ -555,11 +550,23 @@ function drawDecoration() {
         deco.updatePosition();
     }
 
-    //Draw the shop items
-    for (let shopItem of shopItems) {
-        shopItem.draw();
+    for (let i = 0; i < shopItems.length; i++) {
+        let blockYPos = initialHeight + blockOffset + i * (rectHeight + rectSpacing);
+
+
+        if (blockYPos >= initialHeight && blockYPos <= initialHeight + rectHeight) {
+            console.log("here");
+            shopItems[i].draw();
+        }
     }
+    drawTemp();
 }
+
+// //
+// // //Draw the shop items
+// // for (let shopItem of shopItems) {
+// // }
+
 
 /**
  * Creates a new decoration object
@@ -707,6 +714,11 @@ function destroyDecoration(index) {
 }
 
 function mouseWheel(event) {
+    blockOffset -= event.delta;
+    // for (let i = 0; i < shopItems.length; i++) {
+    //     shopItems[i].block.y += blockOffset;
+    //     shopItems[i].block.subBlock.y += blockOffset;
+    // }
     if (event.delta > 0) {
         UI.decoUI.rightBar.scrollWheel.bar.y += 1;
         console.log("scrolling down");

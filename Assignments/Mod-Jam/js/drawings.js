@@ -599,6 +599,13 @@ function drawButton(button) {
     buttonHandler(button);
 }
 
+function drawTemp() {
+    push();
+    fill("red");
+    ellipse(1315, 200, 20);
+    pop();
+}
+
 
 let shopImages = {}
 
