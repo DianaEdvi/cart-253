@@ -455,10 +455,15 @@ function setupDecoratingGame() {
     blocks.push(decorations.miscSnail.block);
     blocks.push(decorations.miscStatue.block);
 
-    //Set original heights for blocks 
+    //Set original heights for blocks
     for (let i = 0; i < blocks.length; i++) {
         blocks[i].y = initialHeight + i * (rectHeight + rectSpacing);
         blocks[i].subBlock.y = initialSublockHeight + i * (rectHeight + rectSpacing);
+        blocks[i].price.flyImg.y += i * (rectHeight + rectSpacing);
+        blocks[i].subBlock.var1.button.y += i * (rectHeight + rectSpacing);
+        blocks[i].subBlock.var2.button.y += i * (rectHeight + rectSpacing);
+        blocks[i].subBlock.var3.button.y += i * (rectHeight + rectSpacing);
+        blocks[i].price.txt.y += i * (rectHeight + rectSpacing);
         // console.log(blocks[i]);
     }
 
@@ -731,6 +736,12 @@ function mouseWheel(event) {
     for (let i = 0; i < blocks.length; i++) {
         blocks[i].y -= blockOffset;
         blocks[i].subBlock.y -= blockOffset;
+        blocks[i].price.flyImg.y -= blockOffset;
+        blocks[i].subBlock.var1.button.y -= blockOffset;
+        blocks[i].subBlock.var2.button.y -= blockOffset;
+        blocks[i].subBlock.var3.button.y -= blockOffset;
+        blocks[i].price.txt.y -= blockOffset;
+
         // console.log(blocks[i]);
     }
 
