@@ -10,6 +10,36 @@ let decorations = {
         dragging: false, // checks whether the object is being dragged
         colorVariations: [], // holds the color variations of the object
         currentVariation: 0, // holds the index of the current color variation
+        shopSprites: {
+            mainSprite: {
+                img: "",
+                x: 1210,
+                y: 195,
+                w: 115,
+                h: 115
+            },
+            var1: {
+                img: "",
+                x: 1205,
+                y: 295,
+                w: 125,
+                h: 125,
+            },
+            var2: {
+                img: "",
+                x: 1205,
+                y: 370,
+                w: 125,
+                h: 125,
+            },
+            var3: {
+                img: "",
+                x: 1205,
+                y: 445,
+                w: 125,
+                h: 125,
+            }
+        }
     },
     vaseShort: {
         x: 720,
@@ -104,14 +134,18 @@ let decorations = {
 }
 
 let decoObjects = [];
+let shopItems = [];
 
 function setupDecoratingGame() {
-    //Temp
-    panel.img.img = decorations.fishBowl.colorVariations[0];
-    panel.price.img.img = UI.decoUI.leftBar.panel.fly.img;
-    panel.subBlock.var1.img = decorations.fishBowl.colorVariations[0];
-    panel.subBlock.var2.img = decorations.fishBowl.colorVariations[1];
-    panel.subBlock.var3.img = decorations.fishBowl.colorVariations[2];
+    decorations.vaseTall.shopSprites.mainSprite.img = decorations.vaseTall.colorVariations[0];
+    decorations.vaseTall.shopSprites.var1.img = decorations.vaseTall.colorVariations[0];
+    decorations.vaseTall.shopSprites.var2.img = decorations.vaseTall.colorVariations[1];
+    decorations.vaseTall.shopSprites.var3.img = decorations.vaseTall.colorVariations[2];
+
+    block.price.flyImg.img = UI.decoUI.leftBar.panel.fly.img;
+
+    shopItems.push(new ShopItem(block, decorations.vaseTall.shopSprites));
+
 }
 
 /**
@@ -183,6 +217,10 @@ function drawDecoration() {
     drawDecoUI();
     for (let deco of decoObjects) {
         deco.updatePosition();
+    }
+
+    for (let shopItem of shopItems) {
+        shopItem.draw();
     }
 
 }
@@ -327,6 +365,17 @@ function destroyDecoration(index) {
     } else if (state === "title") {
         decoObjects.splice(index, 1);
     }
+}
+
+function mouseWheel(event) {
+    if (event.delta > 0) {
+        UI.decoUI.rightBar.scrollWheel.bar.y += 1;
+        console.log("scrolling down");
+    } else {
+        UI.decoUI.rightBar.scrollWheel.bar.y -= 1;
+        console.log("scrolling up");
+    }
+
 }
 
 
