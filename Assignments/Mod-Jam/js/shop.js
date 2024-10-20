@@ -25,8 +25,8 @@ let block = {
         },
         flyImg: {
             img: "",
-            x: 1300,
-            y: 180,
+            x: 1370,
+            y: 250,
             w: 140,
             h: 140
         }
@@ -76,9 +76,10 @@ class ShopItem {
 
     draw() {
         drawShop(this.block, this.sprites);
+        this.displayShopSprites();
     }
 
-    displayShop() {
+    displayShopSprites() {
         push();
         imageMode(CENTER);
         //Variation sprites

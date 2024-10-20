@@ -441,77 +441,18 @@ let shopItems = [];
 
 function setupDecoratingGame() {
     //Assign all sprites for the shop
-    //Tall vase
-    decorations.vaseTall.shopSprites.mainSprite.img = decorations.vaseTall.colorVariations[0];
-    decorations.vaseTall.shopSprites.var1.img = decorations.vaseTall.colorVariations[0];
-    decorations.vaseTall.shopSprites.var2.img = decorations.vaseTall.colorVariations[1];
-    decorations.vaseTall.shopSprites.var3.img = decorations.vaseTall.colorVariations[2];
-    //Short vase
-    decorations.vaseShort.shopSprites.mainSprite.img = decorations.vaseShort.colorVariations[0];
-    decorations.vaseShort.shopSprites.var1.img = decorations.vaseShort.colorVariations[0];
-    decorations.vaseShort.shopSprites.var2.img = decorations.vaseShort.colorVariations[1];
-    decorations.vaseShort.shopSprites.var3.img = decorations.vaseShort.colorVariations[2];
+    setSprites(decorations.vaseTall);
+    setSprites(decorations.vaseShort);
+    setSprites(decorations.fishBowl);
+    setSprites(decorations.fishTank);
+    setSprites(decorations.tableShort);
+    setSprites(decorations.tableLong);
+    setSprites(decorations.rugCircle);
+    setSprites(decorations.rugLong);
+    setSprites(decorations.miscSnail);
+    setSprites(decorations.miscStatue);
 
-    //Fishbowl
-    decorations.fishBowl.shopSprites.mainSprite.img = decorations.fishBowl.colorVariations[0];
-    decorations.fishBowl.shopSprites.var1.img = decorations.fishBowl.colorVariations[0];
-    decorations.fishBowl.shopSprites.var2.img = decorations.fishBowl.colorVariations[1];
-    decorations.fishBowl.shopSprites.var3.img = decorations.fishBowl.colorVariations[2];
-
-    //Fishtank
-    decorations.fishTank.shopSprites.mainSprite.img = decorations.fishTank.colorVariations[0];
-    decorations.fishTank.shopSprites.var1.img = decorations.fishTank.colorVariations[0];
-    decorations.fishTank.shopSprites.var2.img = decorations.fishTank.colorVariations[1];
-    decorations.fishTank.shopSprites.var3.img = decorations.fishTank.colorVariations[2];
-
-    //Table short
-    decorations.tableShort.shopSprites.mainSprite.img = decorations.tableShort.colorVariations[0];
-    decorations.tableShort.shopSprites.var1.img = decorations.tableShort.colorVariations[0];
-    decorations.tableShort.shopSprites.var2.img = decorations.tableShort.colorVariations[1];
-    decorations.tableShort.shopSprites.var3.img = decorations.tableShort.colorVariations[2];
-
-    //Table long
-    decorations.tableLong.shopSprites.mainSprite.img = decorations.tableLong.colorVariations[0];
-    decorations.tableLong.shopSprites.var1.img = decorations.tableLong.colorVariations[0];
-    decorations.tableLong.shopSprites.var2.img = decorations.tableLong.colorVariations[1];
-    decorations.tableLong.shopSprites.var3.img = decorations.tableLong.colorVariations[2];
-
-    //Rug circle
-    decorations.rugCircle.shopSprites.mainSprite.img = decorations.rugCircle.colorVariations[0];
-    decorations.rugCircle.shopSprites.var1.img = decorations.rugCircle.colorVariations[0];
-    decorations.rugCircle.shopSprites.var2.img = decorations.rugCircle.colorVariations[1];
-    decorations.rugCircle.shopSprites.var3.img = decorations.rugCircle.colorVariations[2];
-
-    //Rug long
-    decorations.rugLong.shopSprites.mainSprite.img = decorations.rugLong.colorVariations[0];
-    decorations.rugLong.shopSprites.var1.img = decorations.rugLong.colorVariations[0];
-    decorations.rugLong.shopSprites.var2.img = decorations.rugLong.colorVariations[1];
-    decorations.rugLong.shopSprites.var3.img = decorations.rugLong.colorVariations[2];
-
-    //Snail clock
-    decorations.miscSnail.shopSprites.mainSprite.img = decorations.miscSnail.colorVariations[0];
-    decorations.miscSnail.shopSprites.var1.img = decorations.miscSnail.colorVariations[0];
-    decorations.miscSnail.shopSprites.var2.img = decorations.miscSnail.colorVariations[1];
-    decorations.miscSnail.shopSprites.var3.img = decorations.miscSnail.colorVariations[2];
-
-    //Grandma statue
-    decorations.miscStatue.shopSprites.mainSprite.img = decorations.miscStatue.colorVariations[0];
-    decorations.miscStatue.shopSprites.var1.img = decorations.miscStatue.colorVariations[0];
-    decorations.miscStatue.shopSprites.var2.img = decorations.miscStatue.colorVariations[1];
-    decorations.miscStatue.shopSprites.var3.img = decorations.miscStatue.colorVariations[2];
-
-    //
-    // //Grandma statue
-    // decorations.miscStatue.shopSprites.mainSprite.img = new Image("assets/images/decorations/grandma_statue_1.png",
-    //     decorations.miscStatue.shopSprites.mainSprite.x,
-    //     decorations.miscStatue.shopSprites.mainSprite.y,
-    //     decorations.miscStatue.shopSprites.mainSprite.w,
-    //     decorations.miscStatue.shopSprites.mainSprite.h);
-    // // decorations.miscStatue.shopSprites.mainSprite.img.src = "assets/images/decorations/grandma_statue_1.png";
-    // decorations.miscStatue.shopSprites.var1.img = decorations.miscStatue.colorVariations[0];
-    // decorations.miscStatue.shopSprites.var2.img = decorations.miscStatue.colorVariations[1];
-    // decorations.miscStatue.shopSprites.var3.img = decorations.miscStatue.colorVariations[2];
-
+    //Set fly image for shop
     block.price.flyImg.img = UI.decoUI.leftBar.panel.fly.img;
 
     shopItems.push(new ShopItem(block, decorations.vaseTall.shopSprites));
@@ -524,11 +465,13 @@ function setupDecoratingGame() {
     shopItems.push(new ShopItem(block, decorations.rugLong.shopSprites));
     shopItems.push(new ShopItem(block, decorations.miscSnail.shopSprites));
     shopItems.push(new ShopItem(block, decorations.miscStatue.shopSprites));
+}
 
-
-    console.log(decorations.vaseTall.shopSprites.mainSprite.x);
-    console.log(decorations.vaseTall.shopSprites.mainSprite.y);
-
+function setSprites(decoration) {
+    decoration.shopSprites.mainSprite.img = decoration.colorVariations[0];
+    decoration.shopSprites.var1.img = decoration.colorVariations[0];
+    decoration.shopSprites.var2.img = decoration.colorVariations[1];
+    decoration.shopSprites.var3.img = decoration.colorVariations[2];
 }
 
 /**
@@ -615,7 +558,6 @@ function drawDecoration() {
     //Draw the shop items
     for (let shopItem of shopItems) {
         shopItem.draw();
-        shopItem.displayShop();
     }
 }
 
