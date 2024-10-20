@@ -151,6 +151,20 @@ const UI = {
                 h: 450,
                 fill: "#ebf9ff",
             },
+            scrollWheel: {
+                x: 1410,
+                y: 417,
+                w: 20,
+                h: 430,
+                fill: "#082b15",
+                bar: {
+                    x: 1410,
+                    y: 221,
+                    w: 20,
+                    h: 40,
+                    fill: "#96beb1"
+                }
+            },
             label: {
                 panel: {
                     x: 1325,
@@ -457,6 +471,13 @@ function drawDecoUI() {
     drawSideBar(UI.decoUI.rightBar);
     //Draw white panel
     drawPanel(UI.decoUI.rightBar.panel);
+
+    //Draw scroll wheel
+    push();
+    drawPanel(UI.decoUI.rightBar.scrollWheel);
+    drawPanel(UI.decoUI.rightBar.scrollWheel.bar);
+    pop();
+
     //Draw shop label panel
     drawPanel(UI.decoUI.rightBar.label.panel);
 
@@ -473,6 +494,8 @@ function drawDecoUI() {
     drawButton(buttons.goOutside);
     drawButton(buttons.menuDecorate); //When these are swapped, menu also doesnt work
     drawButton(buttons.finished);
+
+    drawBlockTemp();
 }
 
 function drawSideBar(sidebar) {
@@ -576,6 +599,145 @@ function drawButton(button) {
     buttonHandler(button);
 }
 
+let panel = {
+    x: 1315,
+    y: 250,
+    w: 160,
+    h: 100,
+    fill: "#96beb1",
+    img: {
+        img: "",
+        x: 1195,
+        y: 180,
+        w: 140,
+        h: 140
+    },
+    price: {
+        // x: 1250,
+        // y: 175,
+        txt: {
+            x: 1323,
+            y: 250,
+            txt: "=> 3",
+            fill: "black",
+            size: 22,
+            weight: 1,
+        },
+        img: {
+            img: "",
+            x: 1300,
+            y: 180,
+            w: 140,
+            h: 140
+        }
+
+    },
+    subBlock: {
+        x: 1315,
+        y: 375,
+        w: 160,
+        h: 300,
+        fill: "#5a7e6f",
+        var1: {
+            x: 1205,
+            y: 275,
+            w: 125,
+            h: 125,
+            img: "",
+            button: {
+                x: 1345,
+                y: 335,
+                w: 60,
+                h: 30,
+                fill: "#18284a"
+            }
+        },
+        var2: {
+            x: 1205,
+            y: 350,
+            w: 125,
+            h: 125,
+            img: "",
+            button: {
+                x: 1345,
+                y: 410,
+                w: 60,
+                h: 30,
+                fill: "#18284a"
+            }
+        },
+        var3: {
+            x: 1205,
+            y: 425,
+            w: 125,
+            h: 125,
+            img: "",
+            button: {
+                x: 1345,
+                y: 485,
+                w: 60,
+                h: 30,
+                fill: "#18284a"
+            }
+        }
+    }
+}
+
+function drawBlockTemp() {
+    //Sub block
+    push();
+    // fill(panel.subBlock.fill);
+    drawPanel(panel.subBlock);
+    image(panel.subBlock.var1.img, panel.subBlock.var1.x, panel.subBlock.var1.y, panel.subBlock.var1.w, panel.subBlock.var1.h);
+    image(panel.subBlock.var2.img, panel.subBlock.var2.x, panel.subBlock.var2.y, panel.subBlock.var2.w, panel.subBlock.var2.h);
+    image(panel.subBlock.var3.img, panel.subBlock.var3.x, panel.subBlock.var3.y, panel.subBlock.var3.w, panel.subBlock.var3.h);
+
+    drawBuyButton(panel.subBlock.var1.button);
+    drawBuyButton(panel.subBlock.var2.button);
+    drawBuyButton(panel.subBlock.var3.button);
+    pop();
+
+    //block
+    push();
+    // fill("#5a7e6f");
+    drawPanel(panel);
+    pop();
+
+    image(panel.img.img, panel.img.x, panel.img.y, panel.img.w, panel.img.h);
+    image(panel.price.img.img, panel.price.img.x, panel.price.img.y, panel.price.img.w, panel.price.img.h);
+
+    //text
+    push();
+    fill(panel.price.txt.fill);
+    stroke("black");
+    textAlign(CENTER, CENTER);
+    textSize(panel.price.txt.size);
+    strokeWeight(panel.price.txt.weight);
+    text(panel.price.txt.txt, panel.price.txt.x, panel.price.txt.y);
+    pop();
+
+
+}
+
+function drawBuyButton(button) {
+    push()
+    fill(button.fill);
+    stroke(0);
+    rectMode(CENTER);
+    rect(button.x, button.y, button.w, button.h, 10);
+    pop();
+
+    push();
+    fill("black");
+    strokeWeight(2);
+    textSize(20);
+    textAlign(CENTER, CENTER);
+    text("BUY", button.x, button.y + 2);
+
+
+    pop();
+}
+
 "#ebf9ff"
 "#87a9c5"
 "#52a5de"
@@ -601,3 +763,5 @@ function drawButton(button) {
 "#b9eedc"
 "#96beb1"
 "#586c78"
+
+"#587dca";

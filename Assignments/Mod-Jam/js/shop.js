@@ -2,5 +2,7 @@
 
 class ShopItem {
 
+    //item bar
+    
 
 }

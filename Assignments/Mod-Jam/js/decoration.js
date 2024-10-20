@@ -106,6 +106,12 @@ let decorations = {
 let decoObjects = [];
 
 function setupDecoratingGame() {
+    //Temp
+    panel.img.img = decorations.fishBowl.colorVariations[0];
+    panel.price.img.img = UI.decoUI.leftBar.panel.fly.img;
+    panel.subBlock.var1.img = decorations.fishBowl.colorVariations[0];
+    panel.subBlock.var2.img = decorations.fishBowl.colorVariations[1];
+    panel.subBlock.var3.img = decorations.fishBowl.colorVariations[2];
 }
 
 /**
