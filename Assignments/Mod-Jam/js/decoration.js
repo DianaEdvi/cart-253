@@ -10,6 +10,7 @@ let decorations = {
         dragging: false, // checks whether the object is being dragged
         colorVariations: [], // holds the color variations of the object
         currentVariation: 0, // holds the index of the current color variation
+        block,
         shopSprites: {
             mainSprite: {
                 img: "",
@@ -50,6 +51,7 @@ let decorations = {
         dragging: false,
         colorVariations: [],
         currentVariation: 0,
+        block,
         shopSprites: {
             mainSprite: {
                 img: "",
@@ -455,8 +457,22 @@ function setupDecoratingGame() {
     //Set fly image for shop
     block.price.flyImg.img = UI.decoUI.leftBar.panel.fly.img;
 
-    shopItems.push(new ShopItem(block, decorations.vaseTall.shopSprites));
-    shopItems.push(new ShopItem(block, decorations.vaseShort.shopSprites));
+
+    decorations.vaseTall.block = createBlock();
+    decorations.vaseShort.block = createBlock();
+    decorations.fishBowl.block = createBlock();
+    decorations.fishTank.block = createBlock();
+    decorations.tableShort.block = createBlock();
+    decorations.tableLong.block = createBlock();
+    decorations.rugCircle.block = createBlock();
+    decorations.rugLong.block = createBlock();
+    decorations.miscSnail.block = createBlock();
+    decorations.miscStatue.block = createBlock();
+
+    console.log(decorations.vaseTall.block, decorations.vaseShort.block);
+
+    shopItems.push(new ShopItem(decorations.vaseTall.block, decorations.vaseTall.shopSprites));
+    shopItems.push(new ShopItem(decorations.vaseShort.block, decorations.vaseShort.shopSprites));
     shopItems.push(new ShopItem(block, decorations.fishBowl.shopSprites));
     shopItems.push(new ShopItem(block, decorations.fishTank.shopSprites));
     shopItems.push(new ShopItem(block, decorations.tableShort.shopSprites));
@@ -465,6 +481,8 @@ function setupDecoratingGame() {
     shopItems.push(new ShopItem(block, decorations.rugLong.shopSprites));
     shopItems.push(new ShopItem(block, decorations.miscSnail.shopSprites));
     shopItems.push(new ShopItem(block, decorations.miscStatue.shopSprites));
+
+
 }
 
 function setSprites(decoration) {
@@ -539,6 +557,7 @@ let initialHeight = 200;
 let blockOffset = 0;
 let rectHeight = 400;
 let rectSpacing = 20;
+let yPos = 0;
 
 /**
  * Draw's the decoration objects and UI onto the screen
@@ -551,15 +570,15 @@ function drawDecoration() {
     }
 
     for (let i = 0; i < shopItems.length; i++) {
-        let blockYPos = initialHeight + blockOffset + i * (rectHeight + rectSpacing);
-
-
-        if (blockYPos >= initialHeight && blockYPos <= initialHeight + rectHeight) {
-            console.log("here");
-            shopItems[i].draw();
-        }
+        // let blockYPos = initialHeight + blockOffset + i * (rectHeight + rectSpacing);
+        // // yPos = shopItems[i].y;
+        // if (blockYPos >= initialHeight && blockYPos <= initialHeight + rectHeight) {
+        //     console.log("here");
+        // }
+        shopItems[i].draw();
     }
     drawTemp();
+
 }
 
 // //
@@ -588,8 +607,8 @@ function keyPressed() {
     if (key === ' ') {
         createNewDecoration(decorations.fishBowl, decorations.fishBowl.colorVariations, 0);
 
-        console.log(decorations.vaseTall.shopSprites.mainSprite.x);
-        console.log(decorations.vaseTall.shopSprites.mainSprite.y);
+        // console.log(decorations.vaseTall.shopSprites.mainSprite.x);
+        // console.log(decorations.vaseTall.shopSprites.mainSprite.y);
     } else if (key === 'r') {
         createNewDecoration(decorations.rugLong, decorations.rugLong.colorVariations, 1);
     } else if (key === 'e') {
@@ -715,6 +734,14 @@ function destroyDecoration(index) {
 
 function mouseWheel(event) {
     blockOffset -= event.delta;
+    //
+    // shopItems[0].block.y -= 0.1 * event.delta;
+    // shopItems[0].block.subBlock.y -= 0.1 * event.delta;
+    // shopItems[0].shopSprites.mainSprite.y += 0.1 * event.delta;
+
+    decorations.vaseTall.block.y -= 0.1 * event.delta;
+    decorations.vaseTall.block.subBlock.y -= 0.1 * event.delta;
+
     // for (let i = 0; i < shopItems.length; i++) {
     //     shopItems[i].block.y += blockOffset;
     //     shopItems[i].block.subBlock.y += blockOffset;

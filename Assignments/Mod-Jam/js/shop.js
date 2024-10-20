@@ -82,7 +82,7 @@ class ShopItem {
 
         //Main sprite and fly
         image(this.sprites.mainSprite.img, this.sprites.mainSprite.x, this.sprites.mainSprite.y, this.sprites.mainSprite.w, this.sprites.mainSprite.h);
-        console.log(this.sprites.mainSprite.x);
+        // console.log(this.sprites.mainSprite.x);
         image(this.block.price.flyImg.img, this.block.price.flyImg.x, this.block.price.flyImg.y, this.block.price.flyImg.w, this.block.price.flyImg.h);
         pop();
 
@@ -113,4 +113,80 @@ function drawShop(block) {
     strokeWeight(block.price.txt.weight);
     text(block.price.txt.txt, block.price.txt.x, block.price.txt.y);
     pop();
+}
+
+let blocks = [];
+
+/**
+ * Makes a copy of the block property and pushes it to the blocks array
+ */
+function createBlock() {
+
+    let newBlock = {
+        x: 1315,
+        y: 250,
+        w: 160,
+        h: 100,
+        fill: "#96beb1",
+        totalHeight: 0,
+        price: {
+            txt: {
+                x: 1323,
+                y: 250,
+                txt: "=> 3",
+                fill: "black",
+                size: 22,
+                weight: 1,
+            },
+            flyImg: {
+                img: "",
+                x: 1370,
+                y: 250,
+                w: 140,
+                h: 140
+            }
+        },
+        subBlock: {
+            x: 1315,
+            y: 375,
+            w: 160,
+            h: 300,
+            fill: "#5a7e6f",
+            var1: {
+                button: {
+                    x: 1345,
+                    y: 335,
+                    w: 60,
+                    h: 30,
+                    fill: "#18284a"
+                }
+            },
+            var2: {
+                button: {
+                    x: 1345,
+                    y: 410,
+                    w: 60,
+                    h: 30,
+                    fill: "#18284a"
+                }
+            },
+            var3: {
+                button: {
+                    x: 1345,
+                    y: 485,
+                    w: 60,
+                    h: 30,
+                    fill: "#18284a"
+                }
+            }
+        }
+    }
+
+    newBlock.price.flyImg.img = UI.decoUI.leftBar.panel.fly.img;
+
+    return newBlock;
+}
+
+function storeBlocks() {
+
 }
