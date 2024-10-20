@@ -10,7 +10,7 @@ let decorations = {
         dragging: false, // checks whether the object is being dragged
         colorVariations: [], // holds the color variations of the object
         currentVariation: 0, // holds the index of the current color variation
-        block,
+        block: undefined,
         shopSprites: {
             mainSprite: {
                 img: "",
@@ -51,7 +51,7 @@ let decorations = {
         dragging: false,
         colorVariations: [],
         currentVariation: 0,
-        block,
+        block: undefined,
         shopSprites: {
             mainSprite: {
                 img: "",
@@ -405,41 +405,18 @@ let decorations = {
     },
 }
 
-let temp = {
-    shopSprites: {
-        mainSprite: {
-            img: "",
-            x: 1195,
-            y: 180,
-            w: 140,
-            h: 140
-        },
-        var1: {
-            img: "",
-            x: 1205,
-            y: 275,
-            w: 125,
-            h: 125,
-        },
-        var2: {
-            img: "",
-            x: 1205,
-            y: 350,
-            w: 125,
-            h: 125,
-        },
-        var3: {
-            img: "",
-            x: 1205,
-            y: 425,
-            w: 125,
-            h: 125,
-        }
-    }
-}
 
 let decoObjects = [];
 let shopItems = [];
+let blocks = [];
+
+let initialHeight = 250;
+let initialSublockHeight = 375;
+let blockOffset = 0;
+let rectHeight = 325;
+let rectSpacing = 5;
+let yPos = 0;
+
 
 function setupDecoratingGame() {
     //Assign all sprites for the shop
@@ -455,8 +432,7 @@ function setupDecoratingGame() {
     setSprites(decorations.miscStatue);
 
     //Set fly image for shop
-    block.price.flyImg.img = UI.decoUI.leftBar.panel.fly.img;
-
+    // block.price.flyImg.img = UI.decoUI.leftBar.panel.fly.img;
 
     decorations.vaseTall.block = createBlock();
     decorations.vaseShort.block = createBlock();
@@ -469,20 +445,35 @@ function setupDecoratingGame() {
     decorations.miscSnail.block = createBlock();
     decorations.miscStatue.block = createBlock();
 
-    console.log(decorations.vaseTall.block, decorations.vaseShort.block);
+    blocks.push(decorations.vaseTall.block);
+    blocks.push(decorations.vaseShort.block);
+    blocks.push(decorations.fishBowl.block);
+    blocks.push(decorations.fishTank.block);
+    blocks.push(decorations.tableShort.block);
+    blocks.push(decorations.tableLong.block);
+    blocks.push(decorations.rugCircle.block);
+    blocks.push(decorations.rugLong.block);
+    blocks.push(decorations.miscSnail.block);
+    blocks.push(decorations.miscStatue.block);
+
+    //Set original heights for blocks
+    for (let i = 0; i < blocks.length; i++) {
+        blocks[i].y = initialHeight + i * (rectHeight + rectSpacing);
+        blocks[i].subBlock.y = initialSublockHeight + i * (rectHeight + rectSpacing);
+        console.log(blocks[i]);
+    }
+
 
     shopItems.push(new ShopItem(decorations.vaseTall.block, decorations.vaseTall.shopSprites));
     shopItems.push(new ShopItem(decorations.vaseShort.block, decorations.vaseShort.shopSprites));
-    shopItems.push(new ShopItem(block, decorations.fishBowl.shopSprites));
-    shopItems.push(new ShopItem(block, decorations.fishTank.shopSprites));
-    shopItems.push(new ShopItem(block, decorations.tableShort.shopSprites));
-    shopItems.push(new ShopItem(block, decorations.tableLong.shopSprites));
-    shopItems.push(new ShopItem(block, decorations.rugCircle.shopSprites));
-    shopItems.push(new ShopItem(block, decorations.rugLong.shopSprites));
-    shopItems.push(new ShopItem(block, decorations.miscSnail.shopSprites));
-    shopItems.push(new ShopItem(block, decorations.miscStatue.shopSprites));
-
-
+    shopItems.push(new ShopItem(decorations.fishBowl.block, decorations.fishBowl.shopSprites));
+    shopItems.push(new ShopItem(decorations.fishTank.block, decorations.fishTank.shopSprites));
+    shopItems.push(new ShopItem(decorations.tableShort.block, decorations.tableShort.shopSprites));
+    shopItems.push(new ShopItem(decorations.tableLong.block, decorations.tableLong.shopSprites));
+    shopItems.push(new ShopItem(decorations.rugCircle.block, decorations.rugCircle.shopSprites));
+    shopItems.push(new ShopItem(decorations.rugLong.block, decorations.rugLong.shopSprites));
+    shopItems.push(new ShopItem(decorations.miscSnail.block, decorations.miscSnail.shopSprites));
+    shopItems.push(new ShopItem(decorations.miscStatue.block, decorations.miscStatue.shopSprites));
 }
 
 function setSprites(decoration) {
@@ -553,11 +544,6 @@ function preloadDecoration() {
     ]
 }
 
-let initialHeight = 200;
-let blockOffset = 0;
-let rectHeight = 400;
-let rectSpacing = 20;
-let yPos = 0;
 
 /**
  * Draw's the decoration objects and UI onto the screen
@@ -570,11 +556,7 @@ function drawDecoration() {
     }
 
     for (let i = 0; i < shopItems.length; i++) {
-        // let blockYPos = initialHeight + blockOffset + i * (rectHeight + rectSpacing);
-        // // yPos = shopItems[i].y;
-        // if (blockYPos >= initialHeight && blockYPos <= initialHeight + rectHeight) {
-        //     console.log("here");
-        // }
+
         shopItems[i].draw();
     }
     drawTemp();
@@ -733,19 +715,23 @@ function destroyDecoration(index) {
 }
 
 function mouseWheel(event) {
-    blockOffset -= event.delta;
-    //
-    // shopItems[0].block.y -= 0.1 * event.delta;
-    // shopItems[0].block.subBlock.y -= 0.1 * event.delta;
-    // shopItems[0].shopSprites.mainSprite.y += 0.1 * event.delta;
+    blockOffset = 0.1 * event.delta;
 
-    decorations.vaseTall.block.y -= 0.1 * event.delta;
-    decorations.vaseTall.block.subBlock.y -= 0.1 * event.delta;
+    // decorations.vaseTall.block.y -= blockOffset;
+    // decorations.vaseTall.block.subBlock.y -= blockOffset;
 
     // for (let i = 0; i < shopItems.length; i++) {
     //     shopItems[i].block.y += blockOffset;
     //     shopItems[i].block.subBlock.y += blockOffset;
     // }
+
+    //Set original heights for blocks
+    for (let i = 0; i < blocks.length; i++) {
+        blocks[i].y -= blockOffset;
+        blocks[i].subBlock.y -= blockOffset;
+        console.log(blocks[i]);
+    }
+
     if (event.delta > 0) {
         UI.decoUI.rightBar.scrollWheel.bar.y += 1;
         console.log("scrolling down");
