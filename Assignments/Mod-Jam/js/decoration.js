@@ -431,9 +431,7 @@ function setupDecoratingGame() {
     setSprites(decorations.miscSnail);
     setSprites(decorations.miscStatue);
 
-    //Set fly image for shop
-    // block.price.flyImg.img = UI.decoUI.leftBar.panel.fly.img;
-
+    //Create a new block for each decoration
     decorations.vaseTall.block = createBlock();
     decorations.vaseShort.block = createBlock();
     decorations.fishBowl.block = createBlock();
@@ -445,6 +443,7 @@ function setupDecoratingGame() {
     decorations.miscSnail.block = createBlock();
     decorations.miscStatue.block = createBlock();
 
+    //Push blocks to the blocks array
     blocks.push(decorations.vaseTall.block);
     blocks.push(decorations.vaseShort.block);
     blocks.push(decorations.fishBowl.block);
@@ -456,14 +455,14 @@ function setupDecoratingGame() {
     blocks.push(decorations.miscSnail.block);
     blocks.push(decorations.miscStatue.block);
 
-    //Set original heights for blocks
+    //Set original heights for blocks 
     for (let i = 0; i < blocks.length; i++) {
         blocks[i].y = initialHeight + i * (rectHeight + rectSpacing);
         blocks[i].subBlock.y = initialSublockHeight + i * (rectHeight + rectSpacing);
-        console.log(blocks[i]);
+        // console.log(blocks[i]);
     }
 
-
+    //Create new shop items and push them to the shopItems array
     shopItems.push(new ShopItem(decorations.vaseTall.block, decorations.vaseTall.shopSprites));
     shopItems.push(new ShopItem(decorations.vaseShort.block, decorations.vaseShort.shopSprites));
     shopItems.push(new ShopItem(decorations.fishBowl.block, decorations.fishBowl.shopSprites));
@@ -474,6 +473,18 @@ function setupDecoratingGame() {
     shopItems.push(new ShopItem(decorations.rugLong.block, decorations.rugLong.shopSprites));
     shopItems.push(new ShopItem(decorations.miscSnail.block, decorations.miscSnail.shopSprites));
     shopItems.push(new ShopItem(decorations.miscStatue.block, decorations.miscStatue.shopSprites));
+
+    //Set original heights for images
+
+    for (let i = 0; i < shopItems.length; i++) {
+        // let flyY = shopItems[i].price.flyImg.y;
+        let mainY = shopItems[i].sprites.mainSprite.y;
+        let var1 = shopItems[i].sprites.var1.y;
+        let var2 = shopItems[i].sprites.var2.y;
+        let var3 = shopItems[i].sprites.var3.y;
+
+        shopItems[i].updatePos(mainY + i * (rectHeight + rectSpacing), var1 + i * (rectHeight + rectSpacing), var2 + i * (rectHeight + rectSpacing), var3 + i * (rectHeight + rectSpacing));
+    }
 }
 
 function setSprites(decoration) {
@@ -556,7 +567,6 @@ function drawDecoration() {
     }
 
     for (let i = 0; i < shopItems.length; i++) {
-
         shopItems[i].draw();
     }
     drawTemp();
@@ -717,19 +727,21 @@ function destroyDecoration(index) {
 function mouseWheel(event) {
     blockOffset = 0.1 * event.delta;
 
-    // decorations.vaseTall.block.y -= blockOffset;
-    // decorations.vaseTall.block.subBlock.y -= blockOffset;
-
-    // for (let i = 0; i < shopItems.length; i++) {
-    //     shopItems[i].block.y += blockOffset;
-    //     shopItems[i].block.subBlock.y += blockOffset;
-    // }
-
-    //Set original heights for blocks
+    //Change height of blocks based off of scroll wheel
     for (let i = 0; i < blocks.length; i++) {
         blocks[i].y -= blockOffset;
         blocks[i].subBlock.y -= blockOffset;
-        console.log(blocks[i]);
+        // console.log(blocks[i]);
+    }
+
+    for (let i = 0; i < shopItems.length; i++) {
+        // let flyY = shopItems[i].price.flyImg.y;
+        let mainY = shopItems[i].sprites.mainSprite.y;
+        let var1 = shopItems[i].sprites.var1.y;
+        let var2 = shopItems[i].sprites.var2.y;
+        let var3 = shopItems[i].sprites.var3.y;
+
+        shopItems[i].updatePos(mainY - blockOffset, var1 - blockOffset, var2 - blockOffset, var3 - blockOffset);
     }
 
     if (event.delta > 0) {

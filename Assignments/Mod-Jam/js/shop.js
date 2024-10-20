@@ -1,67 +1,6 @@
 "use strict";
 
-// let block = {
-//     x: 1315,
-//     y: 250,
-//     w: 160,
-//     h: 100,
-//     fill: "#96beb1",
-//     totalHeight: 0,
-//     price: {
-//         txt: {
-//             x: 1323,
-//             y: 250,
-//             txt: "=> 3",
-//             fill: "black",
-//             size: 22,
-//             weight: 1,
-//         },
-//         flyImg: {
-//             img: "",
-//             x: 1370,
-//             y: 250,
-//             w: 140,
-//             h: 140
-//         }
-//     },
-//     subBlock: {
-//         x: 1315,
-//         y: 375,
-//         w: 160,
-//         h: 300,
-//         fill: "#5a7e6f",
-//         var1: {
-//             button: {
-//                 x: 1345,
-//                 y: 335,
-//                 w: 60,
-//                 h: 30,
-//                 fill: "#18284a"
-//             }
-//         },
-//         var2: {
-//             button: {
-//                 x: 1345,
-//                 y: 410,
-//                 w: 60,
-//                 h: 30,
-//                 fill: "#18284a"
-//             }
-//         },
-//         var3: {
-//             button: {
-//                 x: 1345,
-//                 y: 485,
-//                 w: 60,
-//                 h: 30,
-//                 fill: "#18284a"
-//             }
-//         }
-//     }
-// }
-
 class ShopItem {
-    //item bar
     constructor(block, sprites) {
         this.block = block;
         this.sprites = sprites;
@@ -86,6 +25,13 @@ class ShopItem {
         image(this.block.price.flyImg.img, this.block.price.flyImg.x, this.block.price.flyImg.y, this.block.price.flyImg.w, this.block.price.flyImg.h);
         pop();
 
+    }
+
+    updatePos(mainY, var1Y, var2Y, var3Y) {
+        this.sprites.var1.y = var1Y;
+        this.sprites.var2.y = var2Y;
+        this.sprites.var3.y = var3Y;
+        this.sprites.mainSprite.y = mainY;
     }
 }
 
