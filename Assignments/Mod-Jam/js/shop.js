@@ -7,13 +7,13 @@ let block = {
     h: 100,
     fill: "#96beb1",
     images: undefined,
-    img: {
-        img: "",
-        x: 1195,
-        y: 180,
-        w: 140,
-        h: 140
-    },
+    // img: {
+    //     img: "",
+    //     x: 1195,
+    //     y: 180,
+    //     w: 140,
+    //     h: 140
+    // },
     price: {
         txt: {
             x: 1323,
@@ -77,16 +77,32 @@ class ShopItem {
     draw() {
         drawShop(this.block, this.sprites);
     }
+
+    displayShop() {
+        push();
+        imageMode(CENTER);
+        //Variation sprites
+        image(this.sprites.var1.img, this.sprites.var1.x, this.sprites.var1.y, this.sprites.var1.w, this.sprites.var1.h);
+        image(this.sprites.var2.img, this.sprites.var2.x, this.sprites.var2.y, this.sprites.var2.w, this.sprites.var2.h);
+        image(this.sprites.var3.img, this.sprites.var3.x, this.sprites.var3.y, this.sprites.var3.w, this.sprites.var3.h);
+
+        //Main sprite and fly
+        image(this.sprites.mainSprite.img, this.sprites.mainSprite.x, this.sprites.mainSprite.y, this.sprites.mainSprite.w, this.sprites.mainSprite.h);
+        console.log(this.sprites.mainSprite.x);
+        image(this.block.price.flyImg.img, this.block.price.flyImg.x, this.block.price.flyImg.y, this.block.price.flyImg.w, this.block.price.flyImg.h);
+        pop();
+
+    }
 }
 
 function drawShop(block, sprites) {
     //Sub block
     push();
     drawPanel(block.subBlock);
-    //Variation sprites
-    image(sprites.var1.img, sprites.var1.x, sprites.var1.y, sprites.var1.w, sprites.var1.h);
-    image(sprites.var2.img, sprites.var2.x, sprites.var2.y, sprites.var2.w, sprites.var2.h);
-    image(sprites.var3.img, sprites.var3.x, sprites.var3.y, sprites.var3.w, sprites.var3.h);
+    // //Variation sprites
+    // image(sprites.var1.img, sprites.var1.x, sprites.var1.y, sprites.var1.w, sprites.var1.h);
+    // image(sprites.var2.img, sprites.var2.x, sprites.var2.y, sprites.var2.w, sprites.var2.h);
+    // image(sprites.var3.img, sprites.var3.x, sprites.var3.y, sprites.var3.w, sprites.var3.h);
 
     //Buy buttons
     drawBuyButton(block.subBlock.var1.button);
@@ -99,9 +115,10 @@ function drawShop(block, sprites) {
     drawPanel(block);
     pop();
 
-    //Main sprite and fly
-    image(sprites.mainSprite.img, sprites.mainSprite.x, sprites.mainSprite.y, sprites.mainSprite.w, sprites.mainSprite.h);
-    image(block.price.flyImg.img, block.price.flyImg.x, block.price.flyImg.y, block.price.flyImg.w, block.price.flyImg.h);
+    // //Main sprite and fly
+    // image(sprites.mainSprite.img, sprites.mainSprite.x, sprites.mainSprite.y, sprites.mainSprite.w, sprites.mainSprite.h);
+    // console.log(sprites.mainSprite.x);
+    // image(block.price.flyImg.img, block.price.flyImg.x, block.price.flyImg.y, block.price.flyImg.w, block.price.flyImg.h);
 
     //text
     push();

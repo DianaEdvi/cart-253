@@ -13,29 +13,29 @@ let decorations = {
         shopSprites: {
             mainSprite: {
                 img: "",
-                x: 1210,
-                y: 195,
+                x: 1268,
+                y: 253,
                 w: 115,
                 h: 115
             },
             var1: {
                 img: "",
-                x: 1225,
-                y: 295,
+                x: 1270,
+                y: 340,
                 w: 90,
                 h: 90,
             },
             var2: {
                 img: "",
-                x: 1225,
-                y: 370,
+                x: 1270,
+                y: 415,
                 w: 90,
                 h: 90,
             },
             var3: {
                 img: "",
-                x: 1225,
-                y: 445,
+                x: 1270,
+                y: 480,
                 w: 90,
                 h: 90,
             }
@@ -53,29 +53,29 @@ let decorations = {
         shopSprites: {
             mainSprite: {
                 img: "",
-                x: 1210,
-                y: 195,
+                x: 1268,
+                y: 253,
                 w: 115,
                 h: 115
             },
             var1: {
                 img: "",
-                x: 1225,
-                y: 295,
+                x: 1270,
+                y: 340,
                 w: 90,
                 h: 90,
             },
             var2: {
                 img: "",
-                x: 1225,
-                y: 370,
+                x: 1270,
+                y: 415,
                 w: 90,
                 h: 90,
             },
             var3: {
                 img: "",
-                x: 1225,
-                y: 445,
+                x: 1270,
+                y: 490,
                 w: 90,
                 h: 90,
             }
@@ -93,29 +93,29 @@ let decorations = {
         shopSprites: {
             mainSprite: {
                 img: "",
-                x: 1195,
-                y: 180,
+                x: 1265,
+                y: 250,
                 w: 140,
                 h: 140
             },
             var1: {
                 img: "",
-                x: 1205,
-                y: 275,
+                x: 1268,
+                y: 338,
                 w: 125,
                 h: 125,
             },
             var2: {
                 img: "",
-                x: 1205,
-                y: 350,
+                x: 1268,
+                y: 413,
                 w: 125,
                 h: 125,
             },
             var3: {
                 img: "",
-                x: 1205,
-                y: 425,
+                x: 1268,
+                y: 488,
                 w: 125,
                 h: 125,
             }
@@ -133,29 +133,29 @@ let decorations = {
         shopSprites: {
             mainSprite: {
                 img: "",
-                x: 1207,
-                y: 190,
+                x: 1267,
+                y: 250,
                 w: 120,
                 h: 120
             },
             var1: {
                 img: "",
-                x: 1205,
-                y: 275,
+                x: 1268,
+                y: 338,
                 w: 125,
                 h: 125,
             },
             var2: {
                 img: "",
-                x: 1205,
-                y: 350,
+                x: 1268,
+                y: 413,
                 w: 125,
                 h: 125,
             },
             var3: {
                 img: "",
-                x: 1205,
-                y: 425,
+                x: 1268,
+                y: 488,
                 w: 125,
                 h: 125,
             }
@@ -173,29 +173,29 @@ let decorations = {
         shopSprites: {
             mainSprite: {
                 img: "",
-                x: 1205,
-                y: 180,
+                x: 1270,
+                y: 245,
                 w: 130,
                 h: 130
             },
             var1: {
                 img: "",
-                x: 1210,
-                y: 275,
+                x: 1273,
+                y: 338,
                 w: 125,
                 h: 125,
             },
             var2: {
                 img: "",
-                x: 1210,
-                y: 350,
+                x: 1273,
+                y: 413,
                 w: 125,
                 h: 125,
             },
             var3: {
                 img: "",
-                x: 1210,
-                y: 425,
+                x: 1273,
+                y: 488,
                 w: 125,
                 h: 125,
             }
@@ -213,29 +213,29 @@ let decorations = {
         shopSprites: {
             mainSprite: {
                 img: "",
-                x: 1222,
-                y: 205,
+                x: 1267,
+                y: 250,
                 w: 90,
                 h: 90
             },
             var1: {
                 img: "",
-                x: 1223,
-                y: 283,
+                x: 1273,
+                y: 333,
                 w: 100,
                 h: 100,
             },
             var2: {
                 img: "",
-                x: 1223,
-                y: 358,
+                x: 1273,
+                y: 408,
                 w: 100,
                 h: 100,
             },
             var3: {
                 img: "",
-                x: 1223,
-                y: 433,
+                x: 1273,
+                y: 483,
                 w: 100,
                 h: 100,
             }
@@ -253,29 +253,29 @@ let decorations = {
         shopSprites: {
             mainSprite: {
                 img: "",
-                x: 1217,
-                y: 195,
+                x: 1268,
+                y: 245,
                 w: 100,
                 h: 100
             },
             var1: {
                 img: "",
-                x: 1220,
-                y: 275,
+                x: 1275,
+                y: 335,
                 w: 110,
                 h: 110,
             },
             var2: {
                 img: "",
-                x: 1220,
-                y: 350,
+                x: 1275,
+                y: 410,
                 w: 110,
                 h: 110,
             },
             var3: {
                 img: "",
-                x: 1220,
-                y: 425,
+                x: 1275,
+                y: 485,
                 w: 110,
                 h: 110,
             }
@@ -293,29 +293,29 @@ let decorations = {
         shopSprites: {
             mainSprite: {
                 img: "",
-                x: 1227,
-                y: 205,
+                x: 1267,
+                y: 245,
                 w: 80,
                 h: 80
             },
             var1: {
                 img: "",
-                x: 1227,
-                y: 285,
+                x: 1272,
+                y: 330,
                 w: 90,
                 h: 90,
             },
             var2: {
                 img: "",
-                x: 1227,
-                y: 360,
+                x: 1272,
+                y: 405,
                 w: 90,
                 h: 90,
             },
             var3: {
                 img: "",
-                x: 1227,
-                y: 435,
+                x: 1272,
+                y: 480,
                 w: 90,
                 h: 90,
             }
@@ -333,29 +333,29 @@ let decorations = {
         shopSprites: {
             mainSprite: {
                 img: "",
-                x: 1195,
-                y: 170,
+                x: 1270,
+                y: 250,
                 w: 150,
                 h: 150
             },
             var1: {
                 img: "",
-                x: 1205,
-                y: 265,
+                x: 1273,
+                y: 333,
                 w: 135,
                 h: 135,
             },
             var2: {
                 img: "",
-                x: 1205,
-                y: 340,
+                x: 1273,
+                y: 408,
                 w: 135,
                 h: 135,
             },
             var3: {
                 img: "",
-                x: 1205,
-                y: 415,
+                x: 1273,
+                y: 483,
                 w: 135,
                 h: 135,
             }
@@ -373,34 +373,67 @@ let decorations = {
         shopSprites: {
             mainSprite: {
                 img: "",
-                x: 1195,
-                y: 180,
+                x: 1265,
+                y: 250,
                 w: 140,
                 h: 140
             },
             var1: {
                 img: "",
-                x: 1205,
-                y: 275,
+                x: 1268,
+                y: 338,
                 w: 125,
                 h: 125,
             },
             var2: {
                 img: "",
-                x: 1205,
-                y: 350,
+                x: 1268,
+                y: 413,
                 w: 125,
                 h: 125,
             },
             var3: {
                 img: "",
-                x: 1205,
-                y: 425,
+                x: 1268,
+                y: 488,
                 w: 125,
                 h: 125,
             }
         }
     },
+}
+
+let temp = {
+    shopSprites: {
+        mainSprite: {
+            img: "",
+            x: 1195,
+            y: 180,
+            w: 140,
+            h: 140
+        },
+        var1: {
+            img: "",
+            x: 1205,
+            y: 275,
+            w: 125,
+            h: 125,
+        },
+        var2: {
+            img: "",
+            x: 1205,
+            y: 350,
+            w: 125,
+            h: 125,
+        },
+        var3: {
+            img: "",
+            x: 1205,
+            y: 425,
+            w: 125,
+            h: 125,
+        }
+    }
 }
 
 let decoObjects = [];
@@ -467,6 +500,18 @@ function setupDecoratingGame() {
     decorations.miscStatue.shopSprites.var2.img = decorations.miscStatue.colorVariations[1];
     decorations.miscStatue.shopSprites.var3.img = decorations.miscStatue.colorVariations[2];
 
+    //
+    // //Grandma statue
+    // decorations.miscStatue.shopSprites.mainSprite.img = new Image("assets/images/decorations/grandma_statue_1.png",
+    //     decorations.miscStatue.shopSprites.mainSprite.x,
+    //     decorations.miscStatue.shopSprites.mainSprite.y,
+    //     decorations.miscStatue.shopSprites.mainSprite.w,
+    //     decorations.miscStatue.shopSprites.mainSprite.h);
+    // // decorations.miscStatue.shopSprites.mainSprite.img.src = "assets/images/decorations/grandma_statue_1.png";
+    // decorations.miscStatue.shopSprites.var1.img = decorations.miscStatue.colorVariations[0];
+    // decorations.miscStatue.shopSprites.var2.img = decorations.miscStatue.colorVariations[1];
+    // decorations.miscStatue.shopSprites.var3.img = decorations.miscStatue.colorVariations[2];
+
     block.price.flyImg.img = UI.decoUI.leftBar.panel.fly.img;
 
     shopItems.push(new ShopItem(block, decorations.vaseTall.shopSprites));
@@ -479,6 +524,10 @@ function setupDecoratingGame() {
     shopItems.push(new ShopItem(block, decorations.rugLong.shopSprites));
     shopItems.push(new ShopItem(block, decorations.miscSnail.shopSprites));
     shopItems.push(new ShopItem(block, decorations.miscStatue.shopSprites));
+
+
+    console.log(decorations.vaseTall.shopSprites.mainSprite.x);
+    console.log(decorations.vaseTall.shopSprites.mainSprite.y);
 
 }
 
@@ -541,6 +590,16 @@ function preloadDecoration() {
         loadImage("assets/images/decorations/table_short_2.png"),
         loadImage("assets/images/decorations/table_short_3.png"),
     ]
+
+
+    // //Grandma statue
+    // temp.shopSprites.mainSprite.img = loadImage("assets/images/decorations/grandma_statue_1.png");
+    // temp.shopSprites.var1.img = loadImage("assets/images/decorations/grandma_statue_1.png");
+    // temp.shopSprites.var2.img = loadImage("assets/images/decorations/grandma_statue_2.png");
+    // temp.shopSprites.var3.img = loadImage("assets/images/decorations/grandma_statue_3.png");
+    //
+    // shopItems.push(new ShopItem(block, temp.shopSprites));
+
 }
 
 /**
@@ -553,10 +612,11 @@ function drawDecoration() {
         deco.updatePosition();
     }
 
+    //Draw the shop items
     for (let shopItem of shopItems) {
         shopItem.draw();
+        shopItem.displayShop();
     }
-
 }
 
 /**
@@ -578,6 +638,9 @@ function createNewDecoration(decoration, colorVariations, index) {
 function keyPressed() {
     if (key === ' ') {
         createNewDecoration(decorations.fishBowl, decorations.fishBowl.colorVariations, 0);
+
+        console.log(decorations.vaseTall.shopSprites.mainSprite.x);
+        console.log(decorations.vaseTall.shopSprites.mainSprite.y);
     } else if (key === 'r') {
         createNewDecoration(decorations.rugLong, decorations.rugLong.colorVariations, 1);
     } else if (key === 'e') {
