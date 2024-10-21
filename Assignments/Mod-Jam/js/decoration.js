@@ -746,10 +746,11 @@ function mouseWheel(event) {
     let topOfItems = blocks[0].y - blocks[0].w / 2;
     let bottomOfItems = blocks[blocks.length - 1].y + blocks[blocks.length - 1].w / 2;
 
+    let visibleArea = UI.decoUI.rightBar.panel.h
+
 
     // Check bounds before applying offset
     if ((event.delta > 0 && bottomOfItems <= 450) || (event.delta < 0 && topOfItems >= 170)) {
-        console.log("stop");
         return;  // Prevent further changes if bounds are exceeded
     }
 
@@ -763,11 +764,8 @@ function mouseWheel(event) {
         blocks[i].subBlock.var3.button.y -= blockOffset;
         blocks[i].price.txt.y -= blockOffset;
         totalHeight += blocks[i].h + blocks[i].subBlock.h;
-        // console.log(blocks[i]);
     }
-    // console.log(totalHeight);
     for (let i = 0; i < shopItems.length; i++) {
-        // let flyY = shopItems[i].price.flyImg.y;
         let mainY = shopItems[i].sprites.mainSprite.y;
         let var1 = shopItems[i].sprites.var1.y;
         let var2 = shopItems[i].sprites.var2.y;
@@ -775,26 +773,32 @@ function mouseWheel(event) {
         shopItems[i].updatePos(mainY - blockOffset, var1 - blockOffset, var2 - blockOffset, var3 - blockOffset);
     }
 
-    // if (blocks[blocks.length - 1].subBlock.y <= 500) {
-    //     console.log("stop");
-    // }
-    //
-    // if (blocks[0].y >= 245) {
-    //     console.log("stop");
-    // }
 
+    // Calculate the percentage of scroll movement
+    let scrollPercentage = Math.abs(blockOffset / totalHeight) * 13.7; //This is gonna be problematic 
+
+    // Adjust scrollbar position based on the scroll percentage
+    let scrollBarMaxMovement = UI.decoUI.rightBar.scrollWheel.bar.h;  // Total possible movement for scrollbar
+    let scrollBarMovement = scrollPercentage * scrollBarMaxMovement;
 
     if (event.delta > 0) {
-        UI.decoUI.rightBar.scrollWheel.bar.y += 3;
+        UI.decoUI.rightBar.scrollWheel.bar.y += scrollBarMovement;
         console.log("scrolling down");
     } else if (event.delta < 0) {
-        UI.decoUI.rightBar.scrollWheel.bar.y -= 3;
+        UI.decoUI.rightBar.scrollWheel.bar.y -= scrollBarMovement;
         console.log("scrolling up");
     }
 
 }
 
 
+// if (event.delta > 0) {
+//     UI.decoUI.rightBar.scrollWheel.bar.y += 3;
+//     console.log("scrolling down");
+// } else if (event.delta < 0) {
+//     UI.decoUI.rightBar.scrollWheel.bar.y -= 3;
+//     console.log("scrolling up");
+// }
 
 
 
