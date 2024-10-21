@@ -180,6 +180,23 @@ const UI = {
                     size: 32,
                     txt: "SHOP"
                 }
+            },
+            sneakyPanels: {
+                sneakyTop: {
+                    x: 1210,
+                    y: 0,
+                    w: 230,
+                    h: 194,
+                    fill: "#40985e"
+                },
+                sneakyBottom: {
+                    x: 1210,
+                    y: 635,
+                    w: 230,
+                    h: 192,
+                    fill: "#40985e"
+                }
+
             }
         }
     }
@@ -472,15 +489,20 @@ function drawDecoUI() {
     //Draw white panel
     drawPanel(UI.decoUI.rightBar.panel);
 
+    for (let i = 0; i < shopItems.length; i++) {
+        shopItems[i].draw();
+    }
+
     //Draw scroll wheel
     push();
     drawPanel(UI.decoUI.rightBar.scrollWheel);
     drawPanel(UI.decoUI.rightBar.scrollWheel.bar);
     pop();
 
+    sneakyPanel();
+
     //Draw shop label panel
     drawPanel(UI.decoUI.rightBar.label.panel);
-
 
     //Draw shop text
     push();
@@ -606,6 +628,10 @@ function drawTemp() {
     pop();
 }
 
+function sneakyPanel() {
+    drawSideBar(UI.decoUI.rightBar.sneakyPanels.sneakyTop);
+    drawSideBar(UI.decoUI.rightBar.sneakyPanels.sneakyBottom);
+}
 
 let shopImages = {}
 

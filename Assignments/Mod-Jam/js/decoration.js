@@ -464,7 +464,6 @@ function setupDecoratingGame() {
         blocks[i].subBlock.var2.button.y += i * (rectHeight + rectSpacing);
         blocks[i].subBlock.var3.button.y += i * (rectHeight + rectSpacing);
         blocks[i].price.txt.y += i * (rectHeight + rectSpacing);
-        // console.log(blocks[i]);
     }
 
     //Create new shop items and push them to the shopItems array
@@ -571,9 +570,7 @@ function drawDecoration() {
         deco.updatePosition();
     }
 
-    for (let i = 0; i < shopItems.length; i++) {
-        shopItems[i].draw();
-    }
+
     drawTemp();
 
 }
@@ -730,7 +727,7 @@ function destroyDecoration(index) {
 }
 
 function mouseWheel(event) {
-    blockOffset = 0.1 * event.delta;
+    blockOffset = 0.2 * event.delta;
 
     //Change height of blocks based off of scroll wheel
     for (let i = 0; i < blocks.length; i++) {
