@@ -624,7 +624,7 @@ function drawButton(button) {
 function drawTemp() {
     push();
     fill("red");
-    ellipse(1315, 580, 20);
+    ellipse(1315, 194, 20);
     pop();
 }
 

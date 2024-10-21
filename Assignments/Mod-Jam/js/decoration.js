@@ -455,6 +455,8 @@ function setupDecoratingGame() {
     blocks.push(decorations.miscSnail.block);
     blocks.push(decorations.miscStatue.block);
 
+    const lowerBound = 194;
+    const upperBound = 635;
     //Set original heights for blocks
     for (let i = 0; i < blocks.length; i++) {
         blocks[i].y = initialHeight + i * (rectHeight + rectSpacing);
@@ -464,6 +466,17 @@ function setupDecoratingGame() {
         blocks[i].subBlock.var2.button.y += i * (rectHeight + rectSpacing);
         blocks[i].subBlock.var3.button.y += i * (rectHeight + rectSpacing);
         blocks[i].price.txt.y += i * (rectHeight + rectSpacing);
+        //
+        // blocks[i].y = constrain(blocks[i].y, lowerBound, upperBound);
+        // console.log(blocks[i].y);
+        // blocks[i].subBlock.y = initialSublockHeight + i * (rectHeight + rectSpacing);
+        // blocks[i].price.flyImg.y += i * (rectHeight + rectSpacing);
+        // blocks[i].subBlock.var1.button.y += i * (rectHeight + rectSpacing);
+        // blocks[i].subBlock.var2.button.y += i * (rectHeight + rectSpacing);
+        // blocks[i].subBlock.var3.button.y += i * (rectHeight + rectSpacing);
+        // blocks[i].price.txt.y += i * (rectHeight + rectSpacing);
+
+
     }
 
     //Create new shop items and push them to the shopItems array
@@ -726,8 +739,19 @@ function destroyDecoration(index) {
     }
 }
 
+
 function mouseWheel(event) {
     blockOffset = 0.2 * event.delta;
+    let totalHeight = 0;
+    let topOfItems = blocks[0].y - blocks[0].w / 2;
+    let bottomOfItems = blocks[blocks.length - 1].y + blocks[blocks.length - 1].w / 2;
+
+
+    // Check bounds before applying offset
+    if ((event.delta > 0 && bottomOfItems <= 450) || (event.delta < 0 && topOfItems >= 170)) {
+        console.log("stop");
+        return;  // Prevent further changes if bounds are exceeded
+    }
 
     //Change height of blocks based off of scroll wheel
     for (let i = 0; i < blocks.length; i++) {
@@ -738,25 +762,33 @@ function mouseWheel(event) {
         blocks[i].subBlock.var2.button.y -= blockOffset;
         blocks[i].subBlock.var3.button.y -= blockOffset;
         blocks[i].price.txt.y -= blockOffset;
-
+        totalHeight += blocks[i].h + blocks[i].subBlock.h;
         // console.log(blocks[i]);
     }
-
+    // console.log(totalHeight);
     for (let i = 0; i < shopItems.length; i++) {
         // let flyY = shopItems[i].price.flyImg.y;
         let mainY = shopItems[i].sprites.mainSprite.y;
         let var1 = shopItems[i].sprites.var1.y;
         let var2 = shopItems[i].sprites.var2.y;
         let var3 = shopItems[i].sprites.var3.y;
-
         shopItems[i].updatePos(mainY - blockOffset, var1 - blockOffset, var2 - blockOffset, var3 - blockOffset);
     }
 
+    // if (blocks[blocks.length - 1].subBlock.y <= 500) {
+    //     console.log("stop");
+    // }
+    //
+    // if (blocks[0].y >= 245) {
+    //     console.log("stop");
+    // }
+
+
     if (event.delta > 0) {
-        UI.decoUI.rightBar.scrollWheel.bar.y += 1;
+        UI.decoUI.rightBar.scrollWheel.bar.y += 3;
         console.log("scrolling down");
-    } else {
-        UI.decoUI.rightBar.scrollWheel.bar.y -= 1;
+    } else if (event.delta < 0) {
+        UI.decoUI.rightBar.scrollWheel.bar.y -= 3;
         console.log("scrolling up");
     }
 
