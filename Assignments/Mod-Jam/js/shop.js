@@ -8,6 +8,7 @@ class ShopItem {
 
     draw() {
         drawShop(this.block, this.decoration);
+        this.checkPrice(this.block.subBlock);
         this.displayShopSprites();
     }
 
@@ -42,32 +43,53 @@ class ShopItem {
         return mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY;
     }
 
-    isOverBuyButton() {
-        return this.isMouseOverButton(this.block.subBlock.var1) ||
-            this.isMouseOverButton(this.block.subBlock.var2) ||
-            this.isMouseOverButton(this.block.subBlock.var3);
-    }
-
-    checkVariation() {
-        if (this.isMouseOverButton(this.block.subBlock.var1)) {
-            console.log(this.decoration.path + " var 1 pressed");
-        } else if (this.isMouseOverButton(this.block.subBlock.var2)) {
-            console.log(this.decoration.path + " var 2 pressed");
-        } else if (this.isMouseOverButton(this.block.subBlock.var3)) {
-            console.log(this.decoration.path + " var 3 pressed")
+    /**
+     * Checks which variation the mouse is clicking
+     * Checks whether the player has enough flies
+     * If both true, spawns in that variation of the Decoration object
+     */
+    spawnDecoration() {
+        if (this.isMouseOverButton(this.block.subBlock.var1) && this.checkPrice(this.block.subBlock)) {
+            createNewDecoration(this.decoration, this.decoration.colorVariations, 0);
+            this.subtractCost();
+        } else if (this.isMouseOverButton(this.block.subBlock.var2) && this.checkPrice(this.block.subBlock)) {
+            createNewDecoration(this.decoration, this.decoration.colorVariations, 1);
+            this.subtractCost();
+        } else if (this.isMouseOverButton(this.block.subBlock.var3) && this.checkPrice(this.block.subBlock)) {
+            createNewDecoration(this.decoration, this.decoration.colorVariations, 2);
+            this.subtractCost();
         }
     }
 
-    makeAvailable() {
-        if (this.isMouseOverButton(this.block.subBlock.var1)) {
-            this.block.canClick = true;
-            console.log(this.decoration + "")
+    /**
+     * Checks if the player has enough flies to buy the decoration
+     * @returns {boolean} Whether the user has enough flies caught
+     * @param subBlock The sub block of the shop item holding all the buttons
+     */
+    checkPrice(subBlock) {
+        if (totalFlies >= this.decoration.price) {
+            subBlock.var1.button.fill = "#587dca";
+            subBlock.var2.button.fill = "#587dca";
+            subBlock.var3.button.fill = "#587dca";
+            return true;
+        } else {
+            subBlock.var1.button.fill = "#18284a";
+            subBlock.var2.button.fill = "#18284a";
+            subBlock.var3.button.fill = "#18284a";
+            return false;
         }
     }
 
-    checkPrice() {
-
-
+    /**
+     * Subtracts the cost of the Decoration from the total flies and updates the UI
+     */
+    subtractCost() {
+        //Deduct cost
+        totalFlies -= this.decoration.price;
+        //Update UI
+        UI.decoUI.leftBar.panel.txt.txt = " =   " + totalFlies;
+        //Reset button colors if not enough flies
+        this.checkPrice(this.block.subBlock);
     }
 }
 
