@@ -11,7 +11,7 @@ let decorations = {
         path: "vase_tall_",
         colorVariations: [], // holds the color variations of the object
         currentVariation: 0, // holds the index of the current color variation
-        price: 3, //Holds the price of the decoration 
+        price: 3, //Holds the price of the decoration
         block: undefined, //holds the shop item UI
         shopSprites: {
             mainSprite: {

@@ -7,7 +7,7 @@ class ShopItem {
     }
 
     draw() {
-        drawShop(this.block, this.decoration.shopSprites);
+        drawShop(this.block, this.decoration);
         this.displayShopSprites();
     }
 
@@ -39,7 +39,7 @@ class ShopItem {
     }
 }
 
-function drawShop(block) {
+function drawShop(block, decoProps) {
     //Sub block
     push();
     drawPanel(block.subBlock);
@@ -61,7 +61,7 @@ function drawShop(block) {
     textAlign(CENTER, CENTER);
     textSize(block.price.txt.size);
     strokeWeight(block.price.txt.weight);
-    text(block.price.txt.txt, block.price.txt.x, block.price.txt.y);
+    text(block.price.txt.txt + decoProps.price, block.price.txt.x, block.price.txt.y);
     pop();
 }
 
@@ -82,7 +82,7 @@ function createBlock() {
             txt: {
                 x: 1323,
                 y: 250,
-                txt: "=> 3",
+                txt: "=> ",
                 fill: "black",
                 size: 22,
                 weight: 1,
