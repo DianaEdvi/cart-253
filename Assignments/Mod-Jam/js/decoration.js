@@ -556,10 +556,10 @@ function setupDecoratingGame() {
     blocks.push(decorations.vaseShort.block);
     blocks.push(decorations.fishBowl.block);
     blocks.push(decorations.fishTank.block);
-    blocks.push(decorations.tableShort.block);
-    blocks.push(decorations.tableLong.block);
     blocks.push(decorations.rugCircle.block);
     blocks.push(decorations.rugLong.block);
+    blocks.push(decorations.tableShort.block);
+    blocks.push(decorations.tableLong.block);
     blocks.push(decorations.miscSnail.block);
     blocks.push(decorations.miscStatue.block);
 
@@ -581,10 +581,10 @@ function setupDecoratingGame() {
     shopItems.push(new ShopItem(decorations.vaseShort.block, decorations.vaseShort));
     shopItems.push(new ShopItem(decorations.fishBowl.block, decorations.fishBowl));
     shopItems.push(new ShopItem(decorations.fishTank.block, decorations.fishTank));
-    shopItems.push(new ShopItem(decorations.tableShort.block, decorations.tableShort));
-    shopItems.push(new ShopItem(decorations.tableLong.block, decorations.tableLong));
     shopItems.push(new ShopItem(decorations.rugCircle.block, decorations.rugCircle));
     shopItems.push(new ShopItem(decorations.rugLong.block, decorations.rugLong));
+    shopItems.push(new ShopItem(decorations.tableShort.block, decorations.tableShort));
+    shopItems.push(new ShopItem(decorations.tableLong.block, decorations.tableLong));
     shopItems.push(new ShopItem(decorations.miscSnail.block, decorations.miscSnail));
     shopItems.push(new ShopItem(decorations.miscStatue.block, decorations.miscStatue));
 
@@ -623,15 +623,8 @@ function drawDecoration() {
     for (let deco of decoObjects) {
         deco.updatePosition();
     }
-    drawTemp();
+    // drawTemp();
 }
-
-
-// //
-// // //Draw the shop items
-// // for (let shopItem of shopItems) {
-// // }
-
 
 /**
  * Creates a new decoration object
@@ -645,23 +638,6 @@ function createNewDecoration(decoration, colorVariations, index) {
     newDeco.changeColor(index);
     decoObjects.push(newDeco);
 }
-
-/**
- * Temporary
- */
-function keyPressed() {
-    if (key === ' ') {
-        createNewDecoration(decorations.vaseTall, decorations.vaseTall.colorVariations, 0);
-
-        // console.log(decorations.vaseTall.shopSprites.mainSprite.x);
-        // console.log(decorations.vaseTall.shopSprites.mainSprite.y);
-    } else if (key === 'r') {
-        createNewDecoration(decorations.rugLong, decorations.rugLong.colorVariations, 1);
-    } else if (key === 'e') {
-        createNewDecoration(decorations.tableLong, decorations.tableLong.colorVariations, 2);
-    }
-}
-
 
 let selectedDeco = null;
 
@@ -774,18 +750,11 @@ function mouseWheel(event) {
 
 function decoMouseClicked() {
     for (let i = 0; i < shopItems.length; i++) {
-        shopItems[i].spawnDecoration();
+        if (shopItems[i].checkPrice(blocks[i].subBlock)) {
+            shopItems[i].spawnDecoration();
+        }
     }
 }
-
-// if (event.delta > 0) {
-//     UI.decoUI.rightBar.scrollWheel.bar.y += 3;
-//     console.log("scrolling down");
-// } else if (event.delta < 0) {
-//     UI.decoUI.rightBar.scrollWheel.bar.y -= 3;
-//     console.log("scrolling up");
-// }
-
 
 
 
