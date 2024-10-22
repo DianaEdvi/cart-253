@@ -34,7 +34,27 @@ class ShopItem {
         this.decoration.shopSprites.mainSprite.y = mainY;
     }
 
+    isMouseOverButton() {
+        let minX = this.block.subBlock.var1.button.x - this.block.subBlock.var1.button.w / 2;
+        let maxX = this.block.subBlock.var1.button.x + this.block.subBlock.var1.button.w / 2;
+        let minY = this.block.subBlock.var1.button.y - this.block.subBlock.var1.button.h / 2;
+        let maxY = this.block.subBlock.var1.button.y + this.block.subBlock.var1.button.h / 2;
+        return mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY;
+    }
+
+    isOverBuyButton() {
+
+    }
+
+    makeAvailable() {
+        if (this.isMouseOverButton(this.block.subBlock.var1)) {
+            this.block.canClick = true;
+            console.log(this.decoration + "")
+        }
+    }
+
     checkPrice() {
+
 
     }
 }
@@ -107,7 +127,9 @@ function createBlock() {
                     y: 335,
                     w: 60,
                     h: 30,
-                    fill: "#18284a"
+                    fill: "#18284a",
+                    canClick: false,
+                    isAvailable: false
                 }
             },
             var2: {
@@ -116,7 +138,9 @@ function createBlock() {
                     y: 410,
                     w: 60,
                     h: 30,
-                    fill: "#18284a"
+                    fill: "#18284a",
+                    canClick: false,
+                    isAvailable: false
                 }
             },
             var3: {
@@ -125,7 +149,9 @@ function createBlock() {
                     y: 485,
                     w: 60,
                     h: 30,
-                    fill: "#18284a"
+                    fill: "#18284a",
+                    canClick: false,
+                    isAvailable: false
                 }
             }
         }

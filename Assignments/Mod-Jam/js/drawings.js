@@ -649,8 +649,6 @@ function drawBuyButton(button) {
     textSize(20);
     textAlign(CENTER, CENTER);
     text("BUY", button.x, button.y + 2);
-
-
     pop();
 }
 

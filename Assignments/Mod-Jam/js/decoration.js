@@ -623,11 +623,11 @@ function drawDecoration() {
     for (let deco of decoObjects) {
         deco.updatePosition();
     }
-
-
     drawTemp();
 
+    console.log(shopItems[0].isMouseOverButton());
 }
+
 
 // //
 // // //Draw the shop items
