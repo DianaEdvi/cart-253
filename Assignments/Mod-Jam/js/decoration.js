@@ -11,7 +11,7 @@ let decorations = {
         path: "vase_tall_",
         colorVariations: [], // holds the color variations of the object
         currentVariation: 0, // holds the index of the current color variation
-        price: 3,
+        price: 3, //Holds the price of the decoration 
         block: undefined, //holds the shop item UI
         shopSprites: {
             mainSprite: {
@@ -520,46 +520,38 @@ function preloadDecoration() {
     decoProperties.push(decorations.miscSnail);
     decoProperties.push(decorations.miscStatue);
 
+
     //Preload UI images
     UI.decoUI.leftBar.panel.fly.img = loadImage("assets/images/decorations/fly.png");
     UI.decoUI.leftBar.panel.trashcan.img = loadImage("assets/images/decorations/garbage.png");
 
     //Preload color variations for images
     for (let deco of decoProperties) {
+        // console.log(deco);
         deco.colorVariations = [
             loadImage("assets/images/decorations/" + deco.path + "1.png"),
             loadImage("assets/images/decorations/" + deco.path + "2.png"),
             loadImage("assets/images/decorations/" + deco.path + "3.png"),
         ]
+
+        // log(deco[4]);
+        // log(deco[4]);
     }
+    // console.log(decoProperties[0], decoProperties[4], decoProperties[5]);
 }
 
 function setupDecoratingGame() {
-    //Assign all sprites for the shop
-    setSprites(decorations.vaseTall);
-    setSprites(decorations.vaseShort);
-    setSprites(decorations.fishBowl);
-    setSprites(decorations.fishTank);
-    setSprites(decorations.tableShort);
-    setSprites(decorations.tableLong);
-    setSprites(decorations.rugCircle);
-    setSprites(decorations.rugLong);
-    setSprites(decorations.miscSnail);
-    setSprites(decorations.miscStatue);
+    for (let deco of decoProperties) {
+        //Assign all sprites for the shop
+        setSprites(deco);
+        //Create a new item block for each decoration
+        deco.block = createBlock();
+        //Push blocks to the blocks array (proof that i tried to refractor)
+        // blocks.push(deco.block);
+    }
 
-    //Create a new block for each decoration
-    decorations.vaseTall.block = createBlock();
-    decorations.vaseShort.block = createBlock();
-    decorations.fishBowl.block = createBlock();
-    decorations.fishTank.block = createBlock();
-    decorations.tableShort.block = createBlock();
-    decorations.tableLong.block = createBlock();
-    decorations.rugCircle.block = createBlock();
-    decorations.rugLong.block = createBlock();
-    decorations.miscSnail.block = createBlock();
-    decorations.miscStatue.block = createBlock();
-
-    //Push blocks to the blocks array
+    //Push blocks to blocks array
+    //I tried putting this in the loop, and it broke so... yea it's staying here
     blocks.push(decorations.vaseTall.block);
     blocks.push(decorations.vaseShort.block);
     blocks.push(decorations.fishBowl.block);
@@ -582,17 +574,6 @@ function setupDecoratingGame() {
         blocks[i].subBlock.var2.button.y += i * (rectHeight + rectSpacing);
         blocks[i].subBlock.var3.button.y += i * (rectHeight + rectSpacing);
         blocks[i].price.txt.y += i * (rectHeight + rectSpacing);
-        //
-        // blocks[i].y = constrain(blocks[i].y, lowerBound, upperBound);
-        // console.log(blocks[i].y);
-        // blocks[i].subBlock.y = initialSublockHeight + i * (rectHeight + rectSpacing);
-        // blocks[i].price.flyImg.y += i * (rectHeight + rectSpacing);
-        // blocks[i].subBlock.var1.button.y += i * (rectHeight + rectSpacing);
-        // blocks[i].subBlock.var2.button.y += i * (rectHeight + rectSpacing);
-        // blocks[i].subBlock.var3.button.y += i * (rectHeight + rectSpacing);
-        // blocks[i].price.txt.y += i * (rectHeight + rectSpacing);
-
-
     }
 
     //Create new shop items and push them to the shopItems array
@@ -606,6 +587,12 @@ function setupDecoratingGame() {
     shopItems.push(new ShopItem(decorations.rugLong.block, decorations.rugLong));
     shopItems.push(new ShopItem(decorations.miscSnail.block, decorations.miscSnail));
     shopItems.push(new ShopItem(decorations.miscStatue.block, decorations.miscStatue));
+
+    //Same problem. I might come back to this if i have time
+    //Has to do with index's 4 and 5
+    // for (let deco of decoProperties) {
+    //     shopItems.push((new ShopItem(deco.block, deco)));
+    // }
 
     //Set original heights for images
 
