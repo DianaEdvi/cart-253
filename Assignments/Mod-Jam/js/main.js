@@ -29,6 +29,7 @@ function draw() {
     } else if (state === "choose") {
         drawOptions(); //sets options and draws selection menu and outlines
     } else if (state === "decorate") {
+        console.log(decoObjects);
         drawDecoration();
         // drawTempImg();
     } else if (state === "finished") {
@@ -51,6 +52,7 @@ function mouseClicked() {
         buttonHandlerOptions(buttons.ready);
         // check = buttonCheck();
     } else if (state === "decorate") {
+        console.log(decoObjects);
         decoMouseClicked();
         buttonHandlerOptions(buttons.finished);
         // buttonHandlerDecorate();

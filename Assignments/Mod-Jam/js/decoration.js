@@ -673,10 +673,10 @@ function mouseReleasedDecorate() {
     if (selectedDeco) {
         selectedDeco.stopDrag();
         selectedDeco = null; // Reset selected decoration to null
-    }
 
-    //If mouse is over trashcan, delete object
-    destroyDecoration(decoObjects.indexOf(selectedDeco));
+        //If mouse is over trashcan, delete object
+        destroyDecoration(decoObjects.indexOf(selectedDeco));
+    }
 }
 
 /**
