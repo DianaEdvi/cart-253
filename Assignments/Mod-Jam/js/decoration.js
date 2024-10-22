@@ -10,7 +10,8 @@ let decorations = {
         dragging: false, // checks whether the object is being dragged
         colorVariations: [], // holds the color variations of the object
         currentVariation: 0, // holds the index of the current color variation
-        block: undefined,
+        price: 3,
+        block: undefined, //holds the shop item UI
         shopSprites: {
             mainSprite: {
                 img: "",
@@ -40,7 +41,7 @@ let decorations = {
                 w: 90,
                 h: 90,
             }
-        }
+        } //Holds the sprites for the shop
     },
     vaseShort: {
         x: 720,
@@ -51,6 +52,7 @@ let decorations = {
         dragging: false,
         colorVariations: [],
         currentVariation: 0,
+        price: 3,
         block: undefined,
         shopSprites: {
             mainSprite: {
@@ -91,7 +93,9 @@ let decorations = {
         img: "",
         dragging: false,
         colorVariations: [],
+        price: 4,
         currentVariation: 0,
+        block: undefined,
         shopSprites: {
             mainSprite: {
                 img: "",
@@ -131,7 +135,9 @@ let decorations = {
         img: "",
         dragging: false,
         colorVariations: [],
+        price: 5,
         currentVariation: 0,
+        block: undefined,
         shopSprites: {
             mainSprite: {
                 img: "",
@@ -171,7 +177,9 @@ let decorations = {
         img: "",
         dragging: false,
         colorVariations: [],
+        price: 5,
         currentVariation: 0,
+        block: undefined,
         shopSprites: {
             mainSprite: {
                 img: "",
@@ -211,7 +219,9 @@ let decorations = {
         img: "",
         dragging: false,
         colorVariations: [],
+        price: 6,
         currentVariation: 0,
+        block: undefined,
         shopSprites: {
             mainSprite: {
                 img: "",
@@ -251,6 +261,8 @@ let decorations = {
         img: "",
         dragging: false,
         colorVariations: [],
+        price: 5,
+        block: undefined,
         currentVariation: 0,
         shopSprites: {
             mainSprite: {
@@ -291,6 +303,8 @@ let decorations = {
         img: "",
         dragging: false,
         colorVariations: [],
+        price: 6,
+        block: undefined,
         currentVariation: 0,
         shopSprites: {
             mainSprite: {
@@ -331,6 +345,8 @@ let decorations = {
         img: "",
         dragging: false,
         colorVariations: [],
+        price: 7,
+        block: undefined,
         currentVariation: 0,
         shopSprites: {
             mainSprite: {
@@ -371,6 +387,8 @@ let decorations = {
         img: "",
         dragging: false,
         colorVariations: [],
+        price: 8,
+        block: undefined,
         currentVariation: 0,
         shopSprites: {
             mainSprite: {
@@ -405,7 +423,6 @@ let decorations = {
     },
 }
 
-
 let decoObjects = [];
 let shopItems = [];
 let blocks = [];
@@ -416,6 +433,65 @@ let blockOffset = 0;
 let rectHeight = 325;
 let rectSpacing = 5;
 let yPos = 0;
+
+
+/**
+ * Class for a Decoration object
+ * Creates a new Decoration object and displays it onto the screen
+ * Checks if the mouse is over and pressing the decoration object and drags and drops accordingly
+ */
+class Decoration {
+
+    //Construct a new decoration object
+    constructor(decoration, colorVariations) {
+        this.x = decoration.x;
+        this.y = decoration.y;
+        this.w = decoration.w;
+        this.h = decoration.h;
+        this.colorVariations = colorVariations;
+        this.currentVariation = decoration.currentVariation;
+    }
+
+    //Display the object onto the screen
+    display() {
+        imageMode(CENTER);
+        image(this.colorVariations[this.currentVariation], this.x, this.y, this.w, this.h);
+    }
+
+    // Check if the mouse is over the decoration (bad version, but acceptable)
+    isMouseOver() {
+        return mouseX > this.x - this.w / 4 && mouseX < this.x + this.w / 4 &&
+            mouseY > this.y - this.h / 4 && mouseY < this.y + this.h / 4;
+    }
+
+    // Start dragging
+    startDrag() {
+        if (this.isMouseOver()) {
+            this.dragging = true;
+        }
+    }
+
+    // Stop dragging
+    stopDrag() {
+        this.dragging = false;
+    }
+
+    // Update the position if being dragged
+    updatePosition() {
+        if (this.dragging) {
+            this.x = mouseX;
+            this.y = mouseY;
+        }
+        this.display();
+    }
+
+    changeColor(index) {
+        if (index >= 0 && index < 3) {
+            this.currentVariation = index;
+        }
+    }
+
+}
 
 
 function setupDecoratingGame() {
@@ -480,25 +556,25 @@ function setupDecoratingGame() {
     }
 
     //Create new shop items and push them to the shopItems array
-    shopItems.push(new ShopItem(decorations.vaseTall.block, decorations.vaseTall.shopSprites));
-    shopItems.push(new ShopItem(decorations.vaseShort.block, decorations.vaseShort.shopSprites));
-    shopItems.push(new ShopItem(decorations.fishBowl.block, decorations.fishBowl.shopSprites));
-    shopItems.push(new ShopItem(decorations.fishTank.block, decorations.fishTank.shopSprites));
-    shopItems.push(new ShopItem(decorations.tableShort.block, decorations.tableShort.shopSprites));
-    shopItems.push(new ShopItem(decorations.tableLong.block, decorations.tableLong.shopSprites));
-    shopItems.push(new ShopItem(decorations.rugCircle.block, decorations.rugCircle.shopSprites));
-    shopItems.push(new ShopItem(decorations.rugLong.block, decorations.rugLong.shopSprites));
-    shopItems.push(new ShopItem(decorations.miscSnail.block, decorations.miscSnail.shopSprites));
-    shopItems.push(new ShopItem(decorations.miscStatue.block, decorations.miscStatue.shopSprites));
+    shopItems.push(new ShopItem(decorations.vaseTall.block, decorations.vaseTall));
+    shopItems.push(new ShopItem(decorations.vaseShort.block, decorations.vaseShort));
+    shopItems.push(new ShopItem(decorations.fishBowl.block, decorations.fishBowl));
+    shopItems.push(new ShopItem(decorations.fishTank.block, decorations.fishTank));
+    shopItems.push(new ShopItem(decorations.tableShort.block, decorations.tableShort));
+    shopItems.push(new ShopItem(decorations.tableLong.block, decorations.tableLong));
+    shopItems.push(new ShopItem(decorations.rugCircle.block, decorations.rugCircle));
+    shopItems.push(new ShopItem(decorations.rugLong.block, decorations.rugLong));
+    shopItems.push(new ShopItem(decorations.miscSnail.block, decorations.miscSnail));
+    shopItems.push(new ShopItem(decorations.miscStatue.block, decorations.miscStatue));
 
     //Set original heights for images
 
     for (let i = 0; i < shopItems.length; i++) {
         // let flyY = shopItems[i].price.flyImg.y;
-        let mainY = shopItems[i].sprites.mainSprite.y;
-        let var1 = shopItems[i].sprites.var1.y;
-        let var2 = shopItems[i].sprites.var2.y;
-        let var3 = shopItems[i].sprites.var3.y;
+        let mainY = shopItems[i].decoration.shopSprites.mainSprite.y;
+        let var1 = shopItems[i].decoration.shopSprites.var1.y;
+        let var2 = shopItems[i].decoration.shopSprites.var2.y;
+        let var3 = shopItems[i].decoration.shopSprites.var3.y;
 
         shopItems[i].updatePos(mainY + i * (rectHeight + rectSpacing), var1 + i * (rectHeight + rectSpacing), var2 + i * (rectHeight + rectSpacing), var3 + i * (rectHeight + rectSpacing));
     }
@@ -624,64 +700,6 @@ function keyPressed() {
 }
 
 
-/**
- * Class for a Decoration object
- * Creates a new Decoration object and displays it onto the screen
- * Checks if the mouse is over and pressing the decoration object and drags and drops accordingly
- */
-class Decoration {
-
-    //Construct a new decoration object
-    constructor(decoration, colorVariations) {
-        this.x = decoration.x;
-        this.y = decoration.y;
-        this.w = decoration.w;
-        this.h = decoration.h;
-        this.colorVariations = colorVariations;
-        this.currentVariation = decoration.currentVariation;
-    }
-
-    //Display the object onto the screen
-    display() {
-        imageMode(CENTER);
-        image(this.colorVariations[this.currentVariation], this.x, this.y, this.w, this.h);
-    }
-
-    // Check if the mouse is over the decoration (bad version, but acceptable)
-    isMouseOver() {
-        return mouseX > this.x - this.w / 4 && mouseX < this.x + this.w / 4 &&
-            mouseY > this.y - this.h / 4 && mouseY < this.y + this.h / 4;
-    }
-
-    // Start dragging
-    startDrag() {
-        if (this.isMouseOver()) {
-            this.dragging = true;
-        }
-    }
-
-    // Stop dragging
-    stopDrag() {
-        this.dragging = false;
-    }
-
-    // Update the position if being dragged
-    updatePosition() {
-        if (this.dragging) {
-            this.x = mouseX;
-            this.y = mouseY;
-        }
-        this.display();
-    }
-
-    changeColor(index) {
-        if (index >= 0 && index < 3) {
-            this.currentVariation = index;
-        }
-    }
-
-}
-
 let selectedDeco = null;
 
 
@@ -766,10 +784,10 @@ function mouseWheel(event) {
         totalHeight += blocks[i].h + blocks[i].subBlock.h;
     }
     for (let i = 0; i < shopItems.length; i++) {
-        let mainY = shopItems[i].sprites.mainSprite.y;
-        let var1 = shopItems[i].sprites.var1.y;
-        let var2 = shopItems[i].sprites.var2.y;
-        let var3 = shopItems[i].sprites.var3.y;
+        let mainY = shopItems[i].decoration.shopSprites.mainSprite.y;
+        let var1 = shopItems[i].decoration.shopSprites.var1.y;
+        let var2 = shopItems[i].decoration.shopSprites.var2.y;
+        let var3 = shopItems[i].decoration.shopSprites.var3.y;
         shopItems[i].updatePos(mainY - blockOffset, var1 - blockOffset, var2 - blockOffset, var3 - blockOffset);
     }
 

@@ -1,13 +1,13 @@
 "use strict";
 
 class ShopItem {
-    constructor(block, sprites) {
+    constructor(block, decoration) {
         this.block = block;
-        this.sprites = sprites;
+        this.decoration = decoration;
     }
 
     draw() {
-        drawShop(this.block, this.sprites);
+        drawShop(this.block, this.decoration.shopSprites);
         this.displayShopSprites();
     }
 
@@ -15,12 +15,12 @@ class ShopItem {
         push();
         imageMode(CENTER);
         //Variation sprites
-        image(this.sprites.var1.img, this.sprites.var1.x, this.sprites.var1.y, this.sprites.var1.w, this.sprites.var1.h);
-        image(this.sprites.var2.img, this.sprites.var2.x, this.sprites.var2.y, this.sprites.var2.w, this.sprites.var2.h);
-        image(this.sprites.var3.img, this.sprites.var3.x, this.sprites.var3.y, this.sprites.var3.w, this.sprites.var3.h);
+        image(this.decoration.shopSprites.var1.img, this.decoration.shopSprites.var1.x, this.decoration.shopSprites.var1.y, this.decoration.shopSprites.var1.w, this.decoration.shopSprites.var1.h);
+        image(this.decoration.shopSprites.var2.img, this.decoration.shopSprites.var2.x, this.decoration.shopSprites.var2.y, this.decoration.shopSprites.var2.w, this.decoration.shopSprites.var2.h);
+        image(this.decoration.shopSprites.var3.img, this.decoration.shopSprites.var3.x, this.decoration.shopSprites.var3.y, this.decoration.shopSprites.var3.w, this.decoration.shopSprites.var3.h);
 
         //Main sprite and fly
-        image(this.sprites.mainSprite.img, this.sprites.mainSprite.x, this.sprites.mainSprite.y, this.sprites.mainSprite.w, this.sprites.mainSprite.h);
+        image(this.decoration.shopSprites.mainSprite.img, this.decoration.shopSprites.mainSprite.x, this.decoration.shopSprites.mainSprite.y, this.decoration.shopSprites.mainSprite.w, this.decoration.shopSprites.mainSprite.h);
         // console.log(this.sprites.mainSprite.x);
         image(this.block.price.flyImg.img, this.block.price.flyImg.x, this.block.price.flyImg.y, this.block.price.flyImg.w, this.block.price.flyImg.h);
         pop();
@@ -28,10 +28,10 @@ class ShopItem {
     }
 
     updatePos(mainY, var1Y, var2Y, var3Y) {
-        this.sprites.var1.y = var1Y;
-        this.sprites.var2.y = var2Y;
-        this.sprites.var3.y = var3Y;
-        this.sprites.mainSprite.y = mainY;
+        this.decoration.shopSprites.var1.y = var1Y;
+        this.decoration.shopSprites.var2.y = var2Y;
+        this.decoration.shopSprites.var3.y = var3Y;
+        this.decoration.shopSprites.mainSprite.y = mainY;
     }
 }
 
