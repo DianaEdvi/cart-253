@@ -4,10 +4,11 @@ let decorations = {
     vaseTall: {
         x: 720, // the x coordinate of the decoration
         y: 405, // the y coordinate of the decoration
-        w: 200, // the width of the decoration
-        h: 200, // the height of the decoration
+        w: 150, // the width of the decoration
+        h: 150, // the height of the decoration
         img: "", // the variable holding the image
         dragging: false, // checks whether the object is being dragged
+        path: "vase_tall_",
         colorVariations: [], // holds the color variations of the object
         currentVariation: 0, // holds the index of the current color variation
         price: 3,
@@ -50,6 +51,7 @@ let decorations = {
         h: 200,
         img: "",
         dragging: false,
+        path: "vase_short_",
         colorVariations: [],
         currentVariation: 0,
         price: 3,
@@ -92,6 +94,7 @@ let decorations = {
         h: 150,
         img: "",
         dragging: false,
+        path: "fishbowl_",
         colorVariations: [],
         price: 4,
         currentVariation: 0,
@@ -134,6 +137,7 @@ let decorations = {
         h: 200,
         img: "",
         dragging: false,
+        path: "fishtank_",
         colorVariations: [],
         price: 5,
         currentVariation: 0,
@@ -176,6 +180,7 @@ let decorations = {
         h: 200,
         img: "",
         dragging: false,
+        path: "table_short_",
         colorVariations: [],
         price: 5,
         currentVariation: 0,
@@ -218,6 +223,7 @@ let decorations = {
         h: 200,
         img: "",
         dragging: false,
+        path: "table_long_",
         colorVariations: [],
         price: 6,
         currentVariation: 0,
@@ -260,6 +266,7 @@ let decorations = {
         h: 200,
         img: "",
         dragging: false,
+        path: "rug_circle_",
         colorVariations: [],
         price: 5,
         block: undefined,
@@ -302,6 +309,7 @@ let decorations = {
         h: 200,
         img: "",
         dragging: false,
+        path: "rug_long_",
         colorVariations: [],
         price: 6,
         block: undefined,
@@ -344,6 +352,7 @@ let decorations = {
         h: 200,
         img: "",
         dragging: false,
+        path: "snail_clock_",
         colorVariations: [],
         price: 7,
         block: undefined,
@@ -386,6 +395,7 @@ let decorations = {
         h: 200,
         img: "",
         dragging: false,
+        path: "grandma_statue_",
         colorVariations: [],
         price: 8,
         block: undefined,
@@ -423,6 +433,7 @@ let decorations = {
     },
 }
 
+let decoProperties = [];
 let decoObjects = [];
 let shopItems = [];
 let blocks = [];
@@ -493,6 +504,35 @@ class Decoration {
 
 }
 
+/**
+ * Preloads all the images used by the decoration game
+ */
+function preloadDecoration() {
+
+    decoProperties.push(decorations.vaseTall);
+    decoProperties.push(decorations.vaseShort);
+    decoProperties.push(decorations.fishBowl);
+    decoProperties.push(decorations.fishTank);
+    decoProperties.push(decorations.rugCircle);
+    decoProperties.push(decorations.rugLong);
+    decoProperties.push(decorations.tableShort);
+    decoProperties.push(decorations.tableLong);
+    decoProperties.push(decorations.miscSnail);
+    decoProperties.push(decorations.miscStatue);
+
+    //Preload UI images
+    UI.decoUI.leftBar.panel.fly.img = loadImage("assets/images/decorations/fly.png");
+    UI.decoUI.leftBar.panel.trashcan.img = loadImage("assets/images/decorations/garbage.png");
+
+    //Preload color variations for images
+    for (let deco of decoProperties) {
+        deco.colorVariations = [
+            loadImage("assets/images/decorations/" + deco.path + "1.png"),
+            loadImage("assets/images/decorations/" + deco.path + "2.png"),
+            loadImage("assets/images/decorations/" + deco.path + "3.png"),
+        ]
+    }
+}
 
 function setupDecoratingGame() {
     //Assign all sprites for the shop
@@ -588,68 +628,6 @@ function setSprites(decoration) {
 }
 
 /**
- * Preloads all the images used by the decoration game
- */
-function preloadDecoration() {
-    //Preload UI images
-    UI.decoUI.leftBar.panel.fly.img = loadImage("assets/images/decorations/fly.png");
-    UI.decoUI.leftBar.panel.trashcan.img = loadImage("assets/images/decorations/garbage.png");
-
-    //Preload decoration images
-    decorations.vaseTall.colorVariations = [
-        loadImage("assets/images/decorations/vase_tall_1.png"),
-        loadImage("assets/images/decorations/vase_tall_2.png"),
-        loadImage("assets/images/decorations/vase_tall_3.png"),
-    ]
-    decorations.vaseShort.colorVariations = [
-        loadImage("assets/images/decorations/vase_short_1.png"),
-        loadImage("assets/images/decorations/vase_short_2.png"),
-        loadImage("assets/images/decorations/vase_short_3.png"),
-    ]
-    decorations.fishBowl.colorVariations = [
-        loadImage("assets/images/decorations/fishbowl_1.png"),
-        loadImage("assets/images/decorations/fishbowl_2.png"),
-        loadImage("assets/images/decorations/fishbowl_3.png"),
-    ]
-    decorations.fishTank.colorVariations = [
-        loadImage("assets/images/decorations/fishTank_1.png"),
-        loadImage("assets/images/decorations/fishTank_2.png"),
-        loadImage("assets/images/decorations/fishTank_3.png"),
-    ]
-    decorations.miscStatue.colorVariations = [
-        loadImage("assets/images/decorations/grandma_statue_1.png"),
-        loadImage("assets/images/decorations/grandma_statue_2.png"),
-        loadImage("assets/images/decorations/grandma_statue_3.png"),
-    ]
-    decorations.miscSnail.colorVariations = [
-        loadImage("assets/images/decorations/snail_clock_1.png"),
-        loadImage("assets/images/decorations/snail_clock_2.png"),
-        loadImage("assets/images/decorations/snail_clock_3.png"),
-    ]
-    decorations.rugCircle.colorVariations = [
-        loadImage("assets/images/decorations/rug_circle_1.png"),
-        loadImage("assets/images/decorations/rug_circle_2.png"),
-        loadImage("assets/images/decorations/rug_circle_3.png"),
-    ]
-    decorations.rugLong.colorVariations = [
-        loadImage("assets/images/decorations/rug_long_1.png"),
-        loadImage("assets/images/decorations/rug_long_2.png"),
-        loadImage("assets/images/decorations/rug_long_3.png"),
-    ]
-    decorations.tableLong.colorVariations = [
-        loadImage("assets/images/decorations/table_long_1.png"),
-        loadImage("assets/images/decorations/table_long_2.png"),
-        loadImage("assets/images/decorations/table_long_3.png"),
-    ]
-    decorations.tableShort.colorVariations = [
-        loadImage("assets/images/decorations/table_short_1.png"),
-        loadImage("assets/images/decorations/table_short_2.png"),
-        loadImage("assets/images/decorations/table_short_3.png"),
-    ]
-}
-
-
-/**
  * Draw's the decoration objects and UI onto the screen
  */
 function drawDecoration() {
@@ -688,7 +666,7 @@ function createNewDecoration(decoration, colorVariations, index) {
  */
 function keyPressed() {
     if (key === ' ') {
-        createNewDecoration(decorations.fishBowl, decorations.fishBowl.colorVariations, 0);
+        createNewDecoration(decorations.vaseTall, decorations.vaseTall.colorVariations, 0);
 
         // console.log(decorations.vaseTall.shopSprites.mainSprite.x);
         // console.log(decorations.vaseTall.shopSprites.mainSprite.y);

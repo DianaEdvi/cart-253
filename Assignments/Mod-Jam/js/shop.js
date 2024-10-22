@@ -33,6 +33,10 @@ class ShopItem {
         this.decoration.shopSprites.var3.y = var3Y;
         this.decoration.shopSprites.mainSprite.y = mainY;
     }
+
+    checkPrice() {
+
+    }
 }
 
 function drawShop(block) {
