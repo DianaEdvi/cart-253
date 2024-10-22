@@ -624,8 +624,6 @@ function drawDecoration() {
         deco.updatePosition();
     }
     drawTemp();
-
-    console.log(shopItems[0].isMouseOverButton());
 }
 
 
@@ -774,6 +772,11 @@ function mouseWheel(event) {
 
 }
 
+function decoMouseClicked() {
+    for (let i = 0; i < shopItems.length; i++) {
+        shopItems[i].checkVariation();
+    }
+}
 
 // if (event.delta > 0) {
 //     UI.decoUI.rightBar.scrollWheel.bar.y += 3;

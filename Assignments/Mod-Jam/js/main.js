@@ -51,6 +51,7 @@ function mouseClicked() {
         buttonHandlerOptions(buttons.ready);
         // check = buttonCheck();
     } else if (state === "decorate") {
+        decoMouseClicked();
         buttonHandlerOptions(buttons.finished);
         // buttonHandlerDecorate();
     } else if (state === "finished") {

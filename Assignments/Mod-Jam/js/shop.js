@@ -34,16 +34,28 @@ class ShopItem {
         this.decoration.shopSprites.mainSprite.y = mainY;
     }
 
-    isMouseOverButton() {
-        let minX = this.block.subBlock.var1.button.x - this.block.subBlock.var1.button.w / 2;
-        let maxX = this.block.subBlock.var1.button.x + this.block.subBlock.var1.button.w / 2;
-        let minY = this.block.subBlock.var1.button.y - this.block.subBlock.var1.button.h / 2;
-        let maxY = this.block.subBlock.var1.button.y + this.block.subBlock.var1.button.h / 2;
+    isMouseOverButton(varButton) {
+        let minX = varButton.button.x - varButton.button.w / 2;
+        let maxX = varButton.button.x + varButton.button.w / 2;
+        let minY = varButton.button.y - varButton.button.h / 2;
+        let maxY = varButton.button.y + varButton.button.h / 2;
         return mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY;
     }
 
     isOverBuyButton() {
+        return this.isMouseOverButton(this.block.subBlock.var1) ||
+            this.isMouseOverButton(this.block.subBlock.var2) ||
+            this.isMouseOverButton(this.block.subBlock.var3);
+    }
 
+    checkVariation() {
+        if (this.isMouseOverButton(this.block.subBlock.var1)) {
+            console.log(this.decoration.path + " var 1 pressed");
+        } else if (this.isMouseOverButton(this.block.subBlock.var2)) {
+            console.log(this.decoration.path + " var 2 pressed");
+        } else if (this.isMouseOverButton(this.block.subBlock.var3)) {
+            console.log(this.decoration.path + " var 3 pressed")
+        }
     }
 
     makeAvailable() {
