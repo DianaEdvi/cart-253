@@ -1,19 +1,19 @@
 "use strict";
 //Base information for each decoration object
 let decorations = {
-    vaseTall: {
+    frog: {
         x: 720, // the x coordinate of the decoration
         y: 405, // the y coordinate of the decoration
-        w: 150, // the width of the decoration
-        h: 150, // the height of the decoration
+        w: 160, // the width of the decoration
+        h: 160, // the height of the decoration
         img: "", // the variable holding the image
         dragging: false, // checks whether the object is being dragged
-        path: "vase_tall_",
+        path: "frog_",
         colorVariations: [], // holds the color variations of the object
         currentVariation: 0, // holds the index of the current color variation
         price: 0, //Holds the price of the decoration
         block: undefined, //holds the shop item UI
-        shopSprites: {
+        shopSprites: { //Holds the sprites for the shop
             mainSprite: {
                 img: "",
                 x: 1268,
@@ -42,19 +42,62 @@ let decorations = {
                 w: 90,
                 h: 90,
             }
-        } //Holds the sprites for the shop
+        }
+    },
+    vaseTall: {
+        x: 720, // the x coordinate of the decoration
+        y: 405, // the y coordinate of the decoration
+        w: 140, // the width of the decoration
+        h: 140, // the height of the decoration
+        img: "", // the variable holding the image
+        dragging: false, // checks whether the object is being dragged
+        path: "vase_tall_",
+        colorVariations: [], // holds the color variations of the object
+        currentVariation: 0, // holds the index of the current color variation
+        price: 0, //Holds the price of the decoration 2
+        block: undefined, //holds the shop item UI
+        shopSprites: { //Holds the sprites for the shop
+            mainSprite: {
+                img: "",
+                x: 1268,
+                y: 253,
+                w: 115,
+                h: 115
+            },
+            var1: {
+                img: "",
+                x: 1270,
+                y: 340,
+                w: 90,
+                h: 90,
+            },
+            var2: {
+                img: "",
+                x: 1270,
+                y: 415,
+                w: 90,
+                h: 90,
+            },
+            var3: {
+                img: "",
+                x: 1270,
+                y: 480,
+                w: 90,
+                h: 90,
+            }
+        }
     },
     vaseShort: {
         x: 720,
         y: 405,
-        w: 200,
-        h: 200,
+        w: 160,
+        h: 160,
         img: "",
         dragging: false,
         path: "vase_short_",
         colorVariations: [],
         currentVariation: 0,
-        price: 3,
+        price: 0, // 3
         block: undefined,
         shopSprites: {
             mainSprite: {
@@ -96,7 +139,7 @@ let decorations = {
         dragging: false,
         path: "fishbowl_",
         colorVariations: [],
-        price: 4,
+        price: 0, // 4
         currentVariation: 0,
         block: undefined,
         shopSprites: {
@@ -133,13 +176,13 @@ let decorations = {
     fishTank: {
         x: 720,
         y: 405,
-        w: 200,
-        h: 200,
+        w: 180,
+        h: 180,
         img: "",
         dragging: false,
         path: "fishtank_",
         colorVariations: [],
-        price: 5,
+        price: 0, //5
         currentVariation: 0,
         block: undefined,
         shopSprites: {
@@ -176,13 +219,13 @@ let decorations = {
     tableShort: {
         x: 720,
         y: 405,
-        w: 200,
-        h: 200,
+        w: 220,
+        h: 220,
         img: "",
         dragging: false,
         path: "table_short_",
         colorVariations: [],
-        price: 5,
+        price: 0, //5
         currentVariation: 0,
         block: undefined,
         shopSprites: {
@@ -219,13 +262,13 @@ let decorations = {
     tableLong: {
         x: 720,
         y: 405,
-        w: 200,
-        h: 200,
+        w: 280,
+        h: 240,
         img: "",
         dragging: false,
         path: "table_long_",
         colorVariations: [],
-        price: 6,
+        price: 0, //6
         currentVariation: 0,
         block: undefined,
         shopSprites: {
@@ -262,13 +305,13 @@ let decorations = {
     rugCircle: {
         x: 720,
         y: 405,
-        w: 200,
-        h: 200,
+        w: 220,
+        h: 220,
         img: "",
         dragging: false,
         path: "rug_circle_",
         colorVariations: [],
-        price: 5,
+        price: 0, //5
         block: undefined,
         currentVariation: 0,
         shopSprites: {
@@ -305,13 +348,13 @@ let decorations = {
     rugLong: {
         x: 720,
         y: 405,
-        w: 200,
-        h: 200,
+        w: 280,
+        h: 220,
         img: "",
         dragging: false,
         path: "rug_long_",
         colorVariations: [],
-        price: 6,
+        price: 0, //6
         block: undefined,
         currentVariation: 0,
         shopSprites: {
@@ -354,7 +397,7 @@ let decorations = {
         dragging: false,
         path: "snail_clock_",
         colorVariations: [],
-        price: 7,
+        price: 0, //7
         block: undefined,
         currentVariation: 0,
         shopSprites: {
@@ -397,7 +440,7 @@ let decorations = {
         dragging: false,
         path: "grandma_statue_",
         colorVariations: [],
-        price: 8,
+        price: 0, //8
         block: undefined,
         currentVariation: 0,
         shopSprites: {
@@ -509,6 +552,7 @@ class Decoration {
  */
 function preloadDecoration() {
 
+    decoProperties.push(decorations.frog);
     decoProperties.push(decorations.vaseTall);
     decoProperties.push(decorations.vaseShort);
     decoProperties.push(decorations.fishBowl);
@@ -552,6 +596,7 @@ function setupDecoratingGame() {
 
     //Push blocks to blocks array
     //I tried putting this in the loop, and it broke so... yea it's staying here
+    blocks.push(decorations.frog.block);
     blocks.push(decorations.vaseTall.block);
     blocks.push(decorations.vaseShort.block);
     blocks.push(decorations.fishBowl.block);
@@ -577,6 +622,7 @@ function setupDecoratingGame() {
     }
 
     //Create new shop items and push them to the shopItems array
+    shopItems.push(new ShopItem(decorations.frog.block, decorations.frog));
     shopItems.push(new ShopItem(decorations.vaseTall.block, decorations.vaseTall));
     shopItems.push(new ShopItem(decorations.vaseShort.block, decorations.vaseShort));
     shopItems.push(new ShopItem(decorations.fishBowl.block, decorations.fishBowl));
@@ -685,10 +731,10 @@ function mouseReleasedDecorate() {
  */
 function destroyDecoration(index) {
     //Calculate the area of the trashcan
-    if (mouseX > UI.decoUI.leftBar.panel.trashcan.x - UI.decoUI.leftBar.panel.trashcan.w / 2
-        && mouseX < UI.decoUI.leftBar.panel.trashcan.x + UI.decoUI.leftBar.panel.trashcan.w / 2
-        && mouseY > UI.decoUI.leftBar.panel.trashcan.y - UI.decoUI.leftBar.panel.trashcan.h / 2
-        && mouseY < UI.decoUI.leftBar.panel.trashcan.y + UI.decoUI.leftBar.panel.trashcan.h / 2) {
+    if (mouseX > UI.decoUI.leftBar.panel.trashcan.x - UI.decoUI.leftBar.panel.trashcan.w / 3
+        && mouseX < UI.decoUI.leftBar.panel.trashcan.x + UI.decoUI.leftBar.panel.trashcan.w / 3
+        && mouseY > UI.decoUI.leftBar.panel.trashcan.y - UI.decoUI.leftBar.panel.trashcan.h / 3
+        && mouseY < UI.decoUI.leftBar.panel.trashcan.y + UI.decoUI.leftBar.panel.trashcan.h / 3) {
         //Delete the object
         decoObjects.splice(index, 1);
     } else if (state === "title") {
