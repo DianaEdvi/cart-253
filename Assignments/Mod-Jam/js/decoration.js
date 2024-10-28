@@ -54,7 +54,7 @@ let decorations = {
         path: "vase_tall_",
         colorVariations: [], // holds the color variations of the object
         currentVariation: 0, // holds the index of the current color variation
-        price: 0, //Holds the price of the decoration 2
+        price: 2, //Holds the price of the decoration
         block: undefined, //holds the shop item UI
         shopSprites: { //Holds the sprites for the shop
             mainSprite: {
@@ -97,7 +97,7 @@ let decorations = {
         path: "vase_short_",
         colorVariations: [],
         currentVariation: 0,
-        price: 0, // 3
+        price: 3,
         block: undefined,
         shopSprites: {
             mainSprite: {
@@ -139,7 +139,7 @@ let decorations = {
         dragging: false,
         path: "fishbowl_",
         colorVariations: [],
-        price: 0, // 4
+        price: 4,
         currentVariation: 0,
         block: undefined,
         shopSprites: {
@@ -182,7 +182,7 @@ let decorations = {
         dragging: false,
         path: "fishtank_",
         colorVariations: [],
-        price: 0, //5
+        price: 5,
         currentVariation: 0,
         block: undefined,
         shopSprites: {
@@ -225,7 +225,7 @@ let decorations = {
         dragging: false,
         path: "table_short_",
         colorVariations: [],
-        price: 0, //5
+        price: 5,
         currentVariation: 0,
         block: undefined,
         shopSprites: {
@@ -268,7 +268,7 @@ let decorations = {
         dragging: false,
         path: "table_long_",
         colorVariations: [],
-        price: 0, //6
+        price: 6,
         currentVariation: 0,
         block: undefined,
         shopSprites: {
@@ -311,7 +311,7 @@ let decorations = {
         dragging: false,
         path: "rug_circle_",
         colorVariations: [],
-        price: 0, //5
+        price: 5,
         block: undefined,
         currentVariation: 0,
         shopSprites: {
@@ -354,7 +354,7 @@ let decorations = {
         dragging: false,
         path: "rug_long_",
         colorVariations: [],
-        price: 0, //6
+        price: 6,
         block: undefined,
         currentVariation: 0,
         shopSprites: {
@@ -397,7 +397,7 @@ let decorations = {
         dragging: false,
         path: "snail_clock_",
         colorVariations: [],
-        price: 0, //7
+        price: 7,
         block: undefined,
         currentVariation: 0,
         shopSprites: {
@@ -440,7 +440,7 @@ let decorations = {
         dragging: false,
         path: "grandma_statue_",
         colorVariations: [],
-        price: 0, //8
+        price: 8,
         block: undefined,
         currentVariation: 0,
         shopSprites: {
@@ -486,8 +486,6 @@ let initialSublockHeight = 375;
 let blockOffset = 0;
 let rectHeight = 325;
 let rectSpacing = 5;
-let yPos = 0;
-
 
 /**
  * Class for a Decoration object
@@ -504,6 +502,7 @@ class Decoration {
         this.h = decoration.h;
         this.colorVariations = colorVariations;
         this.currentVariation = decoration.currentVariation;
+        this.price = decoration.price;
     }
 
     //Display the object onto the screen
@@ -577,11 +576,7 @@ function preloadDecoration() {
             loadImage("assets/images/decorations/" + deco.path + "2.png"),
             loadImage("assets/images/decorations/" + deco.path + "3.png"),
         ]
-
-        // log(deco[4]);
-        // log(deco[4]);
     }
-    // console.log(decoProperties[0], decoProperties[4], decoProperties[5]);
 }
 
 function setupDecoratingGame() {
@@ -608,8 +603,6 @@ function setupDecoratingGame() {
     blocks.push(decorations.miscSnail.block);
     blocks.push(decorations.miscStatue.block);
 
-    const lowerBound = 194;
-    const upperBound = 635;
     //Set original heights for blocks
     for (let i = 0; i < blocks.length; i++) {
         blocks[i].y = initialHeight + i * (rectHeight + rectSpacing);
@@ -718,10 +711,10 @@ function mouseReleasedDecorate() {
     //If selected decoration is not null, stop dragging it
     if (selectedDeco) {
         selectedDeco.stopDrag();
-        selectedDeco = null; // Reset selected decoration to null
 
         //If mouse is over trashcan, delete object
         destroyDecoration(decoObjects.indexOf(selectedDeco));
+        selectedDeco = null; // Reset selected decoration to null
     }
 }
 
@@ -735,8 +728,16 @@ function destroyDecoration(index) {
         && mouseX < UI.decoUI.leftBar.panel.trashcan.x + UI.decoUI.leftBar.panel.trashcan.w / 3
         && mouseY > UI.decoUI.leftBar.panel.trashcan.y - UI.decoUI.leftBar.panel.trashcan.h / 3
         && mouseY < UI.decoUI.leftBar.panel.trashcan.y + UI.decoUI.leftBar.panel.trashcan.h / 3) {
+
+        // console.log(decoObjects);
+        totalFlies += decoObjects[index].price;
+        //Update UI
+        UI.decoUI.leftBar.panel.txt.txt = " =   " + totalFlies;
+
         //Delete the object
         decoObjects.splice(index, 1);
+
+
     } else if (state === "title") {
         decoObjects.splice(index, 1);
     }
@@ -786,10 +787,8 @@ function mouseWheel(event) {
 
     if (event.delta > 0) {
         UI.decoUI.rightBar.scrollWheel.bar.y += scrollBarMovement;
-        console.log("scrolling down");
     } else if (event.delta < 0) {
         UI.decoUI.rightBar.scrollWheel.bar.y -= scrollBarMovement;
-        console.log("scrolling up");
     }
 
 }

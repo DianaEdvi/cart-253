@@ -59,7 +59,6 @@ class ShopItem {
             createNewDecoration(this.decoration, this.decoration.colorVariations, 2);
             this.subtractCost();
         }
-        console.log(decoObjects);
     }
 
     /**

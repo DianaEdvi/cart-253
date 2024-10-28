@@ -32,16 +32,7 @@ let buttons = {
         state: "choose",
         key: 2
     },
-    menuDecorate: {
-        x: 115,
-        y: 700,
-        w: 150,
-        h: 80,
-        txt: "Menu",
-        txtSize: 32,
-        state: "decorate",
-        key: 3
-    }, finished: {
+    finished: {
         x: 1325,
         y: 700,
         w: 150,
@@ -84,6 +75,23 @@ let buttons = {
 }
 
 const UI = {
+    menuUI: {
+        titleTxt: {
+            x: 720,
+            y: 100,
+            size: 60,
+            weight: 2,
+            txt: "Amphibian Design",
+        },
+        subTxt: {
+            x: 720,
+            y: 200,
+            size: 30,
+            weight: 2,
+            txt: "Collect, buy, decorate :3"
+        },
+        fill: "#18284a",
+    },
     frogUI: {
         bar: {
             x: 720,
@@ -123,7 +131,15 @@ const UI = {
                     y: 500,
                     w: 400,
                     h: 400,
-                    img: ""
+                    img: "",
+                    txt: {
+                        x: 115,
+                        y: 455,
+                        size: 22,
+                        weight: 2,
+                        fill: "black",
+                        txt: "Refunds"
+                    }
                 }, fly: {
                     x: 60,
                     y: 300,
@@ -136,7 +152,17 @@ const UI = {
                     y: 300,
                     txt: " =   0"
                 }
+            },
+            howToPlay: {
+                x: 10,
+                y: 660,
+                size: 18,
+                weight: 1.2,
+                leading: 25,
+                txt: "1. Catch flies outside\n2. Buy decorations inside\n3. Decorate your house\n4. Click \"Finished\" for PDF of your creation\n5. Share with friends :)",
+                fill: "#18284a",
             }
+
         },
         rightBar: {
             x: 1210,
@@ -471,6 +497,10 @@ function drawDecoUI() {
     image(UI.decoUI.leftBar.panel.fly.img, UI.decoUI.leftBar.panel.fly.x, UI.decoUI.leftBar.panel.fly.y, UI.decoUI.leftBar.panel.fly.w, UI.decoUI.leftBar.panel.fly.h);
     textAlign(CENTER, CENTER);
     text(UI.decoUI.leftBar.panel.txt.txt, UI.decoUI.leftBar.panel.txt.x, UI.decoUI.leftBar.panel.txt.y);
+    push();
+    textSize(UI.decoUI.leftBar.panel.trashcan.txt.size);
+    text(UI.decoUI.leftBar.panel.trashcan.txt.txt, UI.decoUI.leftBar.panel.trashcan.txt.x, UI.decoUI.leftBar.panel.trashcan.txt.y);
+    pop();
     pop();
 
 
@@ -506,8 +536,19 @@ function drawDecoUI() {
 
 
     drawButton(buttons.goOutside);
-    drawButton(buttons.menuDecorate); //When these are swapped, menu also doesnt work
+    // drawButton(buttons.menuDecorate); //When these are swapped, menu also doesnt work
     drawButton(buttons.finished);
+
+    //Draw how to play text
+    push();
+    textAlign(LEFT, CENTER);
+    textSize(UI.decoUI.leftBar.howToPlay.size);
+    stroke("#18284a");
+    strokeWeight(UI.decoUI.leftBar.howToPlay.weight);
+    textLeading(UI.decoUI.leftBar.howToPlay.leading);
+    fill(UI.decoUI.leftBar.howToPlay.fill);
+    text(UI.decoUI.leftBar.howToPlay.txt, UI.decoUI.leftBar.howToPlay.x, UI.decoUI.leftBar.howToPlay.y, UI.decoUI.leftBar.w - 10);
+    pop();
 
     // drawShop();
 }
@@ -584,14 +625,27 @@ function drawOutlines(background) {
 }
 
 function drawMenu() {
+    push();
     background("#96beb1");
+    fill(UI.menuUI.fill)
+    stroke("#18284a");
+    strokeWeight(UI.menuUI.titleTxt.weight);
+    textAlign(CENTER, CENTER);
+    push();
+    pop();
+    textSize(UI.menuUI.titleTxt.size);
+    text(UI.menuUI.titleTxt.txt, UI.menuUI.titleTxt.x, UI.menuUI.titleTxt.y)
+    push();
+    textSize(UI.menuUI.subTxt.size);
+    text(UI.menuUI.subTxt.txt, UI.menuUI.subTxt.x, UI.menuUI.subTxt.y)
+    pop();
+    pop();
     drawButton(buttons.play);
 }
 
 function drawEnd() {
-    background("black");
+    background("#586c78");
     drawButton(buttons.playAgain);
-
 }
 
 function drawButton(button) {

@@ -29,7 +29,6 @@ function draw() {
     } else if (state === "choose") {
         drawOptions(); //sets options and draws selection menu and outlines
     } else if (state === "decorate") {
-        console.log(decoObjects);
         drawDecoration();
         // drawTempImg();
     } else if (state === "finished") {
@@ -52,7 +51,6 @@ function mouseClicked() {
         buttonHandlerOptions(buttons.ready);
         // check = buttonCheck();
     } else if (state === "decorate") {
-        console.log(decoObjects);
         decoMouseClicked();
         buttonHandlerOptions(buttons.finished);
         // buttonHandlerDecorate();
@@ -88,31 +86,23 @@ function buttonHandler(button) {
     //Button handling (play)
     if (mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY && clicked === true) {
         if (button.key === 0) {
-            console.log("ahh");
             state = "choose";
         } else if (button.key === 1) {
-            console.log("bbb");
             state = "title";
             resetGame();
         } else if (button.key === 2) { //Does not get triggered for some reason
-            console.log("clickeddd");
             state = "decorate";
         } else if (button.key === 3) {
-            console.log("ddd");
             state = "title";
             resetGame();
         } else if (button.key === 4) { //Does not get triggered for some reason
-            console.log("boooo");
             state = "finished";
         } else if (button.key === 5) {
-            console.log("eee");
             state = "title";
             resetGame();
         } else if (button.key === 6) {
-            console.log("fff");
             state = "frog";
         } else if (button.key === 7) {
-            console.log("ggg");
             state = "decorate";
             resetCounter();
             console.log(totalFlies);
@@ -135,7 +125,6 @@ function mouseReleased() {
 
 
 //Bugs
-//Color of text is being funky and outline of buttons goes wank
 //my buttons in general are wank
 
 //Optional todo
