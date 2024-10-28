@@ -201,17 +201,6 @@ const UI = {
     }
 }
 
-// let readyStr = "Ready!";
-
-
-function drawCircle() {
-    push();
-    noStroke();
-    fill("red");
-    ellipse(circleeee.x, circleeee.y, circleeee.size);
-    pop();
-}
-
 /**
  * Displays the tongue (tip and line connection) and the frog (body)
  */
@@ -282,6 +271,7 @@ function drawFrogUI() {
  * @param dark the darkest shade in the pallette
  */
 function drawHouseBackground(light, midLight, mid, midDark, dark) {
+    push();
     background(light);
     noStroke();
 
@@ -352,6 +342,7 @@ function drawHouseBackground(light, midLight, mid, midDark, dark) {
     triangle(925, 725, 1000, 650, 1000, 750);
     triangle(425, 750, 375, 700, 375, 775);
     pop();
+    pop();
 }
 
 /**
@@ -363,6 +354,7 @@ function drawHouseBackground(light, midLight, mid, midDark, dark) {
  * @param dark the darkest shade in the pallette
  */
 function drawTreeBackground(light, midLight, mid, midDark, dark) {
+    push();
     noStroke();
     background(light);
 
@@ -457,6 +449,7 @@ function drawTreeBackground(light, midLight, mid, midDark, dark) {
     fill(midLight);
     ellipse(900, 100, 100);
     pop();
+    pop();
 }
 
 function drawDecoUI() {
@@ -541,7 +534,6 @@ function drawPanel(panel) {
 function drawSelections() {
     let backgroundStr = "Select a background to decorate";
     let colorStr = "And a color palette";
-    // let menuTxt = "Menu";
     background("#96beb1");
 
     drawButton(buttons.menuChoose);
@@ -553,6 +545,7 @@ function drawSelections() {
     textSize(32);
     stroke("black");
     strokeWeight(2);
+    fill("white");
     text(backgroundStr, width / 2, 100);
     text(colorStr, width / 2, 575);
     pop();
@@ -607,8 +600,10 @@ function drawButton(button) {
     rectMode(CENTER);
     fill("#fda9a9");
     rect(button.x, button.y, button.w, button.h, 20);
+    pop();
 
     //Draw text
+    push();
     textAlign(CENTER, CENTER);
     textSize(button.txtSize);
     stroke("black");
@@ -631,9 +626,6 @@ function sneakyPanel() {
     drawSideBar(UI.decoUI.rightBar.sneakyPanels.sneakyTop);
     drawSideBar(UI.decoUI.rightBar.sneakyPanels.sneakyBottom);
 }
-
-let shopImages = {}
-
 
 function drawBuyButton(button) {
     push()
