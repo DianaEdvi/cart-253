@@ -1,6 +1,7 @@
 /**
- * Frogfrogfrog
- * Pippin Barr
+ * Frogfrogfrog minigame
+ * created by Pippin Barr
+ * slightly modified by Diana Edvi
  *
  * A game of catching flies with your frog-tongue
  *

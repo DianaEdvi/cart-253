@@ -1,3 +1,20 @@
+/**
+ * Options state handler for the game "Amphibian Design"
+ * Created by Diana Edvi
+ *
+ * This file contains all the functionality for the options state
+ *
+ * Contains:
+ * - Data (properties for selection images and palettes)
+ * - local preload and setup functions (load and set data)
+ * - local draw function
+ * - logic for handling which selections the user chooses regarding background image and color
+ * - exception button handler
+ *
+ * Made with p5
+ * https://p5js.org/
+ */
+
 "use strict";
 
 let backgroundImage = ""; //The image of the greyscale background option
@@ -146,7 +163,7 @@ function buttonHandlerOptions(button) {
         drawHiddenText();
         //Take image of the canvas for the saving mechanic
         UI.endUI.png.img.copy(canvas, 230, 0, 980, 810, 0, 0, UI.endUI.png.w, UI.endUI.png.h);
-        
+
         state = "finished";
     }
 }

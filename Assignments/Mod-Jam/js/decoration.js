@@ -1,3 +1,21 @@
+/**
+ * Decoration state handler for the game "Amphibian Design"
+ * Created by Diana Edvi
+ *
+ * This file contains all the functionality for the decoration state
+ *
+ * Contains:
+ * - Decoration Class
+ * - local preload and setup functions (load and set data)
+ * - spite assignment function for decoration property array
+ * - draw functions for rendering
+ * - Decoration spawn and destroy handlers
+ * - local mouse handler functions (mousePressed, mouseReleased, mouseWheel)
+ *
+ * Made with p5
+ * https://p5js.org/
+ */
+
 "use strict";
 //Base information for each decoration object
 let decorations = {

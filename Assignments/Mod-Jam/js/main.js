@@ -1,3 +1,18 @@
+/**
+ * The main file for the game "Amphibian Design"
+ * Created by Diana Edvi
+ *
+ * This file contains the core functionality of the game
+ *
+ * Contains:
+ * - Data (main properties)
+ * - main events (preload, setup, draw, mousePressed, mouseReleased, mouseClicked, keyTyped)
+ * - reset game function
+ * - button handler
+ *
+ * Made with p5
+ * https://p5js.org/
+ */
 "use strict";
 
 let state = ""; //The state the game is in
@@ -82,7 +97,6 @@ function resetGame() {
     }
 }
 
-//IDK wtf is going on over here
 /**
  * Handles the button logic for the game
  * @param button The properties of the current button

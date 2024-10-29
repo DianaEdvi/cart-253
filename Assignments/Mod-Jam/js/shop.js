@@ -1,3 +1,18 @@
+/**
+ * Shop handler for the game "Amphibian Design"
+ * Created by Diana Edvi
+ *
+ * This file contains all the functionality for the shop in the game
+ *
+ * Contains:
+ * - ShopItem Class
+ * - local draw function
+ * - creation of shop UI
+ *
+ * Made with p5
+ * https://p5js.org/
+ */
+
 "use strict";
 
 /**
@@ -218,7 +233,7 @@ function createBlock() {
         }
     }
 
-    //Set the fly image 
+    //Set the fly image
     newBlock.price.flyImg.img = UI.decoUI.leftBar.panel.fly.img;
 
     return newBlock;

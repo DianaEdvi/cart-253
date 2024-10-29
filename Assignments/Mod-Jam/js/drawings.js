@@ -1,3 +1,24 @@
+/**
+ * Handles drawing functions for the game "Amphibian Design"
+ * Created by Diana Edvi
+ *
+ * This file contains most of the drawing functions for the game
+ * Exceptions: drawShop and drawDecoration
+ *
+ * Contains:
+ * - Data (properties for buttons and UI elements)
+ * - draw functions for frog state
+ * - draw functions for background options
+ * - draw functions for decoration state
+ * - draw functions for options state
+ * - draw functions for menu and end states
+ * - wrapper functions for drawing buttons
+ * - draw function for final image to be downloaded
+ *
+ * Made with p5
+ * https://p5js.org/
+ */
+
 "use strict";
 
 //The buttons in the game
