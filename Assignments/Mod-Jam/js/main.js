@@ -54,7 +54,7 @@ function mouseClicked() {
         //Reset the game
         resetGame();
     } else if (state === "choose") {
-        outlineSelections(); //sets palette and background
+        selectOptions(); //sets palette and background
         buttonHandlerOptions(buttons.ready); //Handles button logic for "ready" button (exception)
         // check = buttonCheck();
     } else if (state === "decorate") {

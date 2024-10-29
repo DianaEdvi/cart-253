@@ -1,9 +1,9 @@
 "use strict";
 
-let backgroundImage = "";
-let colorSelect = "";
+let backgroundImage = ""; //The image of the greyscale background option
+let colorSelect = ""; //The image of the palette options
 
-let palette = {
+let palette = { //The palette colors
     light: "",
     midLight: "",
     mid: "",
@@ -11,36 +11,36 @@ let palette = {
     dark: ""
 }
 
-let images = {
-    img1: {
+let images = { //The images in the options menu (background and palettes)
+    img1: { //Left background
         x: 450,
         y: 325,
         w: 400,
         h: 350,
         img: ""
     },
-    img2: {
+    img2: { //Right background
         x: 1000,
         y: 325,
         w: 400,
         h: 350,
         img: ""
     },
-    img3: {
+    img3: { //Purple palette
         x: 400,
         y: 700,
         w: 200,
         h: 200,
         img: ""
     },
-    img4: {
+    img4: { //Green palette
         x: 720,
         y: 700,
         w: 200,
         h: 200,
         img: ""
     },
-    img5: {
+    img5: { //Blue palette
         x: 1040,
         y: 700,
         w: 200,
@@ -49,6 +49,10 @@ let images = {
     }
 }
 
+/**
+ * Preload function that will be called from the main preload event
+ * Preloads all the images for the options menu
+ */
 function preloadOptions() {
     images.img1.img = loadImage("assets/images/houseBackground.png");
     images.img2.img = loadImage("assets/images/treeBackground.png");
@@ -57,22 +61,21 @@ function preloadOptions() {
     images.img5.img = loadImage("assets/images/blue.png");
 }
 
-
+/**
+ * Draw function that will be called from the main draw event
+ */
 function drawOptions() {
-    drawSelections();
-    drawOutlines(backgroundImage, palette);
+    drawSelections(); //Draw the state UI
+    drawOutlines(backgroundImage, palette); //Draw the outlines
 }
 
 /**
  * Checks if the mouse is within the bounds of the image and updates the background logic (image and color) accordingly
- * Also handles logic to return to menu and continue to the game
  */
-function outlineSelections() {
-    //Outline an image if it is clicked on
+function selectOptions() {
     //Left image
     if (mouseX > images.img1.x - images.img1.w / 2 && mouseX < images.img1.x + images.img1.w / 2 && mouseY > images.img1.y - images.img1.h / 2 && mouseY < images.img1.y + images.img1.h / 2) {
         backgroundImage = "left";
-        console.log("lefty");
     }
     //Right image
     else if (mouseX > images.img2.x - images.img2.w / 2 && mouseX < images.img2.x + images.img2.w / 2 && mouseY > images.img2.y - images.img2.h / 2 && mouseY < images.img2.y + images.img2.h / 2) {
@@ -109,9 +112,11 @@ function outlineSelections() {
         palette.midDark = "#18284a";
         palette.dark = "#070810";
     }
-
 }
 
+/**
+ * Set's the background according to whichever option the user chose
+ */
 function setBackground() {
     if (backgroundImage === "left") {
         drawHouseBackground(palette.light, palette.midLight, palette.mid, palette.midDark, palette.dark);
@@ -120,13 +125,18 @@ function setBackground() {
     }
 }
 
+/**
+ * Handles the exception button handling that for some reason did not work
+ * @param button The button properties
+ */
 function buttonHandlerOptions(button) {
+    //Set bounds
     const minX = button.x - button.w / 2;
     const maxX = button.x + button.w / 2;
     const minY = button.y - button.h / 2;
     const maxY = button.y + button.h / 2;
 
-    //Button handling (menu and ready)
+    //Button handling (ready and finished)
     if (mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY && state === "choose") {
         if (backgroundImage !== "" && colorSelect !== "") {
             state = "decorate";
@@ -134,8 +144,9 @@ function buttonHandlerOptions(button) {
     } else if (mouseX > 1260 && mouseX < 1400 && mouseY > 650 && mouseY < 730 && state === "decorate") {
         //Draw the hidden text for only one frame
         drawHiddenText();
-        //Take image of the canvas
+        //Take image of the canvas for the saving mechanic
         UI.endUI.png.img.copy(canvas, 230, 0, 980, 810, 0, 0, UI.endUI.png.w, UI.endUI.png.h);
+        
         state = "finished";
     }
 }
