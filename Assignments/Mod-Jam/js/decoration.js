@@ -14,28 +14,28 @@ let decorations = {
         price: 0, //Holds the price of the decoration
         block: undefined, //holds the shop item UI
         shopSprites: { //Holds the sprites for the shop
-            mainSprite: {
+            mainSprite: { //The sprite next to the price
                 img: "",
                 x: 1268,
                 y: 253,
                 w: 115,
                 h: 115
             },
-            var1: {
+            var1: { //The first variation
                 img: "",
                 x: 1270,
                 y: 340,
                 w: 90,
                 h: 90,
             },
-            var2: {
+            var2: { //The second variation
                 img: "",
                 x: 1270,
                 y: 415,
                 w: 90,
                 h: 90,
             },
-            var3: {
+            var3: { //The third variation
                 img: "",
                 x: 1270,
                 y: 480,
@@ -45,18 +45,18 @@ let decorations = {
         }
     },
     vaseTall: {
-        x: 720, // the x coordinate of the decoration
-        y: 405, // the y coordinate of the decoration
-        w: 140, // the width of the decoration
-        h: 140, // the height of the decoration
-        img: "", // the variable holding the image
-        dragging: false, // checks whether the object is being dragged
+        x: 720,
+        y: 405,
+        w: 140,
+        h: 140,
+        img: "",
+        dragging: false,
         path: "vase_tall_",
-        colorVariations: [], // holds the color variations of the object
-        currentVariation: 0, // holds the index of the current color variation
-        price: 2, //Holds the price of the decoration
-        block: undefined, //holds the shop item UI
-        shopSprites: { //Holds the sprites for the shop
+        colorVariations: [],
+        currentVariation: 0,
+        price: 2,
+        block: undefined,
+        shopSprites: {
             mainSprite: {
                 img: "",
                 x: 1268,
@@ -476,16 +476,13 @@ let decorations = {
     },
 }
 
-let decoProperties = [];
-let decoObjects = [];
-let shopItems = [];
-let blocks = [];
+let decoProperties = []; //Array for holding all the decoratoin data
+let decoObjects = []; //Array for holding all the spawned decoration objects
+let shopItems = []; //Array for holding all the shop items
+let blocks = []; //Array for holding all the UI for the shop items. Don't ask me why this is in a separate array lol.
+let blockOffset = 0; //The amount that the blocks will move when scrolling
 
-let initialHeight = 250;
-let initialSublockHeight = 375;
-let blockOffset = 0;
-let rectHeight = 325;
-let rectSpacing = 5;
+let selectedDeco = null; //The current Decoration object that is being held
 
 /**
  * Class for a Decoration object
@@ -505,7 +502,7 @@ class Decoration {
         this.price = decoration.price;
     }
 
-    //Display the object onto the screen
+    //Display the Decoration object onto the screen
     display() {
         imageMode(CENTER);
         image(this.colorVariations[this.currentVariation], this.x, this.y, this.w, this.h);
@@ -547,10 +544,12 @@ class Decoration {
 }
 
 /**
+ * Preload function that will be called from the main preload event
  * Preloads all the images used by the decoration game
  */
 function preloadDecoration() {
 
+    //Populate properties array
     decoProperties.push(decorations.frog);
     decoProperties.push(decorations.vaseTall);
     decoProperties.push(decorations.vaseShort);
@@ -563,14 +562,12 @@ function preloadDecoration() {
     decoProperties.push(decorations.miscSnail);
     decoProperties.push(decorations.miscStatue);
 
-
     //Preload UI images
     UI.decoUI.leftBar.panel.fly.img = loadImage("assets/images/decorations/fly.png");
     UI.decoUI.leftBar.panel.trashcan.img = loadImage("assets/images/decorations/garbage.png");
 
     //Preload color variations for images
     for (let deco of decoProperties) {
-        // console.log(deco);
         deco.colorVariations = [
             loadImage("assets/images/decorations/" + deco.path + "1.png"),
             loadImage("assets/images/decorations/" + deco.path + "2.png"),
@@ -579,17 +576,22 @@ function preloadDecoration() {
     }
 }
 
+/**
+ * Set up function that will be called from the main setup event
+ * Populates all the necessary arrays with the appropriate data (decoProperties, blocks, shopItems)
+ */
 function setupDecoratingGame() {
+    //Populate the decoProperties array with sprites and UI for the shop
     for (let deco of decoProperties) {
         //Assign all sprites for the shop
         setSprites(deco);
         //Create a new item block for each decoration
         deco.block = createBlock();
-        //Push blocks to the blocks array (proof that i tried to refractor)
+        //Attempted to push blocks to the blocks array  (proof that i tried to refractor, it did not work perfectly)
         // blocks.push(deco.block);
     }
 
-    //Push blocks to blocks array
+    //Push blocks (shop UI) to blocks array
     //I tried putting this in the loop, and it broke so... yea it's staying here
     blocks.push(decorations.frog.block);
     blocks.push(decorations.vaseTall.block);
@@ -603,7 +605,14 @@ function setupDecoratingGame() {
     blocks.push(decorations.miscSnail.block);
     blocks.push(decorations.miscStatue.block);
 
+
+    let initialHeight = 250; //Starting position of the blocks
+    let initialSublockHeight = 375; //Starting position for the subblocks
+    let rectHeight = 325; //Height of the total shopItem block and subblock
+    let rectSpacing = 5; //Spacing between each shopItem block
+
     //Set original heights for blocks
+    //Yes, I should have made all the UI elements depend on one another... lesson learned for next time
     for (let i = 0; i < blocks.length; i++) {
         blocks[i].y = initialHeight + i * (rectHeight + rectSpacing);
         blocks[i].subBlock.y = initialSublockHeight + i * (rectHeight + rectSpacing);
@@ -627,26 +636,33 @@ function setupDecoratingGame() {
     shopItems.push(new ShopItem(decorations.miscSnail.block, decorations.miscSnail));
     shopItems.push(new ShopItem(decorations.miscStatue.block, decorations.miscStatue));
 
-    //Same problem. I might come back to this if i have time
+    //Same problem as. I might come back to this if i have time
     //Has to do with index's 4 and 5
     // for (let deco of decoProperties) {
     //     shopItems.push((new ShopItem(deco.block, deco)));
     // }
 
     //Set original heights for images
-
     for (let i = 0; i < shopItems.length; i++) {
-        // let flyY = shopItems[i].price.flyImg.y;
         let mainY = shopItems[i].decoration.shopSprites.mainSprite.y;
         let var1 = shopItems[i].decoration.shopSprites.var1.y;
         let var2 = shopItems[i].decoration.shopSprites.var2.y;
         let var3 = shopItems[i].decoration.shopSprites.var3.y;
 
-        shopItems[i].updatePos(mainY + i * (rectHeight + rectSpacing), var1 + i * (rectHeight + rectSpacing), var2 + i * (rectHeight + rectSpacing), var3 + i * (rectHeight + rectSpacing));
+        //Update the position of each image in the shopItems array
+        shopItems[i].updatePos(mainY + i * (rectHeight + rectSpacing),
+            var1 + i * (rectHeight + rectSpacing),
+            var2 + i * (rectHeight + rectSpacing),
+            var3 + i * (rectHeight + rectSpacing));
     }
 }
 
+/**
+ * Sets the sprites for a given decoration property
+ * @param decoration The decoration property to be modified
+ */
 function setSprites(decoration) {
+    //Set each image according to its variation
     decoration.shopSprites.mainSprite.img = decoration.colorVariations[0];
     decoration.shopSprites.var1.img = decoration.colorVariations[0];
     decoration.shopSprites.var2.img = decoration.colorVariations[1];
@@ -657,12 +673,15 @@ function setSprites(decoration) {
  * Draw's the decoration objects and UI onto the screen
  */
 function drawDecoration() {
+    //Set the background according to which options the user selected
     setBackground();
+    //Draw the UI for the decoration segment of the game
     drawDecoUI();
+
+    //Continuously update the position of the spawned decoration objects
     for (let deco of decoObjects) {
         deco.updatePosition();
     }
-    // drawTemp();
 }
 
 /**
@@ -674,17 +693,16 @@ function drawDecoration() {
 function createNewDecoration(decoration, colorVariations, index) {
     //Create a new decoration at the center of the screen
     let newDeco = new Decoration(decoration, colorVariations);
-    newDeco.changeColor(index);
-    decoObjects.push(newDeco);
+    newDeco.changeColor(index); //Modify the color according to the one the user selected
+    decoObjects.push(newDeco); //Push each new decoration object to the decoObjects array
 }
-
-let selectedDeco = null;
 
 
 /**
  * Iterates through the decoration objects in LIFO order because this is the order that they appear on the screen
  * Checks if mouse is over an object and if so gives it higher draw priority (draws on top of other items)
  * Then it implements the drag function
+ * DISCLAIMER: I had to use ChatGPT to help me with this
  */
 function mousePressedDecorate() {
     // Iterate through decoObjects in reverse order so that the last drawn object is what is selected
@@ -729,7 +747,7 @@ function destroyDecoration(index) {
         && mouseY > UI.decoUI.leftBar.panel.trashcan.y - UI.decoUI.leftBar.panel.trashcan.h / 3
         && mouseY < UI.decoUI.leftBar.panel.trashcan.y + UI.decoUI.leftBar.panel.trashcan.h / 3) {
 
-        // console.log(decoObjects);
+        //Refund the player
         totalFlies += decoObjects[index].price;
         //Update UI
         UI.decoUI.leftBar.panel.txt.txt = " =   " + totalFlies;
@@ -738,20 +756,26 @@ function destroyDecoration(index) {
         decoObjects.splice(index, 1);
 
 
-    } else if (state === "title") {
+    } //This part is for when the game is resetting
+    else if (state === "title") {
         decoObjects.splice(index, 1);
     }
 }
 
 
+/**
+ * Handles the scrolling mechanic for the shop
+ * Includes many calculations that made my head hurt
+ * @param event
+ */
 function mouseWheel(event) {
+    //Set the offset according to the mouse wheel being scrolled
     blockOffset = 0.2 * event.delta;
-    let totalHeight = 0;
-    let topOfItems = blocks[0].y - blocks[0].w / 2;
-    let bottomOfItems = blocks[blocks.length - 1].y + blocks[blocks.length - 1].w / 2;
+    let totalHeight = 0; //Will hold the total height of all the blocks and subblocks
+    let topOfItems = blocks[0].y - blocks[0].w / 2; //Coordinate for the top of the shop
+    let bottomOfItems = blocks[blocks.length - 1].y + blocks[blocks.length - 1].w / 2; //Coordinate for the bottom of the shop
 
-    let visibleArea = UI.decoUI.rightBar.panel.h
-
+    // let visibleArea = UI.decoUI.rightBar.panel.h
 
     // Check bounds before applying offset
     if ((event.delta > 0 && bottomOfItems <= 450) || (event.delta < 0 && topOfItems >= 170)) {
@@ -759,6 +783,7 @@ function mouseWheel(event) {
     }
 
     //Change height of blocks based off of scroll wheel
+    //I regret not making the sub items depend on one another
     for (let i = 0; i < blocks.length; i++) {
         blocks[i].y -= blockOffset;
         blocks[i].subBlock.y -= blockOffset;
@@ -767,32 +792,39 @@ function mouseWheel(event) {
         blocks[i].subBlock.var2.button.y -= blockOffset;
         blocks[i].subBlock.var3.button.y -= blockOffset;
         blocks[i].price.txt.y -= blockOffset;
-        totalHeight += blocks[i].h + blocks[i].subBlock.h;
+        totalHeight += blocks[i].h + blocks[i].subBlock.h; //Update the total height depending on how many blocks there are
     }
+    //Just like the blocks, modify each image
+    //Again, hindsight is 2020 this could have been done nicer. Next time.
     for (let i = 0; i < shopItems.length; i++) {
+        //Assign all the y coordinates to local variables
         let mainY = shopItems[i].decoration.shopSprites.mainSprite.y;
         let var1 = shopItems[i].decoration.shopSprites.var1.y;
         let var2 = shopItems[i].decoration.shopSprites.var2.y;
         let var3 = shopItems[i].decoration.shopSprites.var3.y;
+        //Update the position of the sprites
         shopItems[i].updatePos(mainY - blockOffset, var1 - blockOffset, var2 - blockOffset, var3 - blockOffset);
     }
 
-
     // Calculate the percentage of scroll movement
-    let scrollPercentage = Math.abs(blockOffset / totalHeight) * 13.7; //This is gonna be problematic 
+    let scrollPercentage = Math.abs(blockOffset / totalHeight) * 13.7; //This value was created from trial and error :)
 
     // Adjust scrollbar position based on the scroll percentage
     let scrollBarMaxMovement = UI.decoUI.rightBar.scrollWheel.bar.h;  // Total possible movement for scrollbar
     let scrollBarMovement = scrollPercentage * scrollBarMaxMovement;
 
+    //Update the scroll bar
     if (event.delta > 0) {
         UI.decoUI.rightBar.scrollWheel.bar.y += scrollBarMovement;
     } else if (event.delta < 0) {
         UI.decoUI.rightBar.scrollWheel.bar.y -= scrollBarMovement;
     }
-
 }
 
+/**
+ * mouseClicked function that will be called from the main mouseClicked Event
+ * Handles the mouse clicking for the shop
+ */
 function decoMouseClicked() {
     for (let i = 0; i < shopItems.length; i++) {
         if (shopItems[i].checkPrice(blocks[i].subBlock)) {

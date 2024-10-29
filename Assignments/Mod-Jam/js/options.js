@@ -59,7 +59,6 @@ function preloadOptions() {
 
 
 function drawOptions() {
-    setBackground();
     drawSelections();
     drawOutlines(backgroundImage, palette);
 }

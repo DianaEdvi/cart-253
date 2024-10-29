@@ -159,7 +159,7 @@ const UI = {
                 size: 18,
                 weight: 1.2,
                 leading: 25,
-                txt: "1. Catch flies outside\n2. Buy decorations inside\n3. Decorate your house\n4. Click \"Finished\" for PDF of your creation\n5. Share with friends :)",
+                txt: "1. Catch flies outside\n2. Buy decorations inside\n3. Decorate your house\n4. Click \"Finished\" for PNG of your creation\n5. Share with friends :)",
                 fill: "#18284a",
             }
 
