@@ -46,10 +46,16 @@ const fly = {
     speed: 3
 };
 
+/**
+ * Preload function that will be called from the main preload event
+ */
 function preloadFrog() {
     UI.frogUI.fly.img = loadImage("assets/images//decorations/fly.png");
 }
 
+/**
+ * draw function that will be called from the main draw event
+ */
 function drawFrogFrogFrog() {
     background("#52a5de");
     moveFly();
@@ -61,6 +67,9 @@ function drawFrogFrogFrog() {
     drawFrogUI();
 }
 
+/**
+ * Setup function that will be called from the main setup event
+ */
 function setupFrogFrogFrog() {
     resetFly();
 }
@@ -121,7 +130,6 @@ function moveTongue() {
     }
 }
 
-
 /**
  * Handles the tongue overlapping the fly
  */
@@ -140,9 +148,15 @@ function checkTongueFlyOverlap() {
     }
 }
 
+/**
+ * Reset the counter to 0 and update the total flies counter
+ */
 function resetCounter() {
+    //Update total flies counter
     totalFlies += fliesCaught;
+    //Update UI
     UI.decoUI.leftBar.panel.txt.txt = " =   " + totalFlies;
+    //Reset to 0
     fliesCaught = 0;
 }
 
