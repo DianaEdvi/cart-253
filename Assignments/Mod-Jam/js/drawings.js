@@ -688,6 +688,16 @@ function drawMenu() {
 function drawEnd() {
     background("#586c78");
 
+    //Draw text
+    push();
+    fill(UI.endUI.txt.fill);
+    textAlign(CENTER, CENTER);
+    stroke("black");
+    strokeWeight(UI.endUI.txt.strokeWeight);
+    textSize(UI.endUI.txt.size);
+    text(UI.endUI.txt.txt, UI.endUI.txt.x, UI.endUI.txt.y)
+    pop();
+
     drawPNG();
     drawButton(buttons.playAgain);
 }
