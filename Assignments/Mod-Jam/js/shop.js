@@ -1,17 +1,28 @@
 "use strict";
 
+/**
+ * Class for a ShopItem object
+ * Creates a new ShopItem and displays it onto the screen
+ * Also handles mouse over logic and the spawning of Decoration objects
+ */
 class ShopItem {
     constructor(block, decoration) {
         this.block = block;
         this.decoration = decoration;
     }
 
+    /**
+     * Draw the shop sprites
+     */
     draw() {
         drawShop(this.block, this.decoration);
-        this.checkPrice(this.block.subBlock);
-        this.displayShopSprites();
+        this.checkPrice(this.block.subBlock); //Changes the fill of the buttons according to flies owned
+        this.displayShopSprites(); //Display the sprites
     }
 
+    /**
+     * Draw the shop sprites and their variations onto the screen
+     */
     displayShopSprites() {
         push();
         imageMode(CENTER);
@@ -28,6 +39,13 @@ class ShopItem {
 
     }
 
+    /**
+     * Updates the position of the sprites
+     * @param mainY The main sprite next to the price
+     * @param var1Y The first variation
+     * @param var2Y The second variation
+     * @param var3Y The third variation
+     */
     updatePos(mainY, var1Y, var2Y, var3Y) {
         this.decoration.shopSprites.var1.y = var1Y;
         this.decoration.shopSprites.var2.y = var2Y;
@@ -35,6 +53,11 @@ class ShopItem {
         this.decoration.shopSprites.mainSprite.y = mainY;
     }
 
+    /**
+     * Checks if the mouse is over the buy button
+     * @param varButton The variation button
+     * @returns {boolean}
+     */
     isMouseOverButton(varButton) {
         let minX = varButton.button.x - varButton.button.w / 2;
         let maxX = varButton.button.x + varButton.button.w / 2;
@@ -93,6 +116,11 @@ class ShopItem {
     }
 }
 
+/**
+ * Draw the shop
+ * @param block The shop block properties
+ * @param decoProps The decoration properties (used to get the price)
+ */
 function drawShop(block, decoProps) {
     //Sub block
     push();
@@ -108,7 +136,7 @@ function drawShop(block, decoProps) {
     drawPanel(block);
     pop();
 
-    //text
+    //Text
     push();
     fill(block.price.txt.fill);
     stroke("black");
@@ -119,20 +147,19 @@ function drawShop(block, decoProps) {
     pop();
 }
 
-
 /**
  * Makes a copy of the block property and pushes it to the blocks array
  */
 function createBlock() {
 
     let newBlock = {
-        x: 1315,
-        y: 250,
-        w: 160,
-        h: 100,
-        fill: "#96beb1",
-        totalHeight: 0,
-        price: {
+        x: 1315, //The x coordinate of the block
+        y: 250, //The y coordinate of the block
+        w: 160, // The width of the block
+        h: 100, //The height of the block
+        fill: "#96beb1", //The color of the block
+        totalHeight: 0, //The total height of the block
+        price: { // The price UI
             txt: {
                 x: 1323,
                 y: 250,
@@ -149,13 +176,13 @@ function createBlock() {
                 h: 140
             }
         },
-        subBlock: {
-            x: 1315,
-            y: 375,
-            w: 160,
-            h: 300,
-            fill: "#5a7e6f",
-            var1: {
+        subBlock: { //The subblock containing all the variations
+            x: 1315, // The x coordinate of the subblock
+            y: 375, // The y coordinate of the subblock
+            w: 160, // The width of the subblock
+            h: 300, // The height of the subblock
+            fill: "#5a7e6f", // The color of the subblock
+            var1: { // The first variation
                 button: {
                     x: 1345,
                     y: 335,
@@ -166,7 +193,7 @@ function createBlock() {
                     isAvailable: false
                 }
             },
-            var2: {
+            var2: { // The second variation
                 button: {
                     x: 1345,
                     y: 410,
@@ -177,7 +204,7 @@ function createBlock() {
                     isAvailable: false
                 }
             },
-            var3: {
+            var3: { // The third variation
                 button: {
                     x: 1345,
                     y: 485,
@@ -191,6 +218,7 @@ function createBlock() {
         }
     }
 
+    //Set the fly image 
     newBlock.price.flyImg.img = UI.decoUI.leftBar.panel.fly.img;
 
     return newBlock;
