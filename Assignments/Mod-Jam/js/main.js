@@ -3,6 +3,17 @@
 let state = "";
 let clicked = false;
 let totalFlies = 0;
+let canvas = undefined;
+// let png = undefined;
+let spacePressed = false;
+
+let png = {
+    x: 720,
+    y: 405,
+    w: 490,
+    h: 405,
+    img: ""
+}
 
 function preload() {
     preloadOptions();
@@ -14,11 +25,13 @@ function preload() {
  * Creates the canvas and initializes the fly
  */
 function setup() {
-    createCanvas(1440, 810);
+    canvas = createCanvas(1440, 810);
     state = "title";
     // setupDecoratingGame();
     setupFrogFrogFrog();
     setupDecoratingGame();
+    png.img = createImage(490, 405);
+
 }
 
 function draw() {
@@ -33,6 +46,10 @@ function draw() {
         // drawTempImg();
     } else if (state === "finished") {
         drawEnd();
+    }
+
+    if (spacePressed) {
+        saveCreation();
     }
 }
 
@@ -123,6 +140,27 @@ function mouseReleased() {
     mouseReleasedDecorate();
 }
 
+function saveCreation() {
+    //Display image of decoration
+    push();
+    imageMode(CENTER);
+    image(png.img, png.x, png.y);
+    pop();
+}
+
+function keyTyped(event) {
+    if (state === "decorate") {
+        if (event.key === " ") {
+            spacePressed = true;
+            png.img.copy(canvas, 230, 0, 980, 810, 0, 0, png.w, png.h);
+
+        }
+        if (event.key === "s") {
+            png.save("png", "png");
+        }
+    }
+
+}
 
 //Bugs
 //my buttons in general are wank
