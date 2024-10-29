@@ -1,16 +1,17 @@
 "use strict";
 
-
+//The buttons in the game
+//These should have been placed in the UI property
 let buttons = {
     play: {
-        x: 720,
-        y: 405,
-        w: 400,
-        h: 200,
-        txt: "PLAY",
-        txtSize: 100,
-        state: "title",
-        key: 0
+        x: 720, //The x coordinate of the button
+        y: 405, //The y coordinate of the button
+        w: 400, //The width of the button
+        h: 200, //The height of the button
+        txt: "PLAY", //The text on the button
+        txtSize: 100, //The size of the button
+        state: "title", //The state the button is in
+        key: 0 //Its "key" code
     },
     menuChoose: {
         x: 150,
@@ -74,16 +75,18 @@ let buttons = {
     }
 }
 
+//Holds (most of) the UI properties for the game
+//The others are... a little scattered, sorry
 const UI = {
-    menuUI: {
-        titleTxt: {
+    menuUI: { //Holds the properties for the menu
+        titleTxt: { //The title
             x: 720,
             y: 100,
             size: 60,
             weight: 2,
             txt: "Amphibian Design",
         },
-        subTxt: {
+        subTxt: { //The subtitle
             x: 720,
             y: 200,
             size: 30,
@@ -92,20 +95,20 @@ const UI = {
         },
         fill: "#18284a",
     },
-    frogUI: {
-        bar: {
+    frogUI: { //Holds the properties for the frogfrogfrog game
+        bar: { //The grass
             x: 720,
             y: 710,
             w: 1440,
             h: 200
         },
-        txt: {
+        txt: { //The text
             x: 720,
             y: 710,
             size: 50,
             txt: " = "
         },
-        fly: {
+        fly: { //The fly image
             x: 650,
             y: 710,
             w: 200,
@@ -113,14 +116,14 @@ const UI = {
             img: ""
         }
     },
-    decoUI: {
-        leftBar: {
+    decoUI: { //Holds the properties for the decoration state
+        leftBar: { //The left side of the UI
             x: 0,
             y: 0,
             w: 230,
             h: 810,
             fill: "#40985e",
-            panel: {
+            panel: { //The white panel holding the totla flies and trashcan
                 x: 115,
                 y: 417,
                 w: 200,
@@ -153,7 +156,7 @@ const UI = {
                     txt: " =   0"
                 }
             },
-            howToPlay: {
+            howToPlay: { //The text explaining how to play
                 x: 10,
                 y: 660,
                 size: 18,
@@ -164,13 +167,13 @@ const UI = {
             }
 
         },
-        rightBar: {
+        rightBar: { //The right side of the UI
             x: 1210,
             y: 0,
             w: 230,
             h: 810,
             fill: "#40985e",
-            panel: {
+            panel: { //The white panel holding the scroll bar (the shop items and it sUI are stored in the shopItems/blocks arrays)
                 x: 1325,
                 y: 417,
                 w: 200,
@@ -191,7 +194,7 @@ const UI = {
                     fill: "#96beb1"
                 }
             },
-            label: {
+            label: { //the SHOP label
                 panel: {
                     x: 1325,
                     y: 100,
@@ -207,7 +210,7 @@ const UI = {
                     txt: "SHOP"
                 }
             },
-            sneakyPanels: {
+            sneakyPanels: { //Sneaky green panels that hide the shop items from view when they get scrolled
                 sneakyTop: {
                     x: 1210,
                     y: 0,
@@ -224,7 +227,7 @@ const UI = {
                 }
             }
         },
-        hiddenText: {
+        hiddenText: { //The watermark
             isActive: false,
             txt: {
                 txt: "Created in \"Amphibean Design\" by Diana Edvi",
@@ -237,7 +240,7 @@ const UI = {
 
         }
     },
-    endUI: {
+    endUI: { //Holds the properties for the end state
         txt: {
             txt: "What a beautiful design!\n Click 's' or 'S' to save a PNG of your creation\nThanks for playing :)",
             x: 720,
@@ -293,6 +296,9 @@ function drawFly() {
     pop();
 }
 
+/**
+ Draw function that will be called from the main draw event
+ */
 function drawFrogUI() {
     //Draw bottom bar
     push();
@@ -314,7 +320,6 @@ function drawFrogUI() {
     imageMode(CENTER);
     image(UI.frogUI.fly.img, UI.frogUI.fly.x, UI.frogUI.fly.y, UI.frogUI.fly.w, UI.frogUI.fly.h);
     pop();
-
 }
 
 /**
@@ -326,6 +331,7 @@ function drawFrogUI() {
  * @param dark the darkest shade in the pallette
  */
 function drawHouseBackground(light, midLight, mid, midDark, dark) {
+    //Draw background and make noStroke the default for backgrounds
     push();
     background(light);
     noStroke();
@@ -392,6 +398,7 @@ function drawHouseBackground(light, midLight, mid, midDark, dark) {
     ellipse(450, 750, 100, 75);
     pop();
 
+    //Draw triangles in lily pads
     push();
     fill(light);
     triangle(925, 725, 1000, 650, 1000, 750);
@@ -409,6 +416,7 @@ function drawHouseBackground(light, midLight, mid, midDark, dark) {
  * @param dark the darkest shade in the pallette
  */
 function drawTreeBackground(light, midLight, mid, midDark, dark) {
+    //Draw background and make noStroke the default for backgrounds
     push();
     noStroke();
     background(light);
@@ -429,7 +437,7 @@ function drawTreeBackground(light, midLight, mid, midDark, dark) {
 
     push();
     fill(dark);
-    //Little cirlces
+    //Little circles
     ellipse(250, 450, 50);
     ellipse(225, 450, 50);
     ellipse(270, 420, 50);
@@ -479,6 +487,7 @@ function drawTreeBackground(light, midLight, mid, midDark, dark) {
     ellipse(580, 600, 75, 40);
     pop();
 
+    //Draw triangle in lilypad
     push();
     fill(light);
     triangle(570, 600, 500, 575, 450, 625);
@@ -507,9 +516,13 @@ function drawTreeBackground(light, midLight, mid, midDark, dark) {
     pop();
 }
 
+/**
+ * Draw the UI elements for the decoration state
+ * Includes panels and their contents as well as how-to-play text
+ */
 function drawDecoUI() {
 
-    //Draw left side of game UI
+    //Draw left side of game UI:
 
     //Draw sidebar
     drawSideBar(UI.decoUI.leftBar);
@@ -526,6 +539,7 @@ function drawDecoUI() {
     image(UI.decoUI.leftBar.panel.fly.img, UI.decoUI.leftBar.panel.fly.x, UI.decoUI.leftBar.panel.fly.y, UI.decoUI.leftBar.panel.fly.w, UI.decoUI.leftBar.panel.fly.h);
     textAlign(CENTER, CENTER);
     text(UI.decoUI.leftBar.panel.txt.txt, UI.decoUI.leftBar.panel.txt.x, UI.decoUI.leftBar.panel.txt.y);
+
     push();
     textSize(UI.decoUI.leftBar.panel.trashcan.txt.size);
     text(UI.decoUI.leftBar.panel.trashcan.txt.txt, UI.decoUI.leftBar.panel.trashcan.txt.x, UI.decoUI.leftBar.panel.trashcan.txt.y);
@@ -533,7 +547,7 @@ function drawDecoUI() {
     pop();
 
 
-    //Draw right side of game UI
+    //Draw right side of game UI:
 
     //Draw sidebar
     drawSideBar(UI.decoUI.rightBar);
@@ -580,10 +594,10 @@ function drawDecoUI() {
     pop();
 }
 
+/**
+ * Draws the watermark
+ */
 function drawHiddenText() {
-    if (UI.decoUI.hiddenText.isActive) {
-        console.log("entereddd");
-    }
     //Draw hidden text
     push();
     fill(UI.decoUI.hiddenText.txt.fill);
@@ -595,17 +609,27 @@ function drawHiddenText() {
     pop();
 }
 
+/**
+ * Creates default rectangle (with hard edges)
+ * @param sidebar The rectangle to be drawn
+ */
 function drawSideBar(sidebar) {
+    //Draw the rectangle
     push();
     noStroke();
     fill(sidebar.fill);
     rectMode(CORNER);
     rect(sidebar.x, sidebar.y, sidebar.w, sidebar.h);
     pop();
-
 }
 
+/**
+ * Creates a default rectangle (with curved edges)
+ * I am aware that I could have merged this with the previous one
+ * @param panel The rectangle to be drawn
+ */
 function drawPanel(panel) {
+    //Draw the panel
     push();
     noStroke();
     rectMode(CENTER);
@@ -614,11 +638,17 @@ function drawPanel(panel) {
     pop();
 }
 
+/**
+ * Draws the options state
+ * Includes two options for background images, three for color palettes, and some buttons
+ */
 function drawSelections() {
+    //Define text
     let backgroundStr = "Select a background to decorate";
     let colorStr = "And a color palette";
     background("#96beb1");
 
+    //Draw buttons
     drawButton(buttons.menuChoose);
     drawButton(buttons.ready);
 
@@ -644,18 +674,25 @@ function drawSelections() {
     pop();
 }
 
+/**
+ * Draws an outline around a selected object
+ * @param background A string dictating which background was selected (left or right)
+ */
 function drawOutlines(background) {
+    //Draw the outlines
     push();
     stroke("black");
     strokeWeight(5);
     noFill();
     rectMode(CENTER);
+    //Draw outline of selected background
     if (background === "left") {
         rect(images.img1.x, images.img1.y, images.img1.w, images.img1.h);
     } else if (background === "right") {
         rect(images.img2.x, images.img2.y, images.img2.w, images.img2.h);
     }
 
+    //Draw outline of selected palette
     if (colorSelect === "purple") {
         rect(images.img3.x, images.img3.y, images.img3.w, images.img3.h);
     } else if (colorSelect === "green") {
@@ -666,25 +703,40 @@ function drawOutlines(background) {
     pop();
 }
 
+/**
+ * Draw function that will be called from the main draw event
+ * Draw's the menu. Includes text and a button
+ */
 function drawMenu() {
+    //Draw the text
     push();
     background("#96beb1");
     fill(UI.menuUI.fill)
     stroke("#18284a");
     strokeWeight(UI.menuUI.titleTxt.weight);
     textAlign(CENTER, CENTER);
+
+    //Draw the title
     push();
-    pop();
     textSize(UI.menuUI.titleTxt.size);
     text(UI.menuUI.titleTxt.txt, UI.menuUI.titleTxt.x, UI.menuUI.titleTxt.y)
+    pop();
+
+    //Draw the subtitle
     push();
     textSize(UI.menuUI.subTxt.size);
     text(UI.menuUI.subTxt.txt, UI.menuUI.subTxt.x, UI.menuUI.subTxt.y)
     pop();
+
     pop();
+    //Draw the Play button
     drawButton(buttons.play);
 }
 
+/**
+ * Draw function that will be called from the main draw event
+ * Draws the end screen
+ */
 function drawEnd() {
     background("#586c78");
 
@@ -698,13 +750,20 @@ function drawEnd() {
     text(UI.endUI.txt.txt, UI.endUI.txt.x, UI.endUI.txt.y)
     pop();
 
+    //Draw the captured image
     drawPNG();
+    //Draw the Play Again button
     drawButton(buttons.playAgain);
 }
 
+/**
+ * Wrapper function that handles drawing buttons
+ * In hindsight, I should not have put my button handler in here.
+ * @param button The button properties to be drawn
+ */
 function drawButton(button) {
-    push();
     //Draw rect
+    push();
     rectMode(CENTER);
     fill("#fda9a9");
     rect(button.x, button.y, button.w, button.h, 20);
@@ -720,22 +779,26 @@ function drawButton(button) {
     text(button.txt, button.x, button.y);
     pop();
 
+    //Handle button logic
     buttonHandler(button);
 }
 
-function drawTemp() {
-    push();
-    fill("red");
-    ellipse(1315, 194, 20);
-    pop();
-}
-
+/**
+ * Draws the sneaky panels that hide the shop items as they are scrolled
+ */
 function sneakyPanel() {
+    //Draw rects
     drawSideBar(UI.decoUI.rightBar.sneakyPanels.sneakyTop);
     drawSideBar(UI.decoUI.rightBar.sneakyPanels.sneakyBottom);
 }
 
+/**
+ * Separate button function for the buy buttons
+ * I separated this from the other one because my other button function is incredibly finicky and I wanted to start over lol
+ * @param button The button properties to be drawn
+ */
 function drawBuyButton(button) {
+    //Draw rect
     push()
     fill(button.fill);
     stroke(0);
@@ -743,6 +806,7 @@ function drawBuyButton(button) {
     rect(button.x, button.y, button.w, button.h, 10);
     pop();
 
+    //Draw text
     push();
     fill("black");
     strokeWeight(2);
@@ -756,7 +820,6 @@ function drawBuyButton(button) {
  * Displays the image that will be saved by the user
  */
 function drawPNG() {
-
     //Display image of decoration
     push();
     stroke("white");
@@ -767,32 +830,3 @@ function drawPNG() {
     image(UI.endUI.png.img, UI.endUI.png.x, UI.endUI.png.y);
     pop();
 }
-
-
-"#ebf9ff"
-"#87a9c5"
-"#52a5de"
-"#18284a"
-"#070810"
-"#d1cb95"
-"#40985e"
-"#1a644e"
-"#04373b"
-"#0a1a2f"
-"#f4c4d4"
-"#ea92ab"
-"#af7fc2"
-"#8c76be"
-"#61567d"
-"#d5d5d5"
-"#b0b0b0"
-"#878787"
-"#5b5b5b"
-"#3a3a3a"
-"#fda9a9"
-"#f3eded"
-"#b9eedc"
-"#96beb1"
-"#586c78"
-
-"#587dca";
