@@ -7,13 +7,6 @@ let canvas = undefined;
 // let png = undefined;
 let spacePressed = false;
 
-let png = {
-    x: 720,
-    y: 405,
-    w: 490,
-    h: 405,
-    img: ""
-}
 
 function preload() {
     preloadOptions();
@@ -30,7 +23,7 @@ function setup() {
     // setupDecoratingGame();
     setupFrogFrogFrog();
     setupDecoratingGame();
-    png.img = createImage(490, 405);
+    UI.endUI.png.img = createImage(490, 405);
 
 }
 
@@ -46,10 +39,7 @@ function draw() {
         // drawTempImg();
     } else if (state === "finished") {
         drawEnd();
-    }
-
-    if (spacePressed) {
-        saveCreation();
+        // drawPNG();
     }
 }
 
@@ -140,23 +130,15 @@ function mouseReleased() {
     mouseReleasedDecorate();
 }
 
-function saveCreation() {
-    //Display image of decoration
-    push();
-    imageMode(CENTER);
-    image(png.img, png.x, png.y);
-    pop();
-}
 
+/**
+ * If the user clicks 's' and is in the end state, they will download a PNG of their creation
+ * @param event
+ */
 function keyTyped(event) {
-    if (state === "decorate") {
-        if (event.key === " ") {
-            spacePressed = true;
-            png.img.copy(canvas, 230, 0, 980, 810, 0, 0, png.w, png.h);
-
-        }
-        if (event.key === "s") {
-            png.save("png", "png");
+    if (state === "finished") {
+        if (event.key === "s" || event.key === "S") {
+            UI.endUI.png.img.save("png", "png");
         }
     }
 

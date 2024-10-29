@@ -133,6 +133,10 @@ function buttonHandlerOptions(button) {
             state = "decorate";
         }
     } else if (mouseX > 1260 && mouseX < 1400 && mouseY > 650 && mouseY < 730 && state === "decorate") {
+        //Draw the hidden text for only one frame
+        drawHiddenText();
+        //Take image of the canvas
+        UI.endUI.png.img.copy(canvas, 230, 0, 980, 810, 0, 0, UI.endUI.png.w, UI.endUI.png.h);
         state = "finished";
     }
 }

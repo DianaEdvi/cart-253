@@ -44,11 +44,11 @@ let buttons = {
     },
     playAgain: {
         x: 720,
-        y: 405,
-        w: 500,
-        h: 200,
+        y: 700,
+        w: 350,
+        h: 120,
         txt: "PLAY AGAIN!",
-        txtSize: 80,
+        txtSize: 50,
         state: "finished",
         key: 5
     },
@@ -223,6 +223,35 @@ const UI = {
                     fill: "#40985e"
                 }
             }
+        },
+        hiddenText: {
+            isActive: false,
+            txt: {
+                txt: "Created in \"Amphibean Design\" by Diana Edvi",
+                x: 1000,
+                y: 797,
+                size: 20,
+                strokeWeight: 1,
+                fill: "black"
+            }
+
+        }
+    },
+    endUI: {
+        txt: {
+            txt: "What a beautiful design!\n Click 's' or 'S' to save a PNG of your creation\nThanks for playing :)",
+            x: 720,
+            y: 95,
+            size: 40,
+            strokeWeight: 2,
+            fill: "white"
+        },
+        png: {
+            x: 720,
+            y: 400,
+            w: 490,
+            h: 405,
+            img: "",
         }
     }
 }
@@ -549,8 +578,21 @@ function drawDecoUI() {
     fill(UI.decoUI.leftBar.howToPlay.fill);
     text(UI.decoUI.leftBar.howToPlay.txt, UI.decoUI.leftBar.howToPlay.x, UI.decoUI.leftBar.howToPlay.y, UI.decoUI.leftBar.w - 10);
     pop();
+}
 
-    // drawShop();
+function drawHiddenText() {
+    if (UI.decoUI.hiddenText.isActive) {
+        console.log("entereddd");
+    }
+    //Draw hidden text
+    push();
+    fill(UI.decoUI.hiddenText.txt.fill);
+    textAlign(CENTER, CENTER);
+    stroke("black");
+    strokeWeight(UI.decoUI.hiddenText.txt.strokeWeight);
+    textSize(UI.decoUI.hiddenText.txt.size);
+    text(UI.decoUI.hiddenText.txt.txt, UI.decoUI.hiddenText.txt.x, UI.decoUI.hiddenText.txt.y)
+    pop();
 }
 
 function drawSideBar(sidebar) {
@@ -645,6 +687,8 @@ function drawMenu() {
 
 function drawEnd() {
     background("#586c78");
+
+    drawPNG();
     drawButton(buttons.playAgain);
 }
 
@@ -695,6 +739,22 @@ function drawBuyButton(button) {
     textSize(20);
     textAlign(CENTER, CENTER);
     text("BUY", button.x, button.y + 2);
+    pop();
+}
+
+/**
+ * Displays the image that will be saved by the user
+ */
+function drawPNG() {
+
+    //Display image of decoration
+    push();
+    stroke("white");
+    strokeWeight(20);
+    imageMode(CENTER);
+    rectMode(CENTER);
+    rect(UI.endUI.png.x, UI.endUI.png.y, UI.endUI.png.w, UI.endUI.png.h);
+    image(UI.endUI.png.img, UI.endUI.png.x, UI.endUI.png.y);
     pop();
 }
 
