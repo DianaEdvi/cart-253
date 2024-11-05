@@ -19,11 +19,12 @@ function setup() {
     background(0);
 
     b1 = new Button("button", 100, 100, 150, 80, boo);
-    b1.buttonStyles("blue", "9");
+    b1.buttonStyles("blue");
 
-    let b2 = new Button("ahh", 500, 500, 300, 200, () => {
+    let b2 = new Button("ahh", 400, 400, 300, 200, () => {
         console.log("ahhhhh");
     });
+    b2.buttonStyles("red", "90px");
 }
 
 function boo() {
