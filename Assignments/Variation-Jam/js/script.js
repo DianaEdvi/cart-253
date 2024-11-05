@@ -11,15 +11,27 @@
 /**
  * OH LOOK I DIDN'T DESCRIBE SETUP!!
  */
+
+let b1;
+
 function setup() {
-    createCanvas(640, 640);
+    canvas = createCanvas(640, 640);
     background(0);
+
+    b1 = new Button("button", 100, 100, 150, 80, boo);
+    b1.buttonStyles("blue", "9");
+
+    let b2 = new Button("ahh", 500, 500, 300, 200, () => {
+        console.log("ahhhhh");
+    });
 }
 
+function boo() {
+    console.log("Hello world");
+}
 
 /**
  * OOPS I DIDN'T DESCRIBE WHAT MY DRAW DOES!
  */
 function draw() {
-
 }
