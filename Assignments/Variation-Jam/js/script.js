@@ -41,10 +41,11 @@ function setup() {
 function draw() {
     background("#6160b2");
     soloPong(paddle, ball);
+    randomCow(cow);
 }
 
 let paddle = {x: 320, y: 609, w: 100, h: 30, f: "white", speed: 10};
-let ball = {x: 320, y: 320, w: 50, f: "white", speedY: 5, speedX: 3}; // Added speedX for horizontal movement
+let ball = {x: 320, y: 320, w: 50, f: "white", speedY: 1, speedX: 3}; // Added speedX for horizontal movement
 
 function soloPong(paddle, ball) {
     // Draw paddle
@@ -97,6 +98,25 @@ function soloPong(paddle, ball) {
         } else {
             ball.speedX = abs(ball.speedX); // Go right
         }
+    }
+}
+
+let cow = {x: 640, y: 100, w: 50, f: "black"}
+
+function randomCow(cow) {
+    //Draw cow
+    push();
+    fill(cow.f);
+    ellipse(cow.x, cow.y, cow.w);
+    pop();
+
+    //Move cow
+    cow.x -= 1;
+    cow.y += 0.25;
+
+    if (mouseIsPressed && mouseX >= cow.x - cow.w / 2 && mouseX <= cow.x + cow.x / 2 && mouseY >= cow.y - cow.w / 2 && mouseY <= cow.y + cow.w / 2) {
+        console.log("moo sound");
+        cow.f = "#69b260";
     }
 }
 
