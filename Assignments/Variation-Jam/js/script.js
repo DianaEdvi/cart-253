@@ -8,6 +8,7 @@
 
 "use strict";
 
+
 /**
  * OH LOOK I DIDN'T DESCRIBE SETUP!!
  */
@@ -42,6 +43,7 @@ function draw() {
     background("#6160b2");
     soloPong(paddle, ball);
     randomCow(cow);
+    mathing(mathStr);
 }
 
 let paddle = {x: 320, y: 609, w: 100, h: 30, f: "white", speed: 10};
@@ -114,11 +116,47 @@ function randomCow(cow) {
     cow.x -= 1;
     cow.y += 0.25;
 
+    //Check if mouse clicked cow
     if (mouseIsPressed && mouseX >= cow.x - cow.w / 2 && mouseX <= cow.x + cow.x / 2 && mouseY >= cow.y - cow.w / 2 && mouseY <= cow.y + cow.w / 2) {
         console.log("moo sound");
         cow.f = "#69b260";
     }
 }
+
+let isClicking = false;
+let mathStr = {str: undefined, x: 320, y: 100, w: 250, f: "black", size: 32};
+
+function mathing(mathStr) {
+    //Initialize
+    let operators;
+    let randomOperator;
+    let randomNumber1;
+    let randomNumber2;
+
+    //Check if space is pressed and if so, generate a new equation
+    if (keyIsDown(32) && isClicking === false) {
+        //Generate equation
+        operators = [" + ", " - "];
+        randomOperator = random(operators);
+        randomNumber1 = floor(random(50));
+        randomNumber2 = floor(random(50));
+
+        mathStr.str = randomNumber1 + randomOperator + randomNumber2;
+        console.log(mathStr.str);
+        isClicking = true;
+    } else if (!keyIsDown(32)) {
+        isClicking = false;
+    }
+
+    //Draw text
+    push();
+    fill(mathStr.f);
+    textSize(mathStr.size);
+    textAlign(CENTER, CENTER);
+    text(mathStr.str, mathStr.x, mathStr.y);
+    pop();
+}
+
 
 
 
