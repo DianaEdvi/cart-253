@@ -41,7 +41,7 @@ function setup() {
 function draw() {
     background("#6160b2");
     soloPong(paddle, ball);
-    bannerAnimation()
+    bannerAnimation("Boo000 000 000000n 00000 000000 000000 00000")
     randomCow(cow);
     mathing(mathStr);
 }
@@ -66,17 +66,26 @@ let banners = {
         y3: undefined,
         x4: undefined,
         y4: undefined
+    },
+    text: {
+        x: undefined,
+        y: undefined,
+        w: 390,
+        h: 100,
+        size: 30,
+        f: "#5f2929",
     }
+
 }
 
 let bannerState = "forwards"
 
 /**
  * Pushes a banner onto the screen and keeps it there for a few seconds. Then it gets pulled off the screen
- * @param displaying
+ * @param displayStr
  */
-function bannerAnimation(displaying) {
-    //Make white banner depend on red banner
+function bannerAnimation(displayStr) {
+    //Make banner contents depend on red banner
     banners.white.x1 = banners.red.x1 - 30
     banners.white.y1 = banners.red.y1 + 30
     banners.white.x2 = banners.red.x2 - 30
@@ -85,6 +94,9 @@ function bannerAnimation(displaying) {
     banners.white.y3 = banners.red.y3 + 30
     banners.white.x4 = banners.red.x4 - 30
     banners.white.y4 = banners.red.y4 + 30
+
+    banners.text.x = banners.red.x2 + (banners.red.x4 - banners.red.x2) / 2
+    banners.text.y = banners.red.y2 + (banners.red.y1 - banners.red.y2) / 2
 
     //Push banner
     if (banners.red.x1 > 100 && bannerState === "forwards") {
@@ -109,17 +121,37 @@ function bannerAnimation(displaying) {
         banners.red.x4 += 20
     }
 
+
     //Draw white banner under red banner
-    push()
-    fill("#faf8d6")
+    push();
+    fill("#faf8d6");
     quad(banners.white.x1, banners.white.y1, banners.white.x2, banners.white.y2, banners.white.x3, banners.white.y3, banners.white.x4, banners.white.y4);
-    pop()
+    pop();
+    console.log(banners.text.x, banners.text.y, banners.text.w, banners.text.h)
 
     //Draw red banner
-    push()
-    fill("#ff6a6a")
+    push();
+    fill("#ff6a6a");
     quad(banners.red.x1, banners.red.y1, banners.red.x2, banners.red.y2, banners.red.x3, banners.red.y3, banners.red.x4, banners.red.y4);
-    pop()
+    pop();
+    //Rect
+    push();
+    fill("red")
+    rectMode(CENTER)
+    rect(banners.text.x, banners.text.y, banners.text.w, banners.text.h)
+    console.log(banners.text.x, banners.text.y, banners.text.w, banners.text.h)
+    pop();
+
+    //Draw the text on top
+    push();
+    fill(banners.text.f);
+    textAlign(CENTER, CENTER);
+    rectMode(CENTER);
+    textWrap(WORD);
+    textSize(banners.text.size);
+    noStroke();
+    text(displayStr, banners.text.x, banners.text.y, banners.text.w);
+    pop();
 }
 
 
@@ -303,6 +335,7 @@ function mathing(mathStr) {
 
 //Todo
 // import assets (sound and drawings)
+// import a font im sick of this one
 // create timing for math stuff
 // create fading for math stuff?
 // create timing for cow stuff
