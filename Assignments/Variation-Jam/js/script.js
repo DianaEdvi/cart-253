@@ -33,23 +33,105 @@ function setup() {
     background("#6160b2");
     states.current = states.menu;
     // menu();
-
 }
 
 /**
- * OOPS I DIDN'T DESCRIBE WHAT MY DRAW DOES!
+ * Draw the game
  */
 function draw() {
     background("#6160b2");
     soloPong(paddle, ball);
+    bannerAnimation()
     randomCow(cow);
     mathing(mathStr);
 }
 
+let banners = {
+    red: {
+        x1: 690,
+        y1: 540,
+        x2: 740,
+        y2: 340,
+        x3: 1180,
+        y3: 340,
+        x4: 1130,
+        y4: 540
+    },
+    white: {
+        x1: undefined,
+        y1: undefined,
+        x2: undefined,
+        y2: undefined,
+        x3: undefined,
+        y3: undefined,
+        x4: undefined,
+        y4: undefined
+    }
+}
+
+let bannerState = "forwards"
+
+/**
+ * Pushes a banner onto the screen and keeps it there for a few seconds. Then it gets pulled off the screen
+ * @param displaying
+ */
+function bannerAnimation(displaying) {
+    //Make white banner depend on red banner
+    banners.white.x1 = banners.red.x1 - 30
+    banners.white.y1 = banners.red.y1 + 30
+    banners.white.x2 = banners.red.x2 - 30
+    banners.white.y2 = banners.red.y2 + 30
+    banners.white.x3 = banners.red.x3 - 30
+    banners.white.y3 = banners.red.y3 + 30
+    banners.white.x4 = banners.red.x4 - 30
+    banners.white.y4 = banners.red.y4 + 30
+
+    //Push banner
+    if (banners.red.x1 > 100 && bannerState === "forwards") {
+        //Move banners
+        banners.red.x1 -= 20
+        banners.red.x2 -= 20
+        banners.red.x3 -= 20
+        banners.red.x4 -= 20
+    }
+
+    // Wait 3 seconds
+    setTimeout(() => {
+        bannerState = "backwards"
+    }, 3000);
+
+    //Pull banner
+    if (banners.red.x1 < 690 && bannerState === "backwards") {
+        //Move banners
+        banners.red.x1 += 20
+        banners.red.x2 += 20
+        banners.red.x3 += 20
+        banners.red.x4 += 20
+    }
+
+    //Draw white banner under red banner
+    push()
+    fill("#faf8d6")
+    quad(banners.white.x1, banners.white.y1, banners.white.x2, banners.white.y2, banners.white.x3, banners.white.y3, banners.white.x4, banners.white.y4);
+    pop()
+
+    //Draw red banner
+    push()
+    fill("#ff6a6a")
+    quad(banners.red.x1, banners.red.y1, banners.red.x2, banners.red.y2, banners.red.x3, banners.red.y3, banners.red.x4, banners.red.y4);
+    pop()
+}
+
+
 let paddle = {x: 320, y: 609, w: 100, h: 30, f: "white", speed: 10};
 let ball = {x: 320, y: 320, w: 50, f: "white", speedY: 1, speedX: 3}; // Added speedX for horizontal movement
-
+/**
+ * Creates the solo pong mechanic. Draws the ball and the paddle and checks for user input to move the paddle
+ * @param paddle
+ * @param ball
+ */
 function soloPong(paddle, ball) {
+    bannerAnimation();
     // Draw paddle
     push();
     fill(paddle.f);
@@ -105,6 +187,10 @@ function soloPong(paddle, ball) {
 
 let cow = {x: 640, y: 100, w: 50, f: "black"}
 
+/**
+ * Makes a random cow fly across the screen. The user must tap it before it moves off-screen
+ * @param cow
+ */
 function randomCow(cow) {
     //Draw cow
     push();
@@ -128,6 +214,10 @@ let mathStr = {str: undefined, x: 320, y: 30, w: 250, f: "black", size: 32};
 let answerString = ""
 let otherString = ""
 
+/**
+ * Displays a math problem onto the screen that the user must solve before ...?
+ * @param mathStr the variable holding the display string
+ */
 function mathing(mathStr) {
     //Initialize
     let operators;
@@ -208,9 +298,26 @@ function mathing(mathStr) {
     textAlign(CENTER, CENTER);
     text(mathStr.str, mathStr.x, mathStr.y);
     pop();
-
 }
 
+
+//Todo
+// import assets (sound and drawings)
+// create timing for math stuff
+// create fading for math stuff?
+// create timing for cow stuff
+// check for microphone and mouse inputs
+// water plant function
+// scream into mic function
+// banner function
+// "health" bar function (have a "succeeded" bool function)
+// menu
+// end game
+
+//Bugs
+// The questions have a weird bug where sometimes one of them turns green
+// Button outlines
+//
 
 
 
