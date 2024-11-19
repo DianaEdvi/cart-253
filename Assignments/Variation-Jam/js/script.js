@@ -124,7 +124,9 @@ function randomCow(cow) {
 }
 
 let isClicking = false;
-let mathStr = {str: undefined, x: 320, y: 100, w: 250, f: "black", size: 32};
+let mathStr = {str: undefined, x: 320, y: 30, w: 250, f: "black", size: 32};
+let answerString = ""
+let otherString = ""
 
 function mathing(mathStr) {
     //Initialize
@@ -132,21 +134,72 @@ function mathing(mathStr) {
     let randomOperator;
     let randomNumber1;
     let randomNumber2;
+    let solutionLocation;
 
+    //Take out of if statement when you have a proper event set up
     //Check if space is pressed and if so, generate a new equation
     if (keyIsDown(32) && isClicking === false) {
+        isClicking = true;
+
         //Generate equation
         operators = [" + ", " - "];
         randomOperator = random(operators);
         randomNumber1 = floor(random(50));
         randomNumber2 = floor(random(50));
-
+        solutionLocation = floor(random(0, 2));
         mathStr.str = randomNumber1 + randomOperator + randomNumber2;
-        console.log(mathStr.str);
-        isClicking = true;
+
+        // Calculate answer
+        let answer = undefined;
+        let wrongAnswer = 1
+
+        if (randomOperator === " + ") {
+            answer = randomNumber1 + randomNumber2;
+            //If the answer is a negative, make false option negative as well
+            if (answer < 0) {
+                wrongAnswer = -1
+            }
+            answerString = "" + answer
+            otherString = "" + (wrongAnswer * floor(random(0, 50)))
+            if (otherString === answerString) {
+                otherString = "" + (wrongAnswer * floor(random(0, 50)))
+            }
+        } else {
+            answer = randomNumber1 - randomNumber2;
+            //If the answer is a negative, make false option negative as well
+            if (answer < 0) {
+                wrongAnswer = -1
+            }
+            answerString = "" + answer
+            otherString = "" + (wrongAnswer * floor(random(0, 50)))
+            if (otherString === answerString) {
+                otherString = "" + (wrongAnswer * floor(random(0, 50)))
+            }
+        }
+
+        //Display on buttons
+        let leftButton;
+        let rightButton;
+
+        if (solutionLocation === 0) {
+            leftButton = new Button(answerString, 240, 100, 150, 80, () => leftButton.buttonStyles("green"));
+            rightButton = new Button(otherString, 420, 100, 150, 80, () => "");
+        } else {
+            leftButton = new Button(otherString, 240, 100, 150, 80, () => "");
+            rightButton = new Button(answerString, 420, 100, 150, 80, () => leftButton.buttonStyles("green"));
+        }
+
     } else if (!keyIsDown(32)) {
         isClicking = false;
     }
+
+    //Draw textbox
+    push()
+    fill("#363fa8")
+    noStroke()
+    rectMode(CENTER)
+    rect(mathStr.x, mathStr.y, mathStr.w, 40, 10)
+    pop()
 
     //Draw text
     push();
@@ -155,6 +208,7 @@ function mathing(mathStr) {
     textAlign(CENTER, CENTER);
     text(mathStr.str, mathStr.x, mathStr.y);
     pop();
+
 }
 
 
