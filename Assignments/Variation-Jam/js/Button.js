@@ -5,7 +5,8 @@
  * Keeps its position relative to the canvas upon resizing
  */
 class Button {
-    constructor(label, x, y, w, h, callBack) {
+    constructor(label, x, y, w, h, callBack = () => {
+    }) {
         //Save properties
         this.label = label;
         this.x = x;
@@ -33,30 +34,36 @@ class Button {
     /**
      * Allows you to change the style of the button
      * @param bg The background color
+     * @param label
      * @param border The color of the border
      * @param borderRadius The radius of the border
      * @param fontSize The size of the font
      * @param color The color of the font
      */
-    buttonStyles(bg = "red", fontSize = "32px", color = "black", border = "black", borderRadius = "5px",) {
+    buttonStyles(bg = "red", label = "none", fontSize = "32px", color = "black", border = "black", borderRadius = "5px",) {
         //Default button
         this.button.style('background-color', bg);
         this.button.style('font-size', fontSize);
         this.button.style('color', color);
         this.button.style("border", border);
         this.button.style('border-radius', borderRadius);
+        // Update the button label if provided
+        if (label) {
+            this.button.html(label);
+        }
     }
 
     /**
      * Update the position of the button relative to the canvas
      * Buttons are positioned via the center of the button
      */
-    updatePosition() {
+    updatePosition(offsetX = 0, offsetY = 0) {
         let canvasX = canvas.position().x;
         let canvasY = canvas.position().y;
-        this.button.position(canvasX - this.w / 2 + this.x, canvasY + this.y);
-    }
 
+        // Adjust the button position based on optional parameters
+        this.button.position(canvasX - this.w / 2 + this.x + offsetX, canvasY + this.y + offsetY);
+    }
 
 }
 
