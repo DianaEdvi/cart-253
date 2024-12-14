@@ -13,6 +13,9 @@ let hitCounter = 0;
  * @param ball
  */
 function soloPong(paddle, ball) {
+    if (!activeTasks.soloPong) {
+        activeTasks.task = "solo";
+    }
     handleHealth()
     // Draw paddle
     push();
@@ -78,7 +81,6 @@ function soloPong(paddle, ball) {
     ) {
         if (hitCounter >= 0) {
             hitCounter++;
-            console.log(hitCounter);
         }
         // Reverse vertical direction
         ball.speedY *= -1;
@@ -117,6 +119,9 @@ let cow = {x: 640, y: 100, w: 50, f: "black"}
  * @param cow
  */
 function randomCow(cow) {
+    if (!activeTasks.randomCow) {
+        activeTasks.task = "cow";
+    }
     //Draw cow
     push();
     fill(cow.f);
@@ -139,12 +144,14 @@ function randomCow(cow) {
         handleHealth(false);
         resetCow(cow);
     }
+
 }
 
 function resetCow(cow) {
     // Reset cow position to start again from the right
     cow.x = width + cow.w / 2; // Start on the right edge
     cow.y = random(100, height - 100); // Random vertical position
+    cow.f = "black";
 }
 
 
@@ -351,7 +358,7 @@ function keyPressed() {
         }
     }
 
-    if (key === 'b' && bannerTimerStarted === false) {
+    if (key === 'b' && timers.bannerTimerStarted === false) {
         playingBanner = true;
     }
 }

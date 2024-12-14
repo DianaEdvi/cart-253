@@ -27,7 +27,18 @@ let states = {
     mathPong: "math",
     colorPong: "color",
 }
-let playingBanner = false;
+let playingBanner = true;
+let activeTasks = {
+    task: "",
+    soloPong: false,
+    mathing: false,
+    randomCow: false,
+}
+
+let timers = {
+    bannerTimerStarted: false,
+    cowTimerStarted: false,
+}
 
 function setup() {
     canvas = createCanvas(640, 640);
@@ -43,14 +54,26 @@ function setup() {
 function draw() {
     background("#6160b2");
     if (playingBanner) {
-        bannerAnimation();
+        bannerAnimation(banners.text.text);
     }
-    // game();
+    if (hitCounter >= 1) {
+        if (hitCounter === 1 && !activeTasks.randomCow) {
+            playingBanner = true;
+        }
+
+        randomCow(cow);
+        if (!timers.cowTimerStarted) {
+            timers.cowTimerStarted = true;
+            setTimeout(() => {
+                randomCow(cow)
+                timers.cowTimerStarted = false;
+            }, 2000);
+        }
+
+    }
     handleHealth();
     displayHealth();
     soloPong(paddle, ball);
-    // bannerAnimation("Boo000 000 000000n 00000 000000 000000 00000")
-    // randomCow(cow);
     // if (startMath) {
     //     mathing(mathStr);
     // }
@@ -83,20 +106,19 @@ let banners = {
         w: 390,
         h: 100,
         size: 30,
-        f: "#5f2929",
+        f: "black",
+        text: undefined
     }
-
 }
 
 let bannerState = "forwards"
-let bannerTimerStarted = false; // Track if the timer is already started
-
 
 /**
  * Pushes a banner onto the screen and keeps it there for a few seconds. Then it gets pulled off the screen
  * @param displayStr
  */
 function bannerAnimation(displayStr) {
+    setBannerText();
     //Make banner contents depend on red banner
     banners.white.x1 = banners.red.x1 - 30
     banners.white.y1 = banners.red.y1 + 30
@@ -119,12 +141,12 @@ function bannerAnimation(displayStr) {
             banners.red.x2 -= 20;
             banners.red.x3 -= 20;
             banners.red.x4 -= 20;
-        } else if (!bannerTimerStarted) {
-            // Start the timer to change state to "backwards"
-            bannerTimerStarted = true;
+        } else if (!timers.bannerTimerStarted) {
+            // Keep the banner there for 3 seconds
+            timers.bannerTimerStarted = true;
             setTimeout(() => {
                 bannerState = "backwards";
-                bannerTimerStarted = false;
+                timers.bannerTimerStarted = false;
             }, 3000);
         }
     } else if (bannerState === "backwards") {
@@ -135,8 +157,10 @@ function bannerAnimation(displayStr) {
             banners.red.x3 += 20;
             banners.red.x4 += 20;
         } else {
+            // Reset variables
             bannerState = "forwards";
             playingBanner = false;
+            activeTasks.task = undefined;
         }
     }
 
@@ -170,6 +194,18 @@ function bannerAnimation(displayStr) {
     noStroke();
     text(displayStr, banners.text.x, banners.text.y, banners.text.w);
     pop();
+}
+
+function setBannerText() {
+    if (activeTasks.task === "solo") {
+        banners.text.text = "Don't drop the ball"
+        activeTasks.soloPong = true;
+    } else if (activeTasks.task === "cow") {
+        banners.text.text = "You should pet the cows methinks"
+        activeTasks.randomCow = true;
+    } else {
+        banners.text.text = undefined;
+    }
 }
 
 function resetGame() {
@@ -249,6 +285,8 @@ function game() {
 // banner function
 // Type what you see (select text box and type)
 // edit the health bar if missed task
+// Audio of me rambling
+// Timer for how long the player lasted
 // menu
 // end game
 
