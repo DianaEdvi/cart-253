@@ -5,6 +5,7 @@ let ball = {x: 320, y: 320, w: 50, f: "white", speedY: 1, speedX: 3}; // Added s
 let countdown = 3; // Countdown starts at 3 seconds
 let countdownActive = true; // Flag to control countdown state
 let countdownStartTime; // Tracks when the countdown starts (used to calculate how much time has passed since the countdown began)
+let hitCounter = 0;
 
 /**
  * Creates the solo pong mechanic. Draws the ball and the paddle and checks for user input to move the paddle
@@ -75,6 +76,10 @@ function soloPong(paddle, ball) {
         ball.x > paddle.x &&
         ball.x < paddle.x + paddle.w
     ) {
+        if (hitCounter >= 0) {
+            hitCounter++;
+            console.log(hitCounter);
+        }
         // Reverse vertical direction
         ball.speedY *= -1;
 
@@ -344,6 +349,10 @@ function keyPressed() {
             leftButton.buttonStyles("red", otherString); // Reset left button to red
             rightButton.buttonStyles("red", answerString); // Reset right button to red
         }
+    }
+
+    if (key === 'b' && bannerTimerStarted === false) {
+        playingBanner = true;
     }
 }
 

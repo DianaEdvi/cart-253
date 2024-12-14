@@ -27,6 +27,7 @@ let states = {
     mathPong: "math",
     colorPong: "color",
 }
+let playingBanner = false;
 
 function setup() {
     canvas = createCanvas(640, 640);
@@ -41,6 +42,10 @@ function setup() {
  */
 function draw() {
     background("#6160b2");
+    if (playingBanner) {
+        bannerAnimation();
+    }
+    // game();
     handleHealth();
     displayHealth();
     soloPong(paddle, ball);
@@ -84,6 +89,8 @@ let banners = {
 }
 
 let bannerState = "forwards"
+let bannerTimerStarted = false; // Track if the timer is already started
+
 
 /**
  * Pushes a banner onto the screen and keeps it there for a few seconds. Then it gets pulled off the screen
@@ -103,29 +110,35 @@ function bannerAnimation(displayStr) {
     banners.text.x = banners.red.x2 + (banners.red.x4 - banners.red.x2) / 2
     banners.text.y = banners.red.y2 + (banners.red.y1 - banners.red.y2) / 2
 
-    //Push banner
-    if (banners.red.x1 > 100 && bannerState === "forwards") {
-        //Move banners
-        banners.red.x1 -= 20
-        banners.red.x2 -= 20
-        banners.red.x3 -= 20
-        banners.red.x4 -= 20
+
+    // Handle banner movement based on state
+    if (bannerState === "forwards") {
+        if (banners.red.x1 > 100) {
+            // Move banners
+            banners.red.x1 -= 20;
+            banners.red.x2 -= 20;
+            banners.red.x3 -= 20;
+            banners.red.x4 -= 20;
+        } else if (!bannerTimerStarted) {
+            // Start the timer to change state to "backwards"
+            bannerTimerStarted = true;
+            setTimeout(() => {
+                bannerState = "backwards";
+                bannerTimerStarted = false;
+            }, 3000);
+        }
+    } else if (bannerState === "backwards") {
+        if (banners.red.x1 < 690) {
+            // Move banners back
+            banners.red.x1 += 20;
+            banners.red.x2 += 20;
+            banners.red.x3 += 20;
+            banners.red.x4 += 20;
+        } else {
+            bannerState = "forwards";
+            playingBanner = false;
+        }
     }
-
-    // Wait 3 seconds
-    setTimeout(() => {
-        bannerState = "backwards"
-    }, 3000);
-
-    //Pull banner
-    if (banners.red.x1 < 690 && bannerState === "backwards") {
-        //Move banners
-        banners.red.x1 += 20
-        banners.red.x2 += 20
-        banners.red.x3 += 20
-        banners.red.x4 += 20
-    }
-
 
     //Draw white banner under red banner
     push();
@@ -158,7 +171,6 @@ function bannerAnimation(displayStr) {
     text(displayStr, banners.text.x, banners.text.y, banners.text.w);
     pop();
 }
-
 
 function resetGame() {
     resetBall();
@@ -213,6 +225,15 @@ let startMath = false;
 
 function mouseClicked() {
     startMath = true;
+}
+
+function game() {
+    if (hitCounter === 1 && playingBanner === false) {
+        hitCounter = -1;
+        console.log("play animation")
+        playingBanner = true;
+        bannerAnimation()
+    }
 }
 
 
