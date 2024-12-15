@@ -54,6 +54,8 @@ let successes = {
     mathSuccess: false,
 }
 
+let hasClicked = false;
+
 function setup() {
     canvas = createCanvas(640, 640);
     background("#6160b2");
@@ -100,6 +102,7 @@ function draw() {
     }
     handleHealth();
     displayHealth();
+    hasClicked = false;
 }
 
 let banners = {
@@ -272,21 +275,49 @@ function displayHealth() {
     pop();
 }
 
+// Used for "animating" the health changes
+let increaseHealth = false;
+let increaseCounter = 0;
+let increaseAmount = 15;
+
+let decreaseHealth = false;
+let decreaseCounter = 0;
+let decreaseAmount = 10;
+
 function handleHealth(succeeded) {
     health.value = constrain(health.value, 0, maxHealth.value);
+
     if (succeeded === undefined) {
         health.value += 0.01;
     } else if (!succeeded) {
-        health.value -= 10;
+        decreaseHealth = true;
     } else {
+        increaseHealth = true;
+    }
+
+    // Handle health increase animation
+    if (increaseHealth && increaseCounter < increaseAmount) {
+        increaseCounter += 1;
         health.value += 1;
+    }
+    if (increaseCounter === increaseAmount) {
+        increaseCounter = 0;
+        increaseHealth = false;
+    }
+
+    // Handle health decrease animation
+    if (decreaseHealth && decreaseCounter < decreaseAmount) {
+        decreaseCounter += 1;
+        health.value -= 1;
+    }
+    if (decreaseCounter === decreaseAmount) {
+        decreaseCounter = 0;
+        decreaseHealth = false;
     }
 }
 
-let startMath = false;
-
 function mouseClicked() {
-    startMath = true;
+    hasClicked = true;
 }
 
 

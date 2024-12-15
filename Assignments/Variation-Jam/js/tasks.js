@@ -132,7 +132,7 @@ function randomCow(cow) {
     cow.y += 0.25;
 
     //Check if mouse clicked cow
-    if (mouseIsPressed && mouseX >= cow.x - cow.w / 2 && mouseX <= cow.x + cow.x / 2 && mouseY >= cow.y - cow.w / 2 && mouseY <= cow.y + cow.w / 2) {
+    if (hasClicked && !successes.cowSuccess && mouseX >= cow.x - cow.w / 2 && mouseX <= cow.x + cow.x / 2 && mouseY >= cow.y - cow.w / 2 && mouseY <= cow.y + cow.w / 2) {
         console.log("moo sound");
         cow.f = "#69b260";
         successes.cowSuccess = true;
@@ -148,7 +148,6 @@ function randomCow(cow) {
         }
         resetCow(cow);
     }
-
 }
 
 /**
@@ -283,10 +282,13 @@ function mathing() {
 
             // If the boxes have returned to off-screen, reset the values (takes two seconds)
             if (mathBoxes.question.y <= -110) {
+                if (!successes.mathSuccess) {
+                    handleHealth(successes.mathSuccess);
+                    successes.mathSuccess = undefined;
+                }
                 // Reset state
                 if (!resetInProgress) {
                     resetInProgress = true; // Prevent multiple resets
-                    handleHealth(successes.mathSuccess);
                     setTimeout(() => {
                         resetMathing();
                     }, 2000); // Pause for 2 seconds (2000 milliseconds)
@@ -296,17 +298,19 @@ function mathing() {
     }
 
     // Handle user clicks
-    if (mouseIsPressed) {
+    if (hasClicked) {
         if (isInArea(mathBoxes.answerLeft.x, mathBoxes.answerLeft.y, mathBoxes.answerLeft.w, mathBoxes.answerLeft.h)) {
             mathBoxes.answerLeft.fill = mathBoxes.answerLeft.isCorrect ? "green" : "#930000";
             successes.mathSuccess = mathBoxes.answerLeft.isCorrect;
             hasAnswered = true;
+            handleHealth(successes.mathSuccess);
             clearTimeout(timers.answerTimeout); // Stop the timer if answered
         }
         if (isInArea(mathBoxes.answerRight.x, mathBoxes.answerRight.y, mathBoxes.answerRight.w, mathBoxes.answerRight.h)) {
             mathBoxes.answerRight.fill = mathBoxes.answerRight.isCorrect ? "green" : "#930000";
             successes.mathSuccess = mathBoxes.answerRight.isCorrect;
             hasAnswered = true;
+            handleHealth(successes.mathSuccess);
             clearTimeout(timers.answerTimeout); // Stop the timer if answered
         }
     }
