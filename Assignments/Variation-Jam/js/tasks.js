@@ -192,20 +192,18 @@ let mathBoxes = {
     }
 }
 
-let hasAnswered = false;
-let answerString = "";
-let otherString = "";
+let hasAnswered = false; // Track whether the player has answered the equation
+let answerString = undefined; // The corrct answer
+let otherString = undefined; // The incorrect answer
 let equationGenerated = false; // Track if the equation has already been generated
 let solutionLocation = -1; // This will store the location of the correct answer (0 for left, 1 for right)
+let resetInProgress = undefined; // Check for timer before the function starts again
 
-let answerTimeout = 5000; // 5 seconds timeout
-let answerTimer = 0; // Track time since question was displayed
 function mathing() {
     if (!activeTasks.mathing) {
         activeTasks.task = "math";
     }
-
-    if (!equationGenerated) {
+    if (!equationGenerated && !resetInProgress) {
         // Initialize question and answers
         let operators = [" + ", " - "];
         let randomOperator = random(operators);
@@ -220,9 +218,13 @@ function mathing() {
             answerString = randomNumber1 - randomNumber2;
         }
 
-        otherString = "" + floor(random(50));
+        otherString = floor(random(70));
         while (otherString === answerString) {
-            otherString = "" + floor(random(50));
+            otherString = floor(random(70));
+        }
+
+        if (answerString < 0) {
+            otherString *= -1;
         }
 
         if (solutionLocation === 0) {
@@ -242,12 +244,11 @@ function mathing() {
         // Start timeout for answering
         clearTimeout(timers.answerTimeout); // Clear any existing timeout
         timers.answerTimeout = setTimeout(() => {
-            console.log("Time's up! Moving boxes back.");
             hasAnswered = true;
         }, 5000);
     }
 
-    // Constrain dem values
+    // Constrain box values
     mathBoxes.question.y = constrain(mathBoxes.question.y, -110, 30);
     mathBoxes.answerLeft.y = constrain(mathBoxes.answerLeft.y, -40, 100);
     mathBoxes.answerRight.y = constrain(mathBoxes.answerRight.y, -40, 100);
@@ -267,12 +268,18 @@ function mathing() {
 
             if (mathBoxes.question.y <= -110) {
                 // Reset state
-                mathBoxes.isActive = false;
-                equationGenerated = false;
-                mathBoxes.answerLeft.isCorrect = false;
-                mathBoxes.answerRight.isCorrect = false;
-                mathBoxes.answerLeft.fill = "red";
-                mathBoxes.answerRight.fill = "red";
+                if (!resetInProgress) {
+                    resetInProgress = true; // Prevent multiple resets
+                    setTimeout(() => {
+                        equationGenerated = false;
+                        mathBoxes.isActive = false;
+                        mathBoxes.answerLeft.isCorrect = false;
+                        mathBoxes.answerRight.isCorrect = false;
+                        mathBoxes.answerLeft.fill = "red";
+                        mathBoxes.answerRight.fill = "red";
+                        resetInProgress = false; // Allow next reset
+                    }, 2000); // Pause for 2 seconds (2000 milliseconds)
+                }
             }
         }
     }
@@ -294,6 +301,7 @@ function mathing() {
     // Draw the text boxes
     drawMathBoxes();
 }
+
 
 function drawMathBoxes() {
     push();
