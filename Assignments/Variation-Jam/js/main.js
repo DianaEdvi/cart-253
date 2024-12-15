@@ -28,16 +28,23 @@ let states = {
     colorPong: "color",
 }
 let playingBanner = true;
+
 let activeTasks = {
     task: "",
     soloPong: false,
-    mathing: false,
     randomCow: false,
+    mathing: false,
 }
 
 let timers = {
     bannerTimerStarted: false,
     cowTimerStarted: false,
+    mathingStarted: false,
+}
+
+let counters = {
+    pongCounter: 0,
+    cowCounter: 0
 }
 
 function setup() {
@@ -46,6 +53,7 @@ function setup() {
     states.current = states.menu;
     resetGame();
     // menu();
+
 }
 
 /**
@@ -56,12 +64,16 @@ function draw() {
     if (playingBanner) {
         bannerAnimation(banners.text.text);
     }
-    if (hitCounter >= 1) {
-        if (hitCounter === 1 && !activeTasks.randomCow) {
+    soloPong(paddle, ball);
+
+    // Handle cow tasks
+    if (counters.pongCounter >= 1) {
+        //Play the banner only once
+        if (counters.pongCounter === 1 && !activeTasks.randomCow) {
             playingBanner = true;
         }
-
         randomCow(cow);
+        // Repeat the cow task periodically
         if (!timers.cowTimerStarted) {
             timers.cowTimerStarted = true;
             setTimeout(() => {
@@ -69,14 +81,27 @@ function draw() {
                 timers.cowTimerStarted = false;
             }, 2000);
         }
+    }
+    // Handle math tasks
+    if (counters.cowCounter >= 1) {
+        //Play the banner only once
+        if (counters.cowCounter === 1 && !activeTasks.mathing) {
+            playingBanner = true;
+            mathBoxes.isActive = true;
+        }
+        mathing();
+        if (!timers.mathingStarted) {
+            timers.mathingStarted = true;
+            setTimeout(() => {
+                mathBoxes.isActive = true;
+                mathing();
+                timers.mathingStarted = false;
+            }, 2000);
+        }
 
     }
     handleHealth();
     displayHealth();
-    soloPong(paddle, ball);
-    // if (startMath) {
-    //     mathing(mathStr);
-    // }
 }
 
 let banners = {
@@ -203,6 +228,9 @@ function setBannerText() {
     } else if (activeTasks.task === "cow") {
         banners.text.text = "You should pet the cows methinks"
         activeTasks.randomCow = true;
+    } else if (activeTasks.task === "math") {
+        banners.text.text = "If I had to do math for this, so do you :)"
+        activeTasks.mathing = true;
     } else {
         banners.text.text = undefined;
     }
@@ -261,15 +289,6 @@ let startMath = false;
 
 function mouseClicked() {
     startMath = true;
-}
-
-function game() {
-    if (hitCounter === 1 && playingBanner === false) {
-        hitCounter = -1;
-        console.log("play animation")
-        playingBanner = true;
-        bannerAnimation()
-    }
 }
 
 

@@ -5,7 +5,6 @@ let ball = {x: 320, y: 320, w: 50, f: "white", speedY: 1, speedX: 3}; // Added s
 let countdown = 3; // Countdown starts at 3 seconds
 let countdownActive = true; // Flag to control countdown state
 let countdownStartTime; // Tracks when the countdown starts (used to calculate how much time has passed since the countdown began)
-let hitCounter = 0;
 
 /**
  * Creates the solo pong mechanic. Draws the ball and the paddle and checks for user input to move the paddle
@@ -74,14 +73,9 @@ function soloPong(paddle, ball) {
     }
 
     // Check collision with paddle
-    if (
-        ball.y + ball.w / 2 >= paddle.y &&
-        ball.x > paddle.x &&
-        ball.x < paddle.x + paddle.w
-    ) {
-        if (hitCounter >= 0) {
-            hitCounter++;
-        }
+    if (ball.y + ball.w / 2 >= paddle.y && ball.x > paddle.x && ball.x < paddle.x + paddle.w) {
+        // Increment counter
+        counters.pongCounter++;
         // Reverse vertical direction
         ball.speedY *= -1;
 
@@ -137,6 +131,8 @@ function randomCow(cow) {
         console.log("moo sound");
         cow.f = "#69b260";
         handleHealth(true);
+        //Increment counter
+        counters.cowCounter++
     }
 
     // Check if the cow goes off-screen
@@ -147,6 +143,10 @@ function randomCow(cow) {
 
 }
 
+/**
+ * Resets the cow properties
+ * @param cow The cow properties
+ */
 function resetCow(cow) {
     // Reset cow position to start again from the right
     cow.x = width + cow.w / 2; // Start on the right edge
@@ -159,112 +159,53 @@ function resetCow(cow) {
  * Displays a math problem onto the screen that the user must solve before ...?
  * @param mathStr the variable holding the display string
  */
-function old(mathStr) {
-    // Initialize
-    let operators;
-    let randomOperator;
-    let randomNumber1;
-    let randomNumber2;
-    let solutionLocation;
 
-    // Move the math question down a little each frame
-    mathStr.y = constrain(mathStr.y, 0, 30);
-    mathStr.y += 1; // This increases the y position over time (moving the text down)
-
-    // Handle key press to generate new problem
-    if (keyIsDown(32) && isClicking === false) {
-        isClicking = true;
-
-        // Generate equation
-        operators = [" + ", " - "];
-        randomOperator = random(operators);
-        randomNumber1 = floor(random(50));
-        randomNumber2 = floor(random(50));
-        solutionLocation = floor(random(0, 2));
-        mathStr.str = randomNumber1 + randomOperator + randomNumber2;
-
-        // Calculate answer
-        let answer = undefined;
-        let wrongAnswer = 1;
-
-        if (randomOperator === " + ") {
-            answer = randomNumber1 + randomNumber2;
-            // If the answer is negative, make the false option negative too
-            if (answer < 0) {
-                wrongAnswer = -1;
-            }
-            answerString = "" + answer;
-            otherString = "" + (wrongAnswer * floor(random(0, 50)));
-            if (otherString === answerString) {
-                otherString = "" + (wrongAnswer * floor(random(0, 50)));
-            }
-        } else {
-            answer = randomNumber1 - randomNumber2;
-            // If the answer is negative, make the false option negative too
-            if (answer < 0) {
-                wrongAnswer = -1;
-            }
-            answerString = "" + answer;
-            otherString = "" + (wrongAnswer * floor(random(0, 50)));
-            if (otherString === answerString) {
-                otherString = "" + (wrongAnswer * floor(random(0, 50)));
-            }
-        }
-
-        // Display on buttons
-        let leftButton;
-        let rightButton;
-
-        // Increase y for buttons too (same way as mathStr)
-        buttonHeight += 1; // Increment the button y-position over time
-
-        if (solutionLocation === 0) {
-            // leftButton = new Button(answerString, 240, 100 + buttonHeight, 150, 80, () => {
-            //     leftButton.buttonStyles("green");
-            //     handleHealth(true);
-            // });
-            rightButton = new Button(otherString, 420, 100 + buttonHeight, 150, 80, () => handleHealth(false));
-        } else {
-            leftButton = new Button(otherString, 240, 100 + buttonHeight, 150, 80, () => handleHealth(false));
-            // rightButton = new Button(answerString, 420, 100 + buttonHeight, 150, 80, () => leftButton.buttonStyles("green"));
-        }
-
-        leftButton.updatePosition(0, buttonHeight);
-        rightButton.updatePosition(0, buttonHeight);
-
-    } else if (!keyIsDown(32)) {
-        isClicking = false;
+let mathBoxes = {
+    hasAnswered: false,
+    isActive: false,
+    textSize: 32,
+    question: {
+        x: 320,
+        y: -110,
+        w: 250,
+        h: 40,
+        fill: "#363fa8",
+        text: ""
+    },
+    answerLeft: {
+        fill: "red",
+        x: 240,
+        y: -40,
+        w: 150,
+        h: 80,
+        text: "",
+        isCorrect: false
+    },
+    answerRight: {
+        fill: "red",
+        x: 400,
+        y: -40,
+        w: 150,
+        h: 80,
+        text: "",
+        isCorrect: false
     }
-
-    // Draw textbox
-    push();
-    fill("#363fa8");
-    noStroke();
-    rectMode(CENTER);
-    rect(mathStr.x, mathStr.y, mathStr.w, 40, 10);
-    pop();
-
-    // Draw text
-    push();
-    fill(mathStr.f);
-    textSize(mathStr.size);
-    textAlign(CENTER, CENTER);
-    text(mathStr.str, mathStr.x, mathStr.y);
-    pop();
 }
 
-let isClicking = false;
-let mathStr = {str: undefined, x: 320, y: 0, w: 250, f: "black", size: 32};
+let hasAnswered = false;
 let answerString = "";
 let otherString = "";
-let buttonHeight = 0;
-let leftButton;
-let rightButton;
 let equationGenerated = false; // Track if the equation has already been generated
 let solutionLocation = -1; // This will store the location of the correct answer (0 for left, 1 for right)
-let correctButton = "";
+
+let answerTimeout = 5000; // 5 seconds timeout
+let answerTimer = 0; // Track time since question was displayed
 
 function mathing() {
+    if (!activeTasks.mathing) {
+        activeTasks.task = "math";
+    }
+
     if (!equationGenerated) {
         // Initialize
         let operators = [" + ", " - "];
@@ -275,98 +216,144 @@ function mathing() {
         // Randomize between 0 (left) and 1 (right) for solution location
         solutionLocation = floor(random(0, 2));
 
-        mathStr.str = randomNumber1 + randomOperator + randomNumber2;
+        // Piece together the question
+        mathBoxes.question.text = randomNumber1 + randomOperator + randomNumber2;
 
-        // Calculate answer
-        let answer = undefined;
-        let wrongAnswer = 1;
-
+        // Calculate answer and assign it to the proper variable
         if (randomOperator === " + ") {
-            answer = randomNumber1 + randomNumber2;
-            answerString = "" + answer;
-            otherString = "" + (wrongAnswer * floor(random(0, 50)));
+            answerString = randomNumber1 + randomNumber2;
+            otherString = "" + floor(random(0, 50));
             if (otherString === answerString) {
-                otherString = "" + (wrongAnswer * floor(random(0, 50)));
+                otherString = "" + floor(random(0, 50));
             }
         } else {
-            answer = randomNumber1 - randomNumber2;
-            answerString = "" + answer;
-            otherString = "" + (wrongAnswer * floor(random(0, 50)));
+            answerString = randomNumber1 - randomNumber2;
+            otherString = "" + floor(random(0, 50));
             if (otherString === answerString) {
-                otherString = "" + (wrongAnswer * floor(random(0, 50)));
+                otherString = "" + floor(random(0, 50));
             }
         }
 
         // Set the equation as generated
         equationGenerated = true;
 
-        // Display on buttons if not already created
-        if (!rightButton && !leftButton) {
-            leftButton = new Button("", 240, 30, 150, 80, () => checkValidity(solutionLocation, leftButton));
-            rightButton = new Button("", 420, 30, 150, 80, () => checkValidity(solutionLocation, rightButton));
-        }
-
         // Randomly assign answer to left or right button
         if (solutionLocation === 0) {
             // Correct answer on left, wrong answer on right
-            leftButton.buttonStyles(undefined, answerString);
-            correctButton = "left";
-            rightButton.buttonStyles(undefined, otherString);
-
+            mathBoxes.answerLeft.text = answerString;
+            mathBoxes.answerLeft.isCorrect = true;
+            mathBoxes.answerRight.text = otherString;
         } else {
             // Correct answer on right, wrong answer on left
-            leftButton.buttonStyles(undefined, otherString);
-            rightButton.buttonStyles(undefined, answerString);
-            correctButton = "right";
+            mathBoxes.answerLeft.text = otherString;
+            mathBoxes.answerRight.text = answerString;
+            mathBoxes.answerRight.isCorrect = true;
+        }
+
+        answerTimer = millis(); // Start timer when the question is generated
+    }
+
+    // Constrain dem values
+    mathBoxes.question.y = constrain(mathBoxes.question.y, -110, 30);
+    mathBoxes.answerLeft.y = constrain(mathBoxes.answerLeft.y, -40, 100);
+    mathBoxes.answerRight.y = constrain(mathBoxes.answerRight.y, -40, 100);
+
+
+    setTimeout(() => {
+        console.log("waited too long");
+        hasAnswered = true;
+    }, 5000);
+
+
+    if (mathBoxes.isActive) {
+        console.log("its active ")
+        if (!hasAnswered) {
+            console.log("has is false")
+            // Move boxes down if not answered
+            mathBoxes.question.y += 2;
+            mathBoxes.answerLeft.y += 2;
+            mathBoxes.answerRight.y += 2;
+        } else {
+            console.log("moving back");
+            // Move boxes up after an answer or timeout
+            mathBoxes.question.y -= 2;
+            mathBoxes.answerLeft.y -= 2;
+            mathBoxes.answerRight.y -= 2;
+
+            // Keep moving until all boxes reach their top position
+            if (mathBoxes.question.y <= -110) {
+                mathBoxes.isActive = false; // Deactivate the movement only after reaching the top
+                hasAnswered = false; // Reset hasAnswered for the next spacebar press
+                equationGenerated = false; // Get ready to create a new equation
+                mathBoxes.answerLeft.isCorrect = false;
+                mathBoxes.answerRight.isCorrect = false;
+                mathBoxes.answerLeft.fill = "red";
+                mathBoxes.answerRight.fill = "red";
+            }
         }
     }
 
-    // Update positions for mathStr and buttons
-    mathStr.y = constrain(mathStr.y, 0, 30);
-    mathStr.y += 1;
-    buttonHeight += 1;
+    // Check if the user has clicked on one of the answer boxes
+    if (mouseIsPressed) {
+        if (isInArea(mathBoxes.answerLeft.x, mathBoxes.answerLeft.y, mathBoxes.answerLeft.w, mathBoxes.answerLeft.h)) {
+            mathBoxes.answerLeft.fill = mathBoxes.answerLeft.isCorrect ? "green" : "#930000";
+            hasAnswered = true;
+        }
+        if (isInArea(mathBoxes.answerRight.x, mathBoxes.answerRight.y, mathBoxes.answerRight.w, mathBoxes.answerRight.h)) {
+            mathBoxes.answerRight.fill = mathBoxes.answerRight.isCorrect ? "green" : "#930000";
+            hasAnswered = true;
+        }
+    }
 
-    buttonHeight = constrain(buttonHeight, 0, 30);
-    leftButton.updatePosition(0, buttonHeight);
-    rightButton.updatePosition(0, buttonHeight);
 
-    // Draw textbox and text (the math equation)
+    // Draw textbox's
     push();
-    fill("#363fa8");
+    // General properties
     noStroke();
     rectMode(CENTER);
-    rect(mathStr.x, mathStr.y, mathStr.w, 40, 10);
+
+    // Draw question box
+    fill(mathBoxes.question.fill);
+    rect(mathBoxes.question.x, mathBoxes.question.y, mathBoxes.question.w, mathBoxes.question.h, 10);
+
+    // Draw answer boxes
+    fill(mathBoxes.answerLeft.fill);
+    rect(mathBoxes.answerLeft.x, mathBoxes.answerLeft.y, mathBoxes.answerLeft.w, mathBoxes.answerLeft.h, 10);
+
+    fill(mathBoxes.answerRight.fill);
+    rect(mathBoxes.answerRight.x, mathBoxes.answerRight.y, mathBoxes.answerRight.w, mathBoxes.answerRight.h, 10);
+
     pop();
 
+    // Draw texts
     push();
-    fill(mathStr.f);
-    textSize(mathStr.size);
+    textSize(mathBoxes.textSize);
     textAlign(CENTER, CENTER);
-    text(mathStr.str, mathStr.x, mathStr.y);
+    fill("black");
+
+    text(mathBoxes.question.text, mathBoxes.question.x, mathBoxes.question.y);
+    text(mathBoxes.answerLeft.text, mathBoxes.answerLeft.x, mathBoxes.answerLeft.y);
+    text(mathBoxes.answerRight.text, mathBoxes.answerRight.x, mathBoxes.answerRight.y);
     pop();
 }
 
-// To reset the equation when needed (for example, on a key press):
-function keyPressed() {
-    if (key === ' ') { // If space bar is pressed
-        equationGenerated = false; // Reset so the math question is generated again
 
-        // Explicitly reset button colors to red before generating a new equation
-        if (leftButton && rightButton) {
-            leftButton.buttonStyles("red", otherString); // Reset left button to red
-            rightButton.buttonStyles("red", answerString); // Reset right button to red
-        }
-    }
+function resetMathing() {
 
-    if (key === 'b' && timers.bannerTimerStarted === false) {
-        playingBanner = true;
-    }
 }
 
-function checkValidity(solutionLocation, clickedButton) {
-    if (correctButton === "left") {
-        leftButton.buttonStyles("green");
-    } else if (correctButton === "right") {
-        rightButton.buttonStyles("green")
-    }
+
+/**
+ * Calculates the area of a rectangle (assuming rect mode CENTER) and returns true if the mouse is within that area
+ * @param x The x coordinate of the rectangle
+ * @param y The y coordinate of the rectangle
+ * @param w The width of the rectangle
+ * @param h The height of the rectangle
+ * @returns {boolean}
+ */
+function isInArea(x, y, w, h) {
+    return mouseX >= x - w / 2 &&
+        mouseX <= x + w / 2 &&
+        mouseY >= y - h / 2 &&
+        mouseY <= y + h / 2;
 }
