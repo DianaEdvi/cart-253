@@ -106,7 +106,12 @@ function resetBall() {
     countdownStartTime = millis(); // Record the current time
 }
 
-let cow = {x: 640, y: 100, w: 50, f: "black"}
+let cow = {
+    x: 640,
+    y: 100,
+    w: 50,
+    f: "black"
+}
 
 /**
  * Makes a random cow fly across the screen. The user must tap it before it moves off-screen
@@ -130,14 +135,17 @@ function randomCow(cow) {
     if (mouseIsPressed && mouseX >= cow.x - cow.w / 2 && mouseX <= cow.x + cow.x / 2 && mouseY >= cow.y - cow.w / 2 && mouseY <= cow.y + cow.w / 2) {
         console.log("moo sound");
         cow.f = "#69b260";
-        handleHealth(true);
+        successes.cowSuccess = true;
+        handleHealth(successes.cowSuccess);
         //Increment counter
         counters.cowCounter++
     }
 
     // Check if the cow goes off-screen
     if (cow.x + cow.w / 2 < 0 || cow.y - cow.w / 2 > height) {
-        handleHealth(false);
+        if (!successes.cowSuccess) {
+            handleHealth(false);
+        }
         resetCow(cow);
     }
 
@@ -152,6 +160,7 @@ function resetCow(cow) {
     cow.x = width + cow.w / 2; // Start on the right edge
     cow.y = random(100, height - 100); // Random vertical position
     cow.f = "black";
+    successes.cowSuccess = false;
 }
 
 
@@ -203,13 +212,14 @@ function mathing() {
     if (!activeTasks.mathing) {
         activeTasks.task = "math";
     }
+
+    //Generate the equation and answers
     if (!equationGenerated && !resetInProgress) {
         // Initialize question and answers
-        let operators = [" + ", " - "];
+        let operators = [" + ", " - "]; // Array holding potential operators
         let randomOperator = random(operators);
         let randomNumber1 = floor(random(50));
         let randomNumber2 = floor(random(50));
-        solutionLocation = floor(random(0, 2));
         mathBoxes.question.text = randomNumber1 + randomOperator + randomNumber2;
 
         if (randomOperator === " + ") {
@@ -218,15 +228,20 @@ function mathing() {
             answerString = randomNumber1 - randomNumber2;
         }
 
+        //Check for duplicates
         otherString = floor(random(70));
         while (otherString === answerString) {
             otherString = floor(random(70));
         }
 
+        // Match the polarity of the answers
         if (answerString < 0) {
             otherString *= -1;
         }
 
+        // Determine where the solution will be left (0) or right (1)
+        solutionLocation = floor(random(0, 2));
+        // Set text according to solution location
         if (solutionLocation === 0) {
             mathBoxes.answerLeft.text = answerString;
             mathBoxes.answerLeft.isCorrect = true;
@@ -266,18 +281,14 @@ function mathing() {
             mathBoxes.answerLeft.y -= 2;
             mathBoxes.answerRight.y -= 2;
 
+            // If the boxes have returned to off-screen, reset the values (takes two seconds)
             if (mathBoxes.question.y <= -110) {
                 // Reset state
                 if (!resetInProgress) {
                     resetInProgress = true; // Prevent multiple resets
+                    handleHealth(successes.mathSuccess);
                     setTimeout(() => {
-                        equationGenerated = false;
-                        mathBoxes.isActive = false;
-                        mathBoxes.answerLeft.isCorrect = false;
-                        mathBoxes.answerRight.isCorrect = false;
-                        mathBoxes.answerLeft.fill = "red";
-                        mathBoxes.answerRight.fill = "red";
-                        resetInProgress = false; // Allow next reset
+                        resetMathing();
                     }, 2000); // Pause for 2 seconds (2000 milliseconds)
                 }
             }
@@ -288,11 +299,13 @@ function mathing() {
     if (mouseIsPressed) {
         if (isInArea(mathBoxes.answerLeft.x, mathBoxes.answerLeft.y, mathBoxes.answerLeft.w, mathBoxes.answerLeft.h)) {
             mathBoxes.answerLeft.fill = mathBoxes.answerLeft.isCorrect ? "green" : "#930000";
+            successes.mathSuccess = mathBoxes.answerLeft.isCorrect;
             hasAnswered = true;
             clearTimeout(timers.answerTimeout); // Stop the timer if answered
         }
         if (isInArea(mathBoxes.answerRight.x, mathBoxes.answerRight.y, mathBoxes.answerRight.w, mathBoxes.answerRight.h)) {
             mathBoxes.answerRight.fill = mathBoxes.answerRight.isCorrect ? "green" : "#930000";
+            successes.mathSuccess = mathBoxes.answerRight.isCorrect;
             hasAnswered = true;
             clearTimeout(timers.answerTimeout); // Stop the timer if answered
         }
@@ -300,6 +313,17 @@ function mathing() {
 
     // Draw the text boxes
     drawMathBoxes();
+}
+
+function resetMathing() {
+    equationGenerated = false;
+    mathBoxes.isActive = false;
+    mathBoxes.answerLeft.isCorrect = false;
+    mathBoxes.answerRight.isCorrect = false;
+    mathBoxes.answerLeft.fill = "red";
+    mathBoxes.answerRight.fill = "red";
+    resetInProgress = false; // Allow next reset
+    successes.mathSuccess = false;
 }
 
 
@@ -331,12 +355,6 @@ function drawMathBoxes() {
     text(mathBoxes.answerRight.text, mathBoxes.answerRight.x, mathBoxes.answerRight.y);
     pop();
 }
-
-
-function resetMathing() {
-
-}
-
 
 /**
  * Calculates the area of a rectangle (assuming rect mode CENTER) and returns true if the mouse is within that area

@@ -49,6 +49,11 @@ let counters = {
     cowCounter: 0
 }
 
+let successes = {
+    cowSuccess: false,
+    mathSuccess: false,
+}
+
 function setup() {
     canvas = createCanvas(640, 640);
     background("#6160b2");
@@ -92,17 +97,6 @@ function draw() {
             mathBoxes.isActive = true;
         }
         mathing();
-        // if (!timers.mathingStarted) {
-        //     timers.mathingStarted = true;
-        //     setTimeout(() => {
-        //         mathBoxes.isActive = true;
-        //         mathBoxes.hasAnswered = false;
-        //         mathing();
-        //         console.log("caleld math agaibn")
-        //         timers.mathingStarted = false;
-        //     }, 2000);
-        // }
-
     }
     handleHealth();
     displayHealth();
