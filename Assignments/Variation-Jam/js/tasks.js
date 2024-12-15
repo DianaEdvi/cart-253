@@ -200,57 +200,51 @@ let solutionLocation = -1; // This will store the location of the correct answer
 
 let answerTimeout = 5000; // 5 seconds timeout
 let answerTimer = 0; // Track time since question was displayed
-
 function mathing() {
     if (!activeTasks.mathing) {
         activeTasks.task = "math";
     }
 
     if (!equationGenerated) {
-        // Initialize
+        // Initialize question and answers
         let operators = [" + ", " - "];
         let randomOperator = random(operators);
         let randomNumber1 = floor(random(50));
         let randomNumber2 = floor(random(50));
-
-        // Randomize between 0 (left) and 1 (right) for solution location
         solutionLocation = floor(random(0, 2));
-
-        // Piece together the question
         mathBoxes.question.text = randomNumber1 + randomOperator + randomNumber2;
 
-        // Calculate answer and assign it to the proper variable
         if (randomOperator === " + ") {
             answerString = randomNumber1 + randomNumber2;
-            otherString = "" + floor(random(0, 50));
-            if (otherString === answerString) {
-                otherString = "" + floor(random(0, 50));
-            }
         } else {
             answerString = randomNumber1 - randomNumber2;
-            otherString = "" + floor(random(0, 50));
-            if (otherString === answerString) {
-                otherString = "" + floor(random(0, 50));
-            }
         }
 
-        // Set the equation as generated
-        equationGenerated = true;
+        otherString = "" + floor(random(50));
+        while (otherString === answerString) {
+            otherString = "" + floor(random(50));
+        }
 
-        // Randomly assign answer to left or right button
         if (solutionLocation === 0) {
-            // Correct answer on left, wrong answer on right
             mathBoxes.answerLeft.text = answerString;
             mathBoxes.answerLeft.isCorrect = true;
             mathBoxes.answerRight.text = otherString;
         } else {
-            // Correct answer on right, wrong answer on left
-            mathBoxes.answerLeft.text = otherString;
             mathBoxes.answerRight.text = answerString;
             mathBoxes.answerRight.isCorrect = true;
+            mathBoxes.answerLeft.text = otherString;
         }
 
-        answerTimer = millis(); // Start timer when the question is generated
+        equationGenerated = true;
+        mathBoxes.isActive = true;
+        hasAnswered = false;
+
+        // Start timeout for answering
+        clearTimeout(timers.answerTimeout); // Clear any existing timeout
+        timers.answerTimeout = setTimeout(() => {
+            console.log("Time's up! Moving boxes back.");
+            hasAnswered = true;
+        }, 5000);
     }
 
     // Constrain dem values
@@ -258,33 +252,23 @@ function mathing() {
     mathBoxes.answerLeft.y = constrain(mathBoxes.answerLeft.y, -40, 100);
     mathBoxes.answerRight.y = constrain(mathBoxes.answerRight.y, -40, 100);
 
-
-    setTimeout(() => {
-        console.log("waited too long");
-        hasAnswered = true;
-    }, 5000);
-
-
+    // Move the boxes
     if (mathBoxes.isActive) {
-        console.log("its active ")
         if (!hasAnswered) {
-            console.log("has is false")
-            // Move boxes down if not answered
+            // Move boxes down
             mathBoxes.question.y += 2;
             mathBoxes.answerLeft.y += 2;
             mathBoxes.answerRight.y += 2;
         } else {
-            console.log("moving back");
-            // Move boxes up after an answer or timeout
+            // Move boxes up
             mathBoxes.question.y -= 2;
             mathBoxes.answerLeft.y -= 2;
             mathBoxes.answerRight.y -= 2;
 
-            // Keep moving until all boxes reach their top position
             if (mathBoxes.question.y <= -110) {
-                mathBoxes.isActive = false; // Deactivate the movement only after reaching the top
-                hasAnswered = false; // Reset hasAnswered for the next spacebar press
-                equationGenerated = false; // Get ready to create a new equation
+                // Reset state
+                mathBoxes.isActive = false;
+                equationGenerated = false;
                 mathBoxes.answerLeft.isCorrect = false;
                 mathBoxes.answerRight.isCorrect = false;
                 mathBoxes.answerLeft.fill = "red";
@@ -293,22 +277,26 @@ function mathing() {
         }
     }
 
-    // Check if the user has clicked on one of the answer boxes
+    // Handle user clicks
     if (mouseIsPressed) {
         if (isInArea(mathBoxes.answerLeft.x, mathBoxes.answerLeft.y, mathBoxes.answerLeft.w, mathBoxes.answerLeft.h)) {
             mathBoxes.answerLeft.fill = mathBoxes.answerLeft.isCorrect ? "green" : "#930000";
             hasAnswered = true;
+            clearTimeout(timers.answerTimeout); // Stop the timer if answered
         }
         if (isInArea(mathBoxes.answerRight.x, mathBoxes.answerRight.y, mathBoxes.answerRight.w, mathBoxes.answerRight.h)) {
             mathBoxes.answerRight.fill = mathBoxes.answerRight.isCorrect ? "green" : "#930000";
             hasAnswered = true;
+            clearTimeout(timers.answerTimeout); // Stop the timer if answered
         }
     }
 
+    // Draw the text boxes
+    drawMathBoxes();
+}
 
-    // Draw textbox's
+function drawMathBoxes() {
     push();
-    // General properties
     noStroke();
     rectMode(CENTER);
 
@@ -325,7 +313,6 @@ function mathing() {
 
     pop();
 
-    // Draw texts
     push();
     textSize(mathBoxes.textSize);
     textAlign(CENTER, CENTER);

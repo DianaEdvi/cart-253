@@ -40,6 +40,8 @@ let timers = {
     bannerTimerStarted: false,
     cowTimerStarted: false,
     mathingStarted: false,
+    answerTimeout: undefined,
+    mathTimout: undefined,
 }
 
 let counters = {
@@ -90,14 +92,16 @@ function draw() {
             mathBoxes.isActive = true;
         }
         mathing();
-        if (!timers.mathingStarted) {
-            timers.mathingStarted = true;
-            setTimeout(() => {
-                mathBoxes.isActive = true;
-                mathing();
-                timers.mathingStarted = false;
-            }, 2000);
-        }
+        // if (!timers.mathingStarted) {
+        //     timers.mathingStarted = true;
+        //     setTimeout(() => {
+        //         mathBoxes.isActive = true;
+        //         mathBoxes.hasAnswered = false;
+        //         mathing();
+        //         console.log("caleld math agaibn")
+        //         timers.mathingStarted = false;
+        //     }, 2000);
+        // }
 
     }
     handleHealth();
