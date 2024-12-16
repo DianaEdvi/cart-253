@@ -116,7 +116,8 @@ function draw() {
         }
         mathing();
     }
-    typeText();
+    patternTask();
+    // typeText();
     handleHealth();
     displayHealth();
     hasClicked = false;
