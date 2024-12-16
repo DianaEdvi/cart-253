@@ -11,8 +11,8 @@ let textBox = {
 let prompt = {
     x: undefined,
     y: undefined,
-    w: undefined,
-    h: undefined,
+    w: 0,
+    h: 0,
     f: "#005293",
     text: ""
 }
@@ -138,17 +138,31 @@ function displayPrompt() {
     // Depend prompt coordinates onto textBox
     prompt.x = textBox.x;
     prompt.y = textBox.y - 50;
-    prompt.w = textBox.w;
-    prompt.h = textBox.h + 40;
+
+    const targetWidth = textBox.w;
+    const targetHeight = textBox.h + 40;
+
+    if (prompt.w < targetWidth) {
+        prompt.w += 2;
+    }
+    if (prompt.h < targetHeight) {
+        prompt.h += 1;
+    }
 
     // Draw rotating rectangle
     push();
     translate(prompt.x + prompt.w / 2, prompt.y + prompt.h / 2); // Move origin to the center of the rectangle
+    angleMode(DEGREES);
     rotate(angle); // Rotate the rectangle
     fill(prompt.f);
     rect(-prompt.w / 2, -prompt.h / 2, prompt.w, prompt.h, 10); // Draw rectangle centered at the origin
     pop();
 
-    // Increment the angle for continuous rotation
-    angle += 0.01; // Adjust this value to control rotation speed
+    if (prompt.w >= targetWidth && prompt.h >= targetHeight && angle % 360 === 0) {
+        angle = 0;
+    } else {
+        // Increment the angle for continuous rotation
+        angle += 20; // Adjust this value to control rotation speed
+    }
 }
+
