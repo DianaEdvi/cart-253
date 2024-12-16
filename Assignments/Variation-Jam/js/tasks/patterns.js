@@ -19,7 +19,7 @@ let prompt = {
 
 let inputText = '';
 let isTyping = false;
-let placeholderText = "Enter here"; // Default placeholder text
+let placeholderText = "Enter here..."; // Default placeholder text
 let isPlaceholderActive = true; // Flag to track if the placeholder is active
 let backspaceTime = 0; // To track how long backspace is held down
 let backspaceDelay = 500; // 1 second delay before continuous deletion
@@ -29,6 +29,7 @@ let currentWidth = 0;
 let currentHeight = 0;
 let currentPromptHeight = 0;
 let animationDone = false;
+let exitingAnimation = false;
 
 
 /**
@@ -199,11 +200,9 @@ function animatePrompt() {
     }
 }
 
-let promptActive = false;
 /**
  * @type {{pattern: string, answer: string}};
  */
-let randomPrompt = undefined;
 let promptText = undefined;
 
 function displayPromptText() {
@@ -211,8 +210,11 @@ function displayPromptText() {
 }
 
 function verifyAnswer() {
-    if (randomPattern === inputText) {
-        console.log("correctamundo");
+    console.log(inputText);
+    if (randomAnswer === inputText) {
+        if (isTyping && key === "Enter") {
+            console.log("correctamundo");
+        }
     }
 }
 
@@ -228,14 +230,13 @@ function keyPressed() {
         // Store the pattern and answer into variables
         randomPattern = selectedPattern.pattern;
         randomAnswer = selectedPattern.answer;
-
-
-        // Optionally, log the selected pattern and answer
-        console.log("Pattern: " + randomPattern);
-        console.log("Answer: " + randomAnswer);
-        console.log("Input: " + inputText);
+        promptText = randomPattern;
     }
 
+    if (isTyping && key === 'Enter') {
+        console.log("done");
+        animationDone = false;
+    }
 }
 
 function resetPatterns() {
