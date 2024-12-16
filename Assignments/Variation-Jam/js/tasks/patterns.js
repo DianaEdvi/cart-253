@@ -11,8 +11,8 @@ let textBox = {
 let prompt = {
     x: undefined,
     y: undefined,
-    w: 0,
-    h: 0,
+    w: 300,
+    h: 80,
     f: "#005293",
     text: ""
 }
@@ -23,22 +23,19 @@ let placeholderText = "Enter here"; // Default placeholder text
 let isPlaceholderActive = true; // Flag to track if the placeholder is active
 let backspaceTime = 0; // To track how long backspace is held down
 let backspaceDelay = 500; // 1 second delay before continuous deletion
+let animationDone = false;
 
 function patternTask() {
     displayPrompt();
-    typeText();
+    if (animationDone) {
+        typeText();
+    }
 }
 
 /**
  * Handles the typing input from the user and displays it onto the screen
  */
 function typeText() {
-    // Draw the text box
-    push();
-    fill(200);
-    rect(textBox.x, textBox.y, textBox.w, textBox.h, 10); // Rectangle with rounded corners
-    pop();
-
     displayText();
     displayCaret();
     handleBackspace();
@@ -132,37 +129,59 @@ function keyTyped() {
     }
 }
 
+
 let angle = 0; // Rotation angle in radians
+let currentWidth = 0;
+let currentHeight = 0;
+let currentPromptHeight = 0;
+
 
 function displayPrompt() {
     // Depend prompt coordinates onto textBox
     prompt.x = textBox.x;
     prompt.y = textBox.y - 50;
 
-    const targetWidth = textBox.w;
-    const targetHeight = textBox.h + 40;
-
-    if (prompt.w < targetWidth) {
-        prompt.w += 2;
+    if (currentWidth < textBox.w) {
+        currentWidth += 2;
     }
-    if (prompt.h < targetHeight) {
-        prompt.h += 1;
+
+    if (currentPromptHeight < prompt.h) {
+        currentPromptHeight += 1;
+    }
+
+    if (currentHeight < textBox.h) {
+        currentHeight += 1;
     }
 
     // Draw rotating rectangle
     push();
-    translate(prompt.x + prompt.w / 2, prompt.y + prompt.h / 2); // Move origin to the center of the rectangle
+    translate(prompt.x + currentWidth / 2, prompt.y + currentPromptHeight / 2); // Move origin to the center of the rectangle
     angleMode(DEGREES);
     rotate(angle); // Rotate the rectangle
     fill(prompt.f);
-    rect(-prompt.w / 2, -prompt.h / 2, prompt.w, prompt.h, 10); // Draw rectangle centered at the origin
+    rect(-currentWidth / 2, -currentPromptHeight / 2, currentWidth, currentPromptHeight, 10); // Draw rectangle centered at the origin
     pop();
 
-    if (prompt.w >= targetWidth && prompt.h >= targetHeight && angle % 360 === 0) {
+
+    // Draw rotating textbox
+    push();
+    translate(textBox.x + currentWidth / 2, textBox.y + currentHeight / 2); // Move origin to the center of the rectangle
+    angleMode(DEGREES);
+    rotate(angle); // Rotate the rectangle
+    fill(textBox.f);
+    rect(-currentWidth / 2, -currentHeight / 2, currentWidth, currentHeight, 10); // Draw rectangle centered at the origin
+    pop();
+
+    if (currentWidth >= textBox.w && currentHeight >= textBox.h && angle % 360 === 0) {
         angle = 0;
+        animationDone = true;
     } else {
         // Increment the angle for continuous rotation
         angle += 20; // Adjust this value to control rotation speed
     }
+}
+
+function resetPatterns() {
+    animationDone = false;
 }
 
