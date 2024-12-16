@@ -44,7 +44,7 @@ function preloadPattern() {
 }
 
 function patternTask() {
-    animatePrompt();
+    animatePrompt('enter');
     if (animationDone) {
         displayPromptText();
         typeText();
@@ -150,54 +150,90 @@ function keyTyped() {
 }
 
 
+let targetWidth = undefined;
+let targetHeight = undefined;
+let targetPromptHeight = undefined;
+let currentWidth2 = undefined;
+let currentHeight2 = undefined;
+let currentPromptHeight2 = undefined;
+let animating = false;
+let widthGrowthRate = 2;
+let heightGrowthRate = 1;
+
 /**
  * Animates the prompt onto the screen
  */
-function animatePrompt() {
+function animatePrompt(state) {
+
+    if (state === 'enter' && !animating) {
+        widthGrowthRate = abs(widthGrowthRate);
+        heightGrowthRate = abs(heightGrowthRate);
+        targetWidth = textBox.w;
+        targetHeight = textBox.h;
+        targetPromptHeight = prompt.h;
+        currentWidth2 = 0;
+        currentHeight2 = 0;
+        currentPromptHeight2 = 0;
+        animating = true;
+    } else if (state === 'exit' && !animating) {
+        widthGrowthRate = -1 * abs(widthGrowthRate);
+        heightGrowthRate = -1 * abs(heightGrowthRate);
+        targetWidth = 0;
+        targetHeight = 0
+        targetPromptHeight = 0;
+        currentWidth2 = textBox.w;
+        currentHeight2 = textBox.h;
+        currentPromptHeight2 = prompt.h;
+        animating = true;
+    }
+
     // Depend prompt coordinates onto textBox
     prompt.x = textBox.x;
     prompt.y = textBox.y - 50;
 
     // Update the width and height of the rectangles
-    if (currentWidth < textBox.w) {
-        currentWidth += 2;
+    if (currentWidth2 !== targetWidth) {
+        currentWidth2 += widthGrowthRate;
+        console.log(currentWidth2);
     }
 
-    if (currentPromptHeight < prompt.h) {
-        currentPromptHeight += 1;
+    if (currentPromptHeight2 !== targetPromptHeight) {
+        currentPromptHeight2 += heightGrowthRate;
     }
 
-    if (currentHeight < textBox.h) {
-        currentHeight += 1;
+    if (currentHeight2 !== targetHeight) {
+        currentHeight2 += heightGrowthRate;
+        console.log(currentHeight2);
     }
 
     // Draw rotating rectangle
     push();
-    translate(prompt.x + currentWidth / 2, prompt.y + currentPromptHeight / 2); // Move origin to the center of the rectangle
+    translate(prompt.x + currentWidth2 / 2, prompt.y + currentPromptHeight2 / 2); // Move origin to the center of the rectangle
     angleMode(DEGREES);
     rotate(angle); // Rotate the rectangle
     fill(prompt.f);
-    rect(-currentWidth / 2, -currentPromptHeight / 2, currentWidth, currentPromptHeight, 10); // Draw rectangle centered at the origin
+    rect(-currentWidth2 / 2, -currentPromptHeight2 / 2, currentWidth2, currentPromptHeight2, 10); // Draw rectangle centered at the origin
     pop();
 
 
     // Draw rotating textbox
     push();
-    translate(textBox.x + currentWidth / 2, textBox.y + currentHeight / 2); // Move origin to the center of the rectangle
+    translate(textBox.x + currentWidth2 / 2, textBox.y + currentHeight2 / 2); // Move origin to the center of the rectangle
     angleMode(DEGREES);
     rotate(angle); // Rotate the rectangle
     fill(textBox.f);
-    rect(-currentWidth / 2, -currentHeight / 2, currentWidth, currentHeight, 10); // Draw rectangle centered at the origin
+    rect(-currentWidth2 / 2, -currentHeight2 / 2, currentWidth2, currentHeight2, 10); // Draw rectangle centered at the origin
     pop();
 
     // Make the rectangles spin
-    if (currentWidth >= textBox.w && currentHeight >= textBox.h && angle % 360 === 0) {
+    if (currentWidth2 === targetWidth && currentHeight2 === targetHeight && angle % 360 === 0) {
         angle = 0;
         animationDone = true;
     } else {
         // Increment the angle for continuous rotation
         angle += 20; // Adjust this value to control rotation speed
     }
+
 }
 
 /**
