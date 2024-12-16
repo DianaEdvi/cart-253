@@ -56,6 +56,17 @@ let successes = {
 
 let hasClicked = false;
 
+
+/**
+ * @type {{patterns: {pattern: string, answer: string}[]}}
+ */
+let patternsData;
+
+function preload() {
+    patternsData = loadJSON("assets/patterns.json");
+
+}
+
 /**
  * Set up any necessary variables before the game begins
  */
@@ -67,6 +78,7 @@ function setup() {
 
     textSize(20);
 
+    console.log(patternsData.patterns[0].answer);
 }
 
 /**

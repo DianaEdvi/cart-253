@@ -1,7 +1,7 @@
 "use strict";
 
 let inputText = '';
-let boxX = 100, boxY = 100, boxWidth = 300, boxHeight = 40;
+let boxX = 170, boxY = 150, boxWidth = 300, boxHeight = 40;
 let isTyping = false;
 let placeholderText = "Enter here"; // Default placeholder text
 let isPlaceholderActive = true; // Flag to track if the placeholder is active
@@ -9,11 +9,12 @@ let backspaceTime = 0; // To track how long backspace is held down
 let backspaceDelay = 500; // 1 second delay before continuous deletion
 
 function typeText() {
-
+    push();
     // Draw the text box
     fill(200);
     rect(boxX, boxY, boxWidth, boxHeight, 10); // Rectangle with rounded corners
     fill(0);
+    pop();
 
     // Display placeholder text if active, else show input text
     if (isPlaceholderActive) {
