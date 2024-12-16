@@ -56,12 +56,16 @@ let successes = {
 
 let hasClicked = false;
 
+/**
+ * Set up any necessary variables before the game begins
+ */
 function setup() {
     canvas = createCanvas(640, 640);
     background("#6160b2");
     states.current = states.menu;
     resetGame();
-    // menu();
+
+    textSize(20);
 
 }
 
@@ -100,6 +104,7 @@ function draw() {
         }
         mathing();
     }
+    typeText();
     handleHealth();
     displayHealth();
     hasClicked = false;
@@ -237,11 +242,16 @@ function setBannerText() {
     }
 }
 
+/**
+ * Reset the game properties and tasks
+ */
 function resetGame() {
     resetBall();
     resetCow(cow);
 }
 
+
+// The properties for the health bar
 let health = {
     value: 0,
     fill: "red"
@@ -256,6 +266,9 @@ let circle = {
     size: 100,
 }
 
+/**
+ * Display the health as a circle that is being filled clockwise
+ */
 function displayHealth() {
     // Calculate the fill level (proportion of the circle filled)
     let fillLevel = map(health.value, 0, maxHealth.value, 0, TWO_PI); // Map value to an angle (0 to 2π)
@@ -284,6 +297,11 @@ let decreaseHealth = false;
 let decreaseCounter = 0;
 let decreaseAmount = 10;
 
+/**
+ * Handles the health meter. Increases the health if a task was completed successfully and decreases if it fails
+ * Animates the increase so as not to be janky
+ * @param succeeded Bool for whether the task was successful or not
+ */
 function handleHealth(succeeded) {
     health.value = constrain(health.value, 0, maxHealth.value);
 
@@ -316,6 +334,9 @@ function handleHealth(succeeded) {
     }
 }
 
+/**
+ * Crease bool checker for if the mouse has clicked
+ */
 function mouseClicked() {
     hasClicked = true;
 }
@@ -324,24 +345,17 @@ function mouseClicked() {
 //Todo
 // import assets (sound and drawings)
 // import a font im sick of this one
-// create timing for math stuff
-// create fading for math stuff?
-// create timing for cow stuff
 // check for microphone and mouse inputs
 // water plant function
 // scream into mic function
-// banner function
 // Type what you see (select text box and type)
-// edit the health bar if missed task
+// Set the time on the clock
+// Flappy bird?
 // Audio of me rambling
 // Timer for how long the player lasted
 // menu
 // end game
 
 //Bugs
-// The questions have a weird bug where sometimes one of them turns green
-// Button outlines
-//
-
-
+// The paddle is weird if you hit it on the side. Will i fix?? prolly not
 

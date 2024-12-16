@@ -207,6 +207,14 @@ let equationGenerated = false; // Track if the equation has already been generat
 let solutionLocation = -1; // This will store the location of the correct answer (0 for left, 1 for right)
 let resetInProgress = undefined; // Check for timer before the function starts again
 
+/**
+ * Generates a math equation and displays it onto the screen.
+ * Specifically:
+ * Generates an equation and randomizes the solution's location
+ * Displays the equation and animates the UI onto the screen
+ * Checks if the user answered correctly or at all and handles the health accordingly
+ *
+ */
 function mathing() {
     if (!activeTasks.mathing) {
         activeTasks.task = "math";
@@ -221,6 +229,7 @@ function mathing() {
         let randomNumber2 = floor(random(50));
         mathBoxes.question.text = randomNumber1 + randomOperator + randomNumber2;
 
+        // Calculate the answer
         if (randomOperator === " + ") {
             answerString = randomNumber1 + randomNumber2;
         } else {
@@ -262,7 +271,7 @@ function mathing() {
         }, 5000);
     }
 
-    // Constrain box values
+    // Constrain box y coordinates
     mathBoxes.question.y = constrain(mathBoxes.question.y, -110, 30);
     mathBoxes.answerLeft.y = constrain(mathBoxes.answerLeft.y, -40, 100);
     mathBoxes.answerRight.y = constrain(mathBoxes.answerRight.y, -40, 100);
@@ -290,14 +299,14 @@ function mathing() {
                 if (!resetInProgress) {
                     resetInProgress = true; // Prevent multiple resets
                     setTimeout(() => {
-                        resetMathing();
+                        resetMathing(); // Reset the function
                     }, 2000); // Pause for 2 seconds (2000 milliseconds)
                 }
             }
         }
     }
 
-    // Handle user clicks
+    // Handle user clicks and determine success/failure
     if (hasClicked) {
         if (isInArea(mathBoxes.answerLeft.x, mathBoxes.answerLeft.y, mathBoxes.answerLeft.w, mathBoxes.answerLeft.h)) {
             mathBoxes.answerLeft.fill = mathBoxes.answerLeft.isCorrect ? "green" : "#930000";
@@ -319,6 +328,9 @@ function mathing() {
     drawMathBoxes();
 }
 
+/**
+ * Reset the math function
+ */
 function resetMathing() {
     equationGenerated = false;
     mathBoxes.isActive = false;
@@ -331,6 +343,9 @@ function resetMathing() {
 }
 
 
+/**
+ * Draws the math task boxes and texts
+ */
 function drawMathBoxes() {
     push();
     noStroke();
