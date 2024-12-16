@@ -57,14 +57,8 @@ let successes = {
 let hasClicked = false;
 
 
-/**
- * @type {{patterns: {pattern: string, answer: string}[]}}
- */
-let patternsData;
-
 function preload() {
-    patternsData = loadJSON("assets/patterns.json");
-
+    preloadPattern();
 }
 
 /**
@@ -79,6 +73,9 @@ function setup() {
     textSize(20);
 
     console.log(patternsData.patterns[0].answer);
+    console.log(random(patternsData.patterns).pattern);
+
+
 }
 
 /**
@@ -304,7 +301,7 @@ function displayHealth() {
 // Used for "animating" the health changes
 let increaseHealth = false;
 let increaseCounter = 0;
-let increaseAmount = 15;
+let increaseAmount = 50;
 
 let decreaseHealth = false;
 let decreaseCounter = 0;
@@ -371,4 +368,5 @@ function mouseClicked() {
 
 //Bugs
 // The paddle is weird if you hit it on the side. Will i fix?? prolly not
+// Health bar
 

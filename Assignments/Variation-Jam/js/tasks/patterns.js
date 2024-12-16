@@ -23,12 +23,31 @@ let placeholderText = "Enter here"; // Default placeholder text
 let isPlaceholderActive = true; // Flag to track if the placeholder is active
 let backspaceTime = 0; // To track how long backspace is held down
 let backspaceDelay = 500; // 1 second delay before continuous deletion
+
+let angle = 0; // Rotation angle in radians
+let currentWidth = 0;
+let currentHeight = 0;
+let currentPromptHeight = 0;
 let animationDone = false;
 
+
+/**
+ * @type {{patterns: {pattern: string, answer: string}[]}}
+ */
+let patternsData;
+
+function preloadPattern() {
+    patternsData = loadJSON("assets/patterns.json");
+
+
+}
+
 function patternTask() {
-    displayPrompt();
+    animatePrompt();
     if (animationDone) {
+        displayPromptText();
         typeText();
+        verifyAnswer();
     }
 }
 
@@ -121,7 +140,7 @@ function mousePressed() {
  */
 function keyTyped() {
     // Allow typing inside the text box only if the width hasn't been exceeded
-    if (isTyping && key !== 'Backspace') {
+    if (isTyping && key !== 'Backspace' && key !== 'Enter') {
         let textWidthLimit = textBox.w - 20; // 10px padding on each side
         if (textWidth(inputText + key) <= textWidthLimit) {
             inputText += key; // Add character only if it fits
@@ -130,17 +149,15 @@ function keyTyped() {
 }
 
 
-let angle = 0; // Rotation angle in radians
-let currentWidth = 0;
-let currentHeight = 0;
-let currentPromptHeight = 0;
-
-
-function displayPrompt() {
+/**
+ * Animates the prompt onto the screen
+ */
+function animatePrompt() {
     // Depend prompt coordinates onto textBox
     prompt.x = textBox.x;
     prompt.y = textBox.y - 50;
 
+    // Update the width and height of the rectangles
     if (currentWidth < textBox.w) {
         currentWidth += 2;
     }
@@ -172,6 +189,7 @@ function displayPrompt() {
     rect(-currentWidth / 2, -currentHeight / 2, currentWidth, currentHeight, 10); // Draw rectangle centered at the origin
     pop();
 
+    // Make the rectangles spin
     if (currentWidth >= textBox.w && currentHeight >= textBox.h && angle % 360 === 0) {
         angle = 0;
         animationDone = true;
@@ -179,6 +197,45 @@ function displayPrompt() {
         // Increment the angle for continuous rotation
         angle += 20; // Adjust this value to control rotation speed
     }
+}
+
+let promptActive = false;
+/**
+ * @type {{pattern: string, answer: string}};
+ */
+let randomPrompt = undefined;
+let promptText = undefined;
+
+function displayPromptText() {
+    text(promptText, prompt.x + 10, prompt.y + prompt.h / 2 - 10);
+}
+
+function verifyAnswer() {
+    if (randomPattern === inputText) {
+        console.log("correctamundo");
+    }
+}
+
+let randomPattern;
+let randomAnswer;
+
+function keyPressed() {
+    if (key === ' ') {
+        // Select a random index from the patterns array
+        let randomIndex = Math.floor(random(patternsData.patterns.length));
+        let selectedPattern = patternsData.patterns[randomIndex];
+
+        // Store the pattern and answer into variables
+        randomPattern = selectedPattern.pattern;
+        randomAnswer = selectedPattern.answer;
+
+
+        // Optionally, log the selected pattern and answer
+        console.log("Pattern: " + randomPattern);
+        console.log("Answer: " + randomAnswer);
+        console.log("Input: " + inputText);
+    }
+
 }
 
 function resetPatterns() {
