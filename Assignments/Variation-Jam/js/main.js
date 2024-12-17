@@ -34,19 +34,22 @@ let activeTasks = {
     soloPong: false,
     randomCow: false,
     mathing: false,
+    patterns: false
 }
 
 let timers = {
-    bannerTimerStarted: false,
+    bannerTimerStarted: false, // The timer for keeping the banner on the screen for 3 seconds
     cowTimerStarted: false,
     mathingStarted: false,
+    patternStarted: false,
     answerTimeout: undefined,
     mathTimout: undefined,
 }
 
 let counters = {
-    pongCounter: 0,
-    cowCounter: 0
+    pong: 0,
+    cow: 0,
+    math: 0,
 }
 
 let successes = {
@@ -69,13 +72,7 @@ function setup() {
     background("#6160b2");
     states.current = states.menu;
     resetGame();
-
     textSize(20);
-
-    console.log(patternsData.patterns[0].answer);
-    console.log(random(patternsData.patterns).pattern);
-
-
 }
 
 /**
@@ -89,9 +86,9 @@ function draw() {
     soloPong(paddle, ball);
 
     // Handle cow tasks
-    if (counters.pongCounter >= 1) {
+    if (counters.pong >= 1) {
         //Play the banner only once
-        if (counters.pongCounter === 1 && !activeTasks.randomCow) {
+        if (counters.pong === 1 && !activeTasks.randomCow) {
             playingBanner = true;
         }
         randomCow(cow);
@@ -105,15 +102,39 @@ function draw() {
         }
     }
     // Handle math tasks
-    if (counters.cowCounter >= 1) {
+    if (counters.cow >= 1) {
         //Play the banner only once
-        if (counters.cowCounter === 1 && !activeTasks.mathing) {
+        if (counters.cow === 1 && !activeTasks.mathing) {
             playingBanner = true;
             mathBoxes.isActive = true;
         }
         mathing();
+
+        // Repeat the cow task periodically
+        if (!timers.cowTimerStarted) {
+            timers.cowTimerStarted = true;
+            setTimeout(() => {
+                randomCow(cow)
+                timers.cowTimerStarted = false;
+            }, 2000);
+        }
     }
-    patternTask();
+    if (counters.math >= 3) {
+        if (counters.math === 3 && !activeTasks.patterns) {
+            playingBanner = true;
+        }
+        patternTask();
+
+        // Repeat the cow task periodically
+        if (!timers.patternStarted) {
+            timers.patternStarted = true;
+            setTimeout(() => {
+                patternTask();
+                timers.patternStarted = false;
+            }, 2000);
+        }
+    }
+    // patternTask();
     // typeText();
     handleHealth();
     displayHealth();
@@ -247,6 +268,8 @@ function setBannerText() {
     } else if (activeTasks.task === "math") {
         banners.text.text = "If I had to do math for this, so do you :)"
         activeTasks.mathing = true;
+    } else if (activeTasks.task === "pattern") {
+        banners.text.text = "Patterns"
     } else {
         banners.text.text = undefined;
     }
@@ -284,7 +307,6 @@ function displayHealth() {
     let fillLevel = map(health.value, 0, maxHealth.value, 0, TWO_PI); // Map value to an angle (0 to 2π)
 
     // Draw the background circle
-    // noStroke();
     push();
     fill(maxHealth.fill);
     ellipse(circle.x, circle.y, circle.size);
@@ -301,7 +323,7 @@ function displayHealth() {
 // Used for "animating" the health changes
 let increaseHealth = false;
 let increaseCounter = 0;
-let increaseAmount = 50;
+let increaseAmount = 15;
 
 let decreaseHealth = false;
 let decreaseCounter = 0;

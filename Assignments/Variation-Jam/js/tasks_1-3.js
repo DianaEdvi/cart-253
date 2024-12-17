@@ -75,7 +75,7 @@ function soloPong(paddle, ball) {
     // Check collision with paddle
     if (ball.y + ball.w / 2 >= paddle.y && ball.x > paddle.x && ball.x < paddle.x + paddle.w) {
         // Increment counter
-        counters.pongCounter++;
+        counters.pong++;
         // Reverse vertical direction
         ball.speedY *= -1;
 
@@ -138,7 +138,7 @@ function randomCow(cow) {
         successes.cowSuccess = true;
         handleHealth(successes.cowSuccess);
         //Increment counter
-        counters.cowCounter++
+        counters.cow++
     }
 
     // Check if the cow goes off-screen
@@ -313,6 +313,7 @@ function mathing() {
             successes.mathSuccess = mathBoxes.answerLeft.isCorrect;
             hasAnswered = true;
             handleHealth(successes.mathSuccess);
+            counters.math++;
             clearTimeout(timers.answerTimeout); // Stop the timer if answered
         }
         if (isInArea(mathBoxes.answerRight.x, mathBoxes.answerRight.y, mathBoxes.answerRight.w, mathBoxes.answerRight.h)) {
@@ -320,6 +321,7 @@ function mathing() {
             successes.mathSuccess = mathBoxes.answerRight.isCorrect;
             hasAnswered = true;
             handleHealth(successes.mathSuccess);
+            counters.math++;
             clearTimeout(timers.answerTimeout); // Stop the timer if answered
         }
     }

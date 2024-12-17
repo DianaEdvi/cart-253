@@ -26,7 +26,15 @@ let backspaceDelay = 500; // 1 second delay before continuous deletion
 
 let angle = 0; // Rotation angle in radians
 let promptIsReady = false;
-let isAnimating = true;
+let animatingIn = true;
+
+/**
+ * @type {{pattern: string, answer: string}};
+ */
+let promptInfo = undefined;
+
+let randomPattern;
+let randomAnswer;
 
 
 /**
@@ -41,15 +49,17 @@ function preloadPattern() {
 }
 
 function patternTask() {
+    if (!activeTasks.patterns) {
+        activeTasks.task = "pattern";
+    }
 
-    if (isAnimating) {
+    if (animatingIn) {
         animatePrompt('enter');
         if (promptIsReady) {
             displayPromptText();
             typeText();
             verifyAnswer();
         }
-
     } else {
         animatePrompt('exit');
         resetPatterns();
@@ -153,17 +163,22 @@ function keyTyped() {
     }
 }
 
-
+// The target size of the prompt boxes
 let targetWidth = undefined;
 let targetHeight = undefined;
 let targetPromptHeight = undefined;
-let currentWidth2 = undefined;
-let currentHeight2 = undefined;
-let currentPromptHeight2 = undefined;
+
+// The actual size of the prompt boxes
+let currentWidth = undefined;
+let currentHeight = undefined;
+let currentPromptHeight = undefined;
+
+//The growth rate
 let widthGrowthRate = 2;
 let heightGrowthRate = 1;
+
+// Flag so as not to reset the variables constantly
 let stateSelected = false;
-let enterAnimation = false;
 
 /**
  * Animates the prompt onto the screen
@@ -176,20 +191,19 @@ function animatePrompt(state) {
         targetWidth = textBox.w;
         targetHeight = textBox.h;
         targetPromptHeight = prompt.h;
-        currentWidth2 = 0;
-        currentHeight2 = 0;
-        currentPromptHeight2 = 0;
+        currentWidth = 0;
+        currentHeight = 0;
+        currentPromptHeight = 0;
         stateSelected = true;
     } else if (state === 'exit' && !stateSelected) {
-        console.log("we have entered exit")
         widthGrowthRate = -1 * abs(widthGrowthRate);
         heightGrowthRate = -1 * abs(heightGrowthRate);
         targetWidth = 0;
         targetHeight = 0
         targetPromptHeight = 0;
-        currentWidth2 = textBox.w;
-        currentHeight2 = textBox.h;
-        currentPromptHeight2 = prompt.h;
+        currentWidth = textBox.w;
+        currentHeight = textBox.h;
+        currentPromptHeight = prompt.h;
         stateSelected = true;
     }
 
@@ -198,39 +212,39 @@ function animatePrompt(state) {
     prompt.y = textBox.y - 50;
 
     // Update the width and height of the rectangles
-    if (currentWidth2 !== targetWidth) {
-        currentWidth2 += widthGrowthRate;
+    if (currentWidth !== targetWidth) {
+        currentWidth += widthGrowthRate;
     }
 
-    if (currentPromptHeight2 !== targetPromptHeight) {
-        currentPromptHeight2 += heightGrowthRate;
+    if (currentPromptHeight !== targetPromptHeight) {
+        currentPromptHeight += heightGrowthRate;
     }
 
-    if (currentHeight2 !== targetHeight) {
-        currentHeight2 += heightGrowthRate;
+    if (currentHeight !== targetHeight) {
+        currentHeight += heightGrowthRate;
     }
 
     // Draw rotating rectangle
     push();
-    translate(prompt.x + currentWidth2 / 2, prompt.y + currentPromptHeight2 / 2); // Move origin to the center of the rectangle
+    translate(prompt.x + currentWidth / 2, prompt.y + currentPromptHeight / 2); // Move origin to the center of the rectangle
     angleMode(DEGREES);
     rotate(angle); // Rotate the rectangle
     fill(prompt.f);
-    rect(-currentWidth2 / 2, -currentPromptHeight2 / 2, currentWidth2, currentPromptHeight2, 10); // Draw rectangle centered at the origin
+    rect(-currentWidth / 2, -currentPromptHeight / 2, currentWidth, currentPromptHeight, 10); // Draw rectangle centered at the origin
     pop();
 
 
     // Draw rotating textbox
     push();
-    translate(textBox.x + currentWidth2 / 2, textBox.y + currentHeight2 / 2); // Move origin to the center of the rectangle
+    translate(textBox.x + currentWidth / 2, textBox.y + currentHeight / 2); // Move origin to the center of the rectangle
     angleMode(DEGREES);
     rotate(angle); // Rotate the rectangle
     fill(textBox.f);
-    rect(-currentWidth2 / 2, -currentHeight2 / 2, currentWidth2, currentHeight2, 10); // Draw rectangle centered at the origin
+    rect(-currentWidth / 2, -currentHeight / 2, currentWidth, currentHeight, 10); // Draw rectangle centered at the origin
     pop();
 
     // Make the rectangles spin
-    if (currentWidth2 === targetWidth && currentHeight2 === targetHeight && angle % 360 === 0) {
+    if (currentWidth === targetWidth && currentHeight === targetHeight && angle % 360 === 0) {
         angle = 0;
         if (state === 'enter') {
             promptIsReady = true;
@@ -243,27 +257,23 @@ function animatePrompt(state) {
 
 }
 
-/**
- * @type {{pattern: string, answer: string}};
- */
-let promptText = undefined;
 
 function displayPromptText() {
-    text(promptText, prompt.x + 10, prompt.y + prompt.h / 2 - 10);
+    text(promptInfo, prompt.x + 10, prompt.y + prompt.h / 2 - 10);
 }
 
 function verifyAnswer() {
-    console.log(inputText);
-    if (randomAnswer === inputText) {
-        if (isTyping && key === "Enter") {
-            console.log("correctamundo");
-            enterAnimation = false;
+    if (isTyping && keyIsPressed && key === "Enter") {
+        if (randomAnswer === inputText) {
+            console.log("Ding sound");
+        } else {
+            console.log("Dong sound");
         }
+        animatingIn = false;
+        stateSelected = false;
     }
 }
 
-let randomPattern;
-let randomAnswer;
 
 function keyPressed() {
     if (key === ' ') {
@@ -274,16 +284,11 @@ function keyPressed() {
         // Store the pattern and answer into variables
         randomPattern = selectedPattern.pattern;
         randomAnswer = selectedPattern.answer;
-        promptText = randomPattern;
-    }
-
-    if (isTyping && key === 'Enter') {
-        console.log("done");
-        promptIsReady = false;
+        promptInfo = randomPattern;
     }
 
     if (key === 'r') {
-        isAnimating = !isAnimating;
+        animatingIn = true;
         stateSelected = false;
         promptIsReady = false;
     }
