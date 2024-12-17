@@ -316,6 +316,7 @@ function displayHealth() {
     push();
     noStroke()
     fill(health.fill);
+    angleMode(RADIANS);
     arc(circle.x, circle.y, circle.size, circle.size, -HALF_PI, -HALF_PI + fillLevel, PIE);
     pop();
 }
