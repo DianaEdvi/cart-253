@@ -309,19 +309,29 @@ function mathing() {
     // Handle user clicks and determine success/failure
     if (hasClicked) {
         if (isInArea(mathBoxes.answerLeft.x, mathBoxes.answerLeft.y, mathBoxes.answerLeft.w, mathBoxes.answerLeft.h)) {
-            mathBoxes.answerLeft.fill = mathBoxes.answerLeft.isCorrect ? "green" : "#930000";
-            successes.mathSuccess = mathBoxes.answerLeft.isCorrect;
+            if (mathBoxes.answerLeft.isCorrect) {
+                mathBoxes.answerLeft.fill = "green";
+                successes.mathSuccess = mathBoxes.answerLeft.isCorrect;
+                counters.math++;
+            } else {
+                mathBoxes.answerLeft.fill = "#930000";
+            }
+
             hasAnswered = true;
             handleHealth(successes.mathSuccess);
-            counters.math++;
             clearTimeout(timers.answerTimeout); // Stop the timer if answered
         }
         if (isInArea(mathBoxes.answerRight.x, mathBoxes.answerRight.y, mathBoxes.answerRight.w, mathBoxes.answerRight.h)) {
-            mathBoxes.answerRight.fill = mathBoxes.answerRight.isCorrect ? "green" : "#930000";
-            successes.mathSuccess = mathBoxes.answerRight.isCorrect;
+            if (mathBoxes.answerRight.isCorrect) {
+                mathBoxes.answerRight.fill = "green";
+                successes.mathSuccess = mathBoxes.answerRight.isCorrect;
+                counters.math++;
+            } else {
+                mathBoxes.answerRight.fill = "#930000";
+
+            }
             hasAnswered = true;
             handleHealth(successes.mathSuccess);
-            counters.math++;
             clearTimeout(timers.answerTimeout); // Stop the timer if answered
         }
     }
