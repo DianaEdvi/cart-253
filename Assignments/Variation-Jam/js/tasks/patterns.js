@@ -25,11 +25,8 @@ let backspaceTime = 0; // To track how long backspace is held down
 let backspaceDelay = 500; // 1 second delay before continuous deletion
 
 let angle = 0; // Rotation angle in radians
-let currentWidth = 0;
-let currentHeight = 0;
-let currentPromptHeight = 0;
-let animationDone = false;
-let exitingAnimation = false;
+let promptIsReady = false;
+let isAnimating = true;
 
 
 /**
@@ -44,11 +41,18 @@ function preloadPattern() {
 }
 
 function patternTask() {
-    animatePrompt('enter');
-    if (animationDone) {
-        displayPromptText();
-        typeText();
-        verifyAnswer();
+
+    if (isAnimating) {
+        animatePrompt('enter');
+        if (promptIsReady) {
+            displayPromptText();
+            typeText();
+            verifyAnswer();
+        }
+
+    } else {
+        animatePrompt('exit');
+        resetPatterns();
     }
 }
 
@@ -156,16 +160,17 @@ let targetPromptHeight = undefined;
 let currentWidth2 = undefined;
 let currentHeight2 = undefined;
 let currentPromptHeight2 = undefined;
-let animating = false;
 let widthGrowthRate = 2;
 let heightGrowthRate = 1;
+let stateSelected = false;
+let enterAnimation = false;
 
 /**
  * Animates the prompt onto the screen
  */
 function animatePrompt(state) {
 
-    if (state === 'enter' && !animating) {
+    if (state === 'enter' && !stateSelected) {
         widthGrowthRate = abs(widthGrowthRate);
         heightGrowthRate = abs(heightGrowthRate);
         targetWidth = textBox.w;
@@ -174,8 +179,9 @@ function animatePrompt(state) {
         currentWidth2 = 0;
         currentHeight2 = 0;
         currentPromptHeight2 = 0;
-        animating = true;
-    } else if (state === 'exit' && !animating) {
+        stateSelected = true;
+    } else if (state === 'exit' && !stateSelected) {
+        console.log("we have entered exit")
         widthGrowthRate = -1 * abs(widthGrowthRate);
         heightGrowthRate = -1 * abs(heightGrowthRate);
         targetWidth = 0;
@@ -184,7 +190,7 @@ function animatePrompt(state) {
         currentWidth2 = textBox.w;
         currentHeight2 = textBox.h;
         currentPromptHeight2 = prompt.h;
-        animating = true;
+        stateSelected = true;
     }
 
     // Depend prompt coordinates onto textBox
@@ -194,7 +200,6 @@ function animatePrompt(state) {
     // Update the width and height of the rectangles
     if (currentWidth2 !== targetWidth) {
         currentWidth2 += widthGrowthRate;
-        console.log(currentWidth2);
     }
 
     if (currentPromptHeight2 !== targetPromptHeight) {
@@ -203,7 +208,6 @@ function animatePrompt(state) {
 
     if (currentHeight2 !== targetHeight) {
         currentHeight2 += heightGrowthRate;
-        console.log(currentHeight2);
     }
 
     // Draw rotating rectangle
@@ -228,7 +232,10 @@ function animatePrompt(state) {
     // Make the rectangles spin
     if (currentWidth2 === targetWidth && currentHeight2 === targetHeight && angle % 360 === 0) {
         angle = 0;
-        animationDone = true;
+        if (state === 'enter') {
+            promptIsReady = true;
+
+        }
     } else {
         // Increment the angle for continuous rotation
         angle += 20; // Adjust this value to control rotation speed
@@ -250,6 +257,7 @@ function verifyAnswer() {
     if (randomAnswer === inputText) {
         if (isTyping && key === "Enter") {
             console.log("correctamundo");
+            enterAnimation = false;
         }
     }
 }
@@ -271,11 +279,21 @@ function keyPressed() {
 
     if (isTyping && key === 'Enter') {
         console.log("done");
-        animationDone = false;
+        promptIsReady = false;
+    }
+
+    if (key === 'r') {
+        isAnimating = !isAnimating;
+        stateSelected = false;
+        promptIsReady = false;
     }
 }
 
 function resetPatterns() {
-    animationDone = false;
+    promptIsReady = false;
+    inputText = '';
+    isTyping = false;
+    isPlaceholderActive = true;
+    placeholderText = "Enter here..."; // Default placeholder text
 }
 
