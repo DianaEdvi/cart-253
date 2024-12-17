@@ -270,6 +270,7 @@ function setBannerText() {
         activeTasks.mathing = true;
     } else if (activeTasks.task === "pattern") {
         banners.text.text = "Patterns"
+        activeTasks.patterns = true;
     } else {
         banners.text.text = undefined;
     }
@@ -281,6 +282,7 @@ function setBannerText() {
 function resetGame() {
     resetBall();
     resetCow(cow);
+    resetPatterns();
 }
 
 

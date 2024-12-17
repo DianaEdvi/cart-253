@@ -300,5 +300,18 @@ function resetPatterns() {
     isTyping = false;
     isPlaceholderActive = true;
     placeholderText = "Enter here..."; // Default placeholder text
+
+    generatePrompt();
 }
 
+function generatePrompt() {
+    // Select a random index from the patterns array
+    let randomIndex = Math.floor(random(patternsData.patterns.length));
+    let selectedPattern = patternsData.patterns[randomIndex];
+
+    // Store the pattern and answer into variables
+    randomPattern = selectedPattern.pattern;
+    randomAnswer = selectedPattern.answer;
+    promptInfo = randomPattern;
+
+}
