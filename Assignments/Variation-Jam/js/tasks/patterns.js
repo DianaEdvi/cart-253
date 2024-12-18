@@ -17,6 +17,7 @@ let prompt = {
     text: ""
 }
 
+// Typing properties
 let inputText = '';
 let isTyping = false;
 let placeholderText = "Enter here..."; // Default placeholder text
@@ -24,17 +25,11 @@ let isPlaceholderActive = true; // Flag to track if the placeholder is active
 let backspaceTime = 0; // To track how long backspace is held down
 let backspaceDelay = 500; // 1 second delay before continuous deletion
 
+
+// Animation properties
 let angle = 0; // Rotation angle in radians
 let promptIsReady = false;
 let animatingIn = true;
-
-/**
- * @type {{pattern: string, answer: string}};
- */
-let promptInfo = undefined;
-
-let randomPattern;
-let randomAnswer;
 
 
 /**
@@ -42,13 +37,23 @@ let randomAnswer;
  */
 let patternsData;
 
+/**
+ * @type {{pattern: string, answer: string}};
+ */
+let promptInfo = undefined;
+let randomPattern;
+let randomAnswer;
+
+// let hasTypedAnswer = undefined;
+
+
 function preloadPattern() {
     patternsData = loadJSON("assets/patterns.json");
 
 
 }
 
-function patternTask() {
+function patterns() {
     if (!activeTasks.patterns) {
         activeTasks.task = "pattern";
     }
@@ -64,6 +69,13 @@ function patternTask() {
         animatePrompt('exit');
         resetPatterns();
     }
+
+    // if (!hasTypedAnswer) {
+    //     setTimeout(() => {
+    //         console.log("go back now");
+    //     }, 3000);
+    //
+    // }
 }
 
 /**
@@ -271,27 +283,8 @@ function verifyAnswer() {
         }
         animatingIn = false;
         stateSelected = false;
+        // hasTypedAnswer = true;
     }
-}
-
-
-function keyPressed() {
-    if (key === ' ') {
-        // Select a random index from the patterns array
-        let randomIndex = Math.floor(random(patternsData.patterns.length));
-        let selectedPattern = patternsData.patterns[randomIndex];
-
-        // Store the pattern and answer into variables
-        randomPattern = selectedPattern.pattern;
-        randomAnswer = selectedPattern.answer;
-        promptInfo = randomPattern;
-    }
-    //
-    // if (key === 'r') {
-    //     animatingIn = true;
-    //     stateSelected = false;
-    //     promptIsReady = false;
-    // }
 }
 
 function resetPatterns() {
@@ -300,8 +293,7 @@ function resetPatterns() {
     isTyping = false;
     isPlaceholderActive = true;
     placeholderText = "Enter here..."; // Default placeholder text
-    // animatingIn = true;
-    // stateSelected = false;
+    // hasTypedAnswer = false;
     generatePrompt();
 }
 
