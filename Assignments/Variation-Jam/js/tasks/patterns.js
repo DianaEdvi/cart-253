@@ -286,12 +286,12 @@ function keyPressed() {
         randomAnswer = selectedPattern.answer;
         promptInfo = randomPattern;
     }
-
-    if (key === 'r') {
-        animatingIn = true;
-        stateSelected = false;
-        promptIsReady = false;
-    }
+    //
+    // if (key === 'r') {
+    //     animatingIn = true;
+    //     stateSelected = false;
+    //     promptIsReady = false;
+    // }
 }
 
 function resetPatterns() {
@@ -300,7 +300,8 @@ function resetPatterns() {
     isTyping = false;
     isPlaceholderActive = true;
     placeholderText = "Enter here..."; // Default placeholder text
-
+    // animatingIn = true;
+    // stateSelected = false;
     generatePrompt();
 }
 

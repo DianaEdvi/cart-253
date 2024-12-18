@@ -291,8 +291,9 @@ function mathing() {
 
             // If the boxes have returned to off-screen, reset the values (takes two seconds)
             if (mathBoxes.question.y <= -110) {
-                if (!successes.mathSuccess) {
+                if (!successes.mathSuccess && mathBoxes.answerRight.fill === "red" && mathBoxes.answerLeft.fill === "red") {
                     handleHealth(successes.mathSuccess);
+                    console.log("this is why");
                     successes.mathSuccess = undefined;
                 }
                 // Reset state
