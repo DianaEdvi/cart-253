@@ -54,9 +54,12 @@ let successes = {
 
 let hasClicked = false;
 
+let backgroundImage = undefined;
+
 
 function preload() {
     preloadPattern();
+    backgroundImage = loadImage('assets/second.jpg')
 }
 
 /**
@@ -74,7 +77,8 @@ function setup() {
  * Draw the game
  */
 function draw() {
-    background("#6160b2");
+    image(backgroundImage, 0, 0, width, height);
+    // background(0);
     if (playingBanner) {
         bannerAnimation(banners.text.text);
     }

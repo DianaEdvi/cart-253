@@ -55,7 +55,6 @@ function patterns() {
         activeTasks.task = "pattern";
     }
 
-    console.log(endTask);
 
     if (animatingIn) {
         animationState = 'enter'
@@ -70,14 +69,12 @@ function patterns() {
             if (!timers.patternTimeout) {
                 timers.patternTimeout = setTimeout(() => {
                     endTask = true;
-                    console.log("End task triggered after 3 seconds");
                 }, 3000);
             }
         }
     } else {
         animationState = 'exit';
         animatePrompt(animationState);
-        // resetPatterns();
     }
 }
 
@@ -300,7 +297,6 @@ function verifyAnswer() {
 }
 
 function resetPatterns() {
-    console.log("reset is called")
     inputText = '';
     isTyping = false;
     isPlaceholderActive = true;

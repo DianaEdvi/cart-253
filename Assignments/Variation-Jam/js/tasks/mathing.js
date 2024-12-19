@@ -111,7 +111,7 @@ function mathing() {
     }
 
     // Handle user clicks and determine success/failure
-    if (hasClicked) {
+    if (hasClicked && mathBoxes.answerRight.fill === "red" && mathBoxes.answerLeft.fill === "red") {
         if (isInArea(mathBoxes.answerLeft.x, mathBoxes.answerLeft.y, mathBoxes.answerLeft.w, mathBoxes.answerLeft.h)) {
             if (mathBoxes.answerLeft.isCorrect) {
                 mathBoxes.answerLeft.fill = "green";
