@@ -142,51 +142,35 @@ function activateBannerOnce(counter, newTask, countThreshold) {
     }
 }
 
-// The properties for the health bar
-let health = {
-    value: 0,
-    fill: "#9066b2"
-}
-let maxHealth = {
-    value: 100,
-    fill: "#cacaca"
-}
-let circle = {
+let healthBar = {
     x: 50,
     y: 50,
     size: 100,
+    container: {
+        f: "#cacaca"
+    },
+    healthPoints: {
+        f: "#9066b2",
+        currentValue: 100,
+        minValue: 0,
+        maxValue: 100,
+        decayRate: -0.01,
+        animation: {
+            gainingHealth: {
+                isActive: false,
+                counter: 0,
+                amount: 15,
+                rateOfChange: 1
+            },
+            losingHealth: {
+                isActive: false,
+                counter: 0,
+                amount: 15,
+                rateOfChange: -1
+            }
+        }
+    }
 }
-
-/**
- * Display the health as a circle that is being filled clockwise
- */
-function displayHealth() {
-    // Calculate the fill level (proportion of the circle filled)
-    let fillLevel = map(health.value, 0, maxHealth.value, 0, TWO_PI); // Map value to an angle (0 to 2π)
-
-    // Draw the background circle
-    push();
-    fill(maxHealth.fill);
-    ellipse(circle.x, circle.y, circle.size);
-    pop();
-
-    // Draw the filled portion
-    push();
-    noStroke()
-    fill(health.fill);
-    angleMode(RADIANS);
-    arc(circle.x, circle.y, circle.size, circle.size, -HALF_PI, -HALF_PI + fillLevel, PIE);
-    pop();
-}
-
-// Used for "animating" the health changes
-let increaseHealth = false;
-let increaseCounter = 0;
-let increaseAmount = 15;
-
-let decreaseHealth = false;
-let decreaseCounter = 0;
-let decreaseAmount = 10;
 
 /**
  * Handles the health meter. Increases the health if a task was completed successfully and decreases if it fails
@@ -194,33 +178,66 @@ let decreaseAmount = 10;
  * @param succeeded Bool for whether the task was successful or not
  */
 function handleHealth(succeeded) {
-    health.value = constrain(health.value, 0, maxHealth.value);
+    healthBar.healthPoints.currentValue = constrain(healthBar.healthPoints.currentValue, healthBar.healthPoints.minValue, healthBar.healthPoints.maxValue);
 
+    // Determine how health is to be changed
     if (succeeded === undefined) {
-        health.value += 0.01;
+        healthBar.healthPoints.currentValue += healthBar.healthPoints.decayRate; // Decay health consistently if nothing is happening
     } else if (!succeeded) {
-        decreaseHealth = true;
+        healthBar.healthPoints.animation.losingHealth.isActive = true; // Lose health if a task is failed
     } else {
-        increaseHealth = true;
+        healthBar.healthPoints.animation.gainingHealth.isActive = true; // Gain health if a task is succeeded
     }
 
-    // Handle health increase animation
-    if (increaseHealth && increaseCounter < increaseAmount) {
-        increaseCounter += 1;
-        health.value += 1;
-    }
-    if (increaseCounter === increaseAmount) {
-        increaseCounter = 0;
-        increaseHealth = false;
+    animateHealth(healthBar.healthPoints.animation.gainingHealth);
+    animateHealth(healthBar.healthPoints.animation.losingHealth);
+
+    drawHealth();
+}
+
+/**
+ * Display the health as a circle that is being filled clockwise
+ */
+function drawHealth() {
+    // Calculate the fill level (proportion of the circle filled)
+    let fillLevel = map(healthBar.healthPoints.currentValue, 0, healthBar.healthPoints.maxValue, 0, TWO_PI); // Map value to an angle (0 to 2π)
+
+    // Draw the background circle
+    push();
+    fill(healthBar.container.f);
+    ellipse(healthBar.x, healthBar.y, healthBar.size);
+    pop();
+
+    // Draw the filled portion
+    push();
+    noStroke()
+    fill(healthBar.healthPoints.f);
+    angleMode(RADIANS);
+    arc(healthBar.x, healthBar.y, healthBar.size, healthBar.size, -HALF_PI, -HALF_PI + fillLevel, PIE);
+    pop();
+}
+
+/**
+ * Handles the animation of the health bar in response to a task's completion
+ * @param animation
+ */
+function animateHealth(animation) {
+    // Handle change in health animation
+    if (animation.isActive && animation.counter < animation.amount) {
+        animation.counter += abs(animation.rateOfChange);
+        healthBar.healthPoints.currentValue += animation.rateOfChange;
     }
 
-    // Handle health decrease animation
-    if (decreaseHealth && decreaseCounter < decreaseAmount) {
-        decreaseCounter += 1;
-        health.value -= 1;
+    // Reset values if animation is complete
+    if (animation.counter === animation.amount) {
+        animation.counter = 0;
+        animation.isActive = false;
     }
-    if (decreaseCounter === decreaseAmount) {
-        decreaseCounter = 0;
-        decreaseHealth = false;
+}
+
+
+function manageFailState() {
+    if (healthBar.healthPoints.currentValue === 0) {
+        console.log("game over");
     }
 }

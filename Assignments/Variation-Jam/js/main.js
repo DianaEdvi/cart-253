@@ -134,7 +134,7 @@ function game() {
         patterns();
     }
     handleHealth();
-    displayHealth();
+    manageFailState();
     hasClicked = false;
 }
 
