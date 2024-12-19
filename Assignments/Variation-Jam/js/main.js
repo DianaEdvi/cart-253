@@ -38,6 +38,7 @@ let timers = {
     patternStarted: false,
     answerTimeout: undefined,
     mathTimout: undefined,
+    patternTimeout: undefined
 }
 
 let counters = {
@@ -107,19 +108,19 @@ function draw() {
             }, 2000);
         }
     }
-    if (counters.math >= 3) {
-        activateBannerOnce(counters.math, activeTasks.patterns, 3);
+    if (counters.math >= 1) {
+        activateBannerOnce(counters.math, activeTasks.patterns, 1);
         patterns();
 
-        // Repeat the cow task periodically
-        if (!timers.patternStarted) {
-            timers.patternStarted = true;
-            setTimeout(() => {
-                patterns();
-                timers.patternStarted = false;
-                console.log("counting")
-            }, 2000);
-        }
+        // // Repeat the cow task periodically
+        // if (!timers.patternStarted) {
+        //     timers.patternStarted = true;
+        //     setTimeout(() => {
+        //         patterns();
+        //         timers.patternStarted = false;
+        //         console.log("counting")
+        //     }, 2000);
+        // }
     }
     handleHealth();
     displayHealth();

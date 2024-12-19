@@ -30,6 +30,8 @@ let backspaceDelay = 500; // 1 second delay before continuous deletion
 let angle = 0; // Rotation angle in radians
 let promptIsReady = false;
 let animatingIn = true;
+let animationState = 'enter';
+let endTask = false;
 
 
 /**
@@ -44,13 +46,8 @@ let promptInfo = undefined;
 let randomPattern;
 let randomAnswer;
 
-// let hasTypedAnswer = undefined;
-
-
 function preloadPattern() {
     patternsData = loadJSON("assets/patterns.json");
-
-
 }
 
 function patterns() {
@@ -59,30 +56,33 @@ function patterns() {
     }
 
     if (animatingIn) {
-        animatePrompt('enter');
+        animationState = 'enter'
+        animatePrompt(animationState);
+
         if (promptIsReady) {
             displayPromptText();
             typeText();
             verifyAnswer();
+
+            // Trigger exit animation 3 seconds after enter animation finishes
+            setTimeout(() => {
+                endTask = true;
+            }, 4000);
         }
     } else {
-        animatePrompt('exit');
+        animationState = 'exit';
+        animatePrompt(animationState);
         resetPatterns();
     }
 
-    // if (!hasTypedAnswer) {
-    //     setTimeout(() => {
-    //         console.log("go back now");
-    //     }, 3000);
-    //
-    // }
+
 }
 
 /**
  * Handles the typing input from the user and displays it onto the screen
  */
 function typeText() {
-    displayText();
+    displayTypedText();
     displayCaret();
     handleBackspace();
 
@@ -92,7 +92,7 @@ function typeText() {
 /**
  * Displays a placeholder text and once the user starts typing, truncates the text to the box width.
  */
-function displayText() {
+function displayTypedText() {
     // Display placeholder text if active, else show input text
     if (isPlaceholderActive) {
         text(placeholderText, textBox.x + 10, textBox.y + 25); // Placeholder text
@@ -260,7 +260,6 @@ function animatePrompt(state) {
         angle = 0;
         if (state === 'enter') {
             promptIsReady = true;
-
         }
     } else {
         // Increment the angle for continuous rotation
@@ -283,7 +282,9 @@ function verifyAnswer() {
         }
         animatingIn = false;
         stateSelected = false;
-        // hasTypedAnswer = true;
+    } else if (endTask) {
+        animatingIn = false;
+        stateSelected = false;
     }
 }
 
