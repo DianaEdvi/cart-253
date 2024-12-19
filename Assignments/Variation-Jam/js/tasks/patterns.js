@@ -54,8 +54,8 @@ function patterns() {
     if (!activeTasks.patterns) {
         activeTasks.task = "pattern";
     }
-    // console.log(animationState);
-    // console.log(animatingIn);
+
+    console.log(endTask);
 
     if (animatingIn) {
         animationState = 'enter'
@@ -66,13 +66,13 @@ function patterns() {
             typeText();
             verifyAnswer();
 
-            // console.log("AHHHHHHHHI HATE THIS ASSIGN,ENT ")
-            // Trigger exit animation 3 seconds after enter animation finishes
-            timers.patternTimeout = setTimeout(() => {
-                endTask = true;
-                // console.log("true true")
-                clearTimeout(timers.patternTimeout);
-            }, 3000);
+            // Only set timeout once and clear any existing one
+            if (!timers.patternTimeout) {
+                timers.patternTimeout = setTimeout(() => {
+                    endTask = true;
+                    console.log("End task triggered after 3 seconds");
+                }, 3000);
+            }
         }
     } else {
         animationState = 'exit';
@@ -260,20 +260,15 @@ function animatePrompt(state) {
 
     // Make the rectangles spin
     if (currentWidth === targetWidth && currentHeight === targetHeight && angle % 360 === 0) {
-        console.log("only here")
-        console.log(currentHeight);
-        console.log(targetHeight);
         angle = 0;
         if (state === 'enter') {
             promptIsReady = true;
         }
 
         if (state === 'exit') {
-            console.log("reset");
             resetPatterns();
         }
     } else {
-        console.log("not here")
         // Increment the angle for continuous rotation
         angle += 20; // Adjust this value to control rotation speed
     }
@@ -316,6 +311,7 @@ function resetPatterns() {
     animatingIn = true;
     animationState = 'enter';
     endTask = false;
+    timers.patternTimeout = undefined;
     generatePrompt();
 }
 
