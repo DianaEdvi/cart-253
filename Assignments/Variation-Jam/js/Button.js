@@ -67,22 +67,22 @@ class Button {
 
 }
 
-//garbage
-function menu() {
-    background("#95d0ff")
-    buttons.soloButton = new Button("Solo Pong", 100, height / 2, 150, 80, () => states.current = states.soloPong);
-    buttons.soloButton.buttonStyles("#5037c0");
-
-    buttons.mathButton = new Button("Math Pong", width / 2, height / 2, 150, 80, () => states.current = states.mathPong);
-    buttons.mathButton.buttonStyles("#b995ff");
-
-    buttons.colorButton = new Button("Color Pong", 540, height / 2, 150, 80, () => {
-        console.log("boooo")
-    });
-    buttons.colorButton.buttonStyles("#b260b0");
-
-    buttons.questionButton = new Button("?", 540, 100, 80, 80, () => {
-        console.log("??????")
-    });
-    buttons.questionButton.buttonStyles("#b26090");
-}
+// //garbage
+// function menu() {
+//     background("#95d0ff")
+//     buttons.soloButton = new Button("Solo Pong", 100, height / 2, 150, 80, () => states.current = states.soloPong);
+//     buttons.soloButton.buttonStyles("#5037c0");
+//
+//     buttons.mathButton = new Button("Math Pong", width / 2, height / 2, 150, 80, () => states.current = states.mathPong);
+//     buttons.mathButton.buttonStyles("#b995ff");
+//
+//     buttons.colorButton = new Button("Color Pong", 540, height / 2, 150, 80, () => {
+//         console.log("boooo")
+//     });
+//     buttons.colorButton.buttonStyles("#b260b0");
+//
+//     buttons.questionButton = new Button("?", 540, 100, 80, 80, () => {
+//         console.log("??????")
+//     });
+//     buttons.questionButton.buttonStyles("#b26090");
+// }

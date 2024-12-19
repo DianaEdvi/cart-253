@@ -54,12 +54,17 @@ let successes = {
 
 let hasClicked = false;
 
-let backgroundImage = undefined;
+const backgroundImages = {
+    menu: "",
+    game: ""
+}
 
+let gameState = "menu";
 
 function preload() {
     preloadPattern();
-    backgroundImage = loadImage('assets/second.jpg')
+    menuProperties.backgroundImg = loadImage('assets/optical_illusion.png')
+    backgroundImages.game = loadImage('assets/second_optical_illusion.jpg')
 }
 
 /**
@@ -77,8 +82,20 @@ function setup() {
  * Draw the game
  */
 function draw() {
-    image(backgroundImage, 0, 0, width, height);
-    // background(0);
+
+    console.log(gameState)
+    if (gameState === "menu") {
+        menu();
+    } else if (gameState === "game") {
+        game();
+    } else if (gameState === "end") {
+        end();
+    }
+}
+
+function game() {
+    image(backgroundImages.game, 0, 0, width, height);
+    // menu();
     if (playingBanner) {
         bannerAnimation(banners.text.text);
     }
@@ -128,6 +145,8 @@ function resetGame() {
     resetBall();
     resetCow(cow);
     resetPatterns();
+
+    gameState = "menu";
 }
 
 
@@ -141,13 +160,9 @@ function mouseClicked() {
 
 //Todo
 // import assets (sound and drawings)
-// import a font im sick of this one
 // check for microphone and mouse inputs
-// water plant function
-// scream into mic function
-// Type what you see (select text box and type)
+// talk into mic function
 // Set the time on the clock
-// Flappy bird?
 // Audio of me rambling
 // Timer for how long the player lasted
 // menu
