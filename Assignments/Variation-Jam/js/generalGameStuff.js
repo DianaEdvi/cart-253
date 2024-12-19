@@ -145,7 +145,7 @@ function activateBannerOnce(counter, newTask, countThreshold) {
 // The properties for the health bar
 let health = {
     value: 0,
-    fill: "red"
+    fill: "#9066b2"
 }
 let maxHealth = {
     value: 100,

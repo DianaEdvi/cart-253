@@ -115,17 +115,6 @@ function draw() {
     if (counters.math >= 1) {
         activateBannerOnce(counters.math, activeTasks.patterns, 1);
         patterns();
-
-        // // Repeat the cow task periodically
-        // if (!timers.patternStarted) {
-        //     timers.patternStarted = true;
-        //     setTimeout(() => {
-        //         // animatingIn = true;
-        //         patterns();
-        //         timers.patternStarted = false;
-        //         // console.log("counting")
-        //     }, 8000);
-        // }
     }
     handleHealth();
     displayHealth();

@@ -1,5 +1,5 @@
-let paddle = {x: 320, y: 609, w: 100, h: 30, f: "white", speed: 10};
-let ball = {x: 320, y: 320, w: 50, f: "white", speedY: 1, speedX: 3}; // Added speedX for horizontal movement
+let paddle = {x: 320, y: 625, w: 100, h: 15, f: "#e8b974", speed: 10};
+let ball = {x: 320, y: 320, w: 50, f: "#e8b974", speedY: 1, speedX: 3}; // Added speedX for horizontal movement
 let countdown = 3; // Countdown starts at 3 seconds
 let countdownActive = true; // Flag to control countdown state
 let countdownStartTime; // Tracks when the countdown starts (used to calculate how much time has passed since the countdown began)

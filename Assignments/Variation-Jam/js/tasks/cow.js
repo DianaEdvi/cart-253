@@ -5,7 +5,11 @@ let cow = {
     x: 640,
     y: 100,
     w: 50,
-    f: "black"
+    f: {
+        fill: undefined,
+        neutral: "#000000",
+        selected: "#eaa2d3"
+    }
 }
 
 /**
@@ -18,7 +22,7 @@ function randomCow(cow) {
     }
     //Draw cow
     push();
-    fill(cow.f);
+    fill(cow.f.fill);
     ellipse(cow.x, cow.y, cow.w);
     pop();
 
@@ -29,7 +33,7 @@ function randomCow(cow) {
     //Check if mouse clicked cow
     if (hasClicked && !successes.cowSuccess && mouseX >= cow.x - cow.w / 2 && mouseX <= cow.x + cow.x / 2 && mouseY >= cow.y - cow.w / 2 && mouseY <= cow.y + cow.w / 2) {
         console.log("moo sound");
-        cow.f = "#69b260";
+        cow.f.fill = cow.f.selected;
         successes.cowSuccess = true;
         handleHealth(successes.cowSuccess);
         //Increment counter
@@ -53,6 +57,6 @@ function resetCow(cow) {
     // Reset cow position to start again from the right
     cow.x = width + cow.w / 2; // Start on the right edge
     cow.y = random(100, height - 100); // Random vertical position
-    cow.f = "black";
+    cow.f.fill = cow.f.neutral;
     successes.cowSuccess = false;
 }

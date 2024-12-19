@@ -150,7 +150,7 @@ function handleBackspace() {
  */
 function mousePressed() {
     // Check if the mouse click is inside the text box
-    if (mouseX > textBox.x && mouseX < textBox.x + textBox.w && mouseY > textBox.y && mouseY < textBox.y + textBox.h) {
+    if (mouseX > textBox.x && mouseX < textBox.x + textBox.w && mouseY > textBox.y && mouseY < textBox.y + textBox.h && promptIsReady) {
         if (isPlaceholderActive) {
             // Clear the placeholder text when the user clicks
             inputText = '';

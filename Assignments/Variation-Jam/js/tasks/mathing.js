@@ -10,16 +10,21 @@ let mathBoxes = {
     hasAnswered: false,
     isActive: true,
     textSize: 32,
+    fillOptions: {
+        wrong: "#930000",
+        unanswered: "#e63535",
+        correct: "#e28b8b"
+    },
     question: {
         x: 320,
         y: -110,
         w: 250,
         h: 40,
-        fill: "#363fa8",
+        fill: "#5b62bb",
         text: ""
     },
     answerLeft: {
-        fill: "red",
+        fill: "#e63535",
         x: 240,
         y: -40,
         w: 150,
@@ -28,7 +33,7 @@ let mathBoxes = {
         isCorrect: false
     },
     answerRight: {
-        fill: "red",
+        fill: "#e63535",
         x: 400,
         y: -40,
         w: 150,
@@ -111,14 +116,14 @@ function mathing() {
     }
 
     // Handle user clicks and determine success/failure
-    if (hasClicked && mathBoxes.answerRight.fill === "red" && mathBoxes.answerLeft.fill === "red") {
+    if (hasClicked && mathBoxes.answerRight.fill === mathBoxes.fillOptions.unanswered && mathBoxes.fillOptions.unanswered) {
         if (isInArea(mathBoxes.answerLeft.x, mathBoxes.answerLeft.y, mathBoxes.answerLeft.w, mathBoxes.answerLeft.h)) {
             if (mathBoxes.answerLeft.isCorrect) {
-                mathBoxes.answerLeft.fill = "green";
+                mathBoxes.answerLeft.fill = mathBoxes.fillOptions.correct;
                 successes.mathSuccess = mathBoxes.answerLeft.isCorrect;
                 counters.math++;
             } else {
-                mathBoxes.answerLeft.fill = "#930000";
+                mathBoxes.answerLeft.fill = mathBoxes.fillOptions.wrong;
             }
 
             hasAnswered = true;
@@ -127,11 +132,11 @@ function mathing() {
         }
         if (isInArea(mathBoxes.answerRight.x, mathBoxes.answerRight.y, mathBoxes.answerRight.w, mathBoxes.answerRight.h)) {
             if (mathBoxes.answerRight.isCorrect) {
-                mathBoxes.answerRight.fill = "green";
+                mathBoxes.answerRight.fill = mathBoxes.fillOptions.correct;
                 successes.mathSuccess = mathBoxes.answerRight.isCorrect;
                 counters.math++;
             } else {
-                mathBoxes.answerRight.fill = "#930000";
+                mathBoxes.answerRight.fill = mathBoxes.fillOptions.wrong;
 
             }
             hasAnswered = true;
@@ -243,8 +248,8 @@ function resetMathing() {
     mathBoxes.isActive = false;
     mathBoxes.answerLeft.isCorrect = false;
     mathBoxes.answerRight.isCorrect = false;
-    mathBoxes.answerLeft.fill = "red";
-    mathBoxes.answerRight.fill = "red";
+    mathBoxes.answerRight.fill = mathBoxes.fillOptions.unanswered;
+    mathBoxes.answerLeft.fill = mathBoxes.fillOptions.unanswered;
     resetInProgress = false; // Allow next reset
     successes.mathSuccess = false;
 }
