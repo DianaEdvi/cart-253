@@ -54,6 +54,8 @@ function patterns() {
     if (!activeTasks.patterns) {
         activeTasks.task = "pattern";
     }
+    // console.log(animationState);
+    // console.log(animatingIn);
 
     if (animatingIn) {
         animationState = 'enter'
@@ -64,18 +66,19 @@ function patterns() {
             typeText();
             verifyAnswer();
 
+            // console.log("AHHHHHHHHI HATE THIS ASSIGN,ENT ")
             // Trigger exit animation 3 seconds after enter animation finishes
-            setTimeout(() => {
+            timers.patternTimeout = setTimeout(() => {
                 endTask = true;
-            }, 4000);
+                // console.log("true true")
+                clearTimeout(timers.patternTimeout);
+            }, 3000);
         }
     } else {
         animationState = 'exit';
         animatePrompt(animationState);
-        resetPatterns();
+        // resetPatterns();
     }
-
-
 }
 
 /**
@@ -257,11 +260,20 @@ function animatePrompt(state) {
 
     // Make the rectangles spin
     if (currentWidth === targetWidth && currentHeight === targetHeight && angle % 360 === 0) {
+        console.log("only here")
+        console.log(currentHeight);
+        console.log(targetHeight);
         angle = 0;
         if (state === 'enter') {
             promptIsReady = true;
         }
+
+        if (state === 'exit') {
+            console.log("reset");
+            resetPatterns();
+        }
     } else {
+        console.log("not here")
         // Increment the angle for continuous rotation
         angle += 20; // Adjust this value to control rotation speed
     }
@@ -277,24 +289,33 @@ function verifyAnswer() {
     if (isTyping && keyIsPressed && key === "Enter") {
         if (randomAnswer === inputText) {
             console.log("Ding sound");
+            handleHealth(true);
         } else {
             console.log("Dong sound");
+            handleHealth(false);
         }
         animatingIn = false;
         stateSelected = false;
     } else if (endTask) {
+        console.log("Dong sound");
+        handleHealth(false);
         animatingIn = false;
         stateSelected = false;
     }
 }
 
 function resetPatterns() {
-    promptIsReady = false;
+    console.log("reset is called")
     inputText = '';
     isTyping = false;
     isPlaceholderActive = true;
     placeholderText = "Enter here..."; // Default placeholder text
-    // hasTypedAnswer = false;
+
+    stateSelected = false;
+    promptIsReady = false;
+    animatingIn = true;
+    animationState = 'enter';
+    endTask = false;
     generatePrompt();
 }
 

@@ -116,10 +116,11 @@ function draw() {
         // if (!timers.patternStarted) {
         //     timers.patternStarted = true;
         //     setTimeout(() => {
+        //         // animatingIn = true;
         //         patterns();
         //         timers.patternStarted = false;
-        //         console.log("counting")
-        //     }, 2000);
+        //         // console.log("counting")
+        //     }, 8000);
         // }
     }
     handleHealth();
