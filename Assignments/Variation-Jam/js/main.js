@@ -8,19 +8,6 @@
 
 "use strict";
 
-let buttons = {
-    soloButton: undefined,
-    mathButton: undefined,
-    colorButton: undefined,
-    questionButton: undefined
-}
-let states = {
-    current: undefined,
-    menu: "menu",
-    soloPong: "solo",
-    mathPong: "math",
-    colorPong: "color",
-}
 let playingBanner = true;
 
 let activeTasks = {
@@ -61,11 +48,37 @@ const backgroundImages = {
 
 let gameState = "menu";
 
+let gameStates = {
+    current: undefined,
+    menu: "menu",
+    game: "game",
+    end: "end",
+}
+
+let audio = {
+    background: undefined,
+    pong: undefined,
+    cow: undefined,
+    mathing: undefined,
+    pattern: undefined,
+}
+
 function preload() {
     preloadPattern();
     menuProperties.backgroundImg = loadImage('assets/optical_illusion.png')
     backgroundImages.game = loadImage('assets/second_optical_illusion.jpg')
     endProperties.backgroundImg = loadImage('assets/third_optical_illusion.png')
+
+    audio.pong = loadSound('assets/sounds/pong.wav');
+}
+
+function keyPressed() {
+    if (key === ' ') {
+        console.log("space")
+        if (!audio.pong.isPlaying()) {
+            audio.pong.play();
+        }
+    }
 }
 
 /**
@@ -74,7 +87,6 @@ function preload() {
 function setup() {
     canvas = createCanvas(640, 640);
     background("#6160b2");
-    states.current = states.menu;
     resetGame();
     textSize(20);
 }
