@@ -56,16 +56,17 @@ function drawGameButton(buttonProperties) {
  * @param button The button that is being pressed
  */
 function buttonManager(button) {
-    if (button.text === "PLAY" && mouseIsPressed && isInArea(button.x, button.y, button.w, button.h)) {
+    if (button.text === "PLAY" && hasClicked && isInArea(button.x, button.y, button.w, button.h)) {
+        console.log(healthBar);
         gameState = "game";
-    } else if (button.text === "Play Again!" && mouseIsPressed && isInArea(button.x, button.y, button.w, button.h)) {
+    } else if (button.text === "PLAY AGAIN" && hasClicked && isInArea(button.x, button.y, button.w, button.h)) {
+        resetGame();
         gameState = "menu"
     }
 }
 
 
 function end() {
-    console.log(width);
     image(endProperties.backgroundImg, -20, -20, width + 50, height + 40);
     drawGameButton(endProperties.playButton);
     buttonManager(endProperties.playButton);

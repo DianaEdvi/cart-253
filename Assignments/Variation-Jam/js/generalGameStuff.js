@@ -165,7 +165,7 @@ let healthBar = {
             losingHealth: {
                 isActive: false,
                 counter: 0,
-                amount: 100,
+                amount: 15,
                 rateOfChange: -1
             }
         }
@@ -209,7 +209,6 @@ function drawHealth() {
     // Calculate the fill level (proportion of the circle filled)
     let fillLevel = map(healthBar.healthPoints.currentValue, 0, healthBar.healthPoints.maxValue, 0, TWO_PI); // Map value to an angle (0 to 2π)
 
-    console.log(healthBar.healthPoints.currentValue);
     // Draw the background circle
     push();
     fill(healthBar.container.f);
@@ -246,6 +245,7 @@ function animateHealth(animation) {
 
 function manageFailState() {
     if (healthBar.healthPoints.currentValue === 0) {
-        end();
+        console.log("its still 0")
+        gameState = 'end';
     }
 }

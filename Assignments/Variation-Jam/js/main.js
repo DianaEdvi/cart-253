@@ -91,6 +91,8 @@ function draw() {
     } else if (gameState === "end") {
         end();
     }
+
+    hasClicked = false;
 }
 
 function game() {
@@ -136,7 +138,6 @@ function game() {
     handleHealth();
     manageFailState();
     // end();
-    hasClicked = false;
 }
 
 /**
@@ -147,6 +148,14 @@ function resetGame() {
     resetCow(cow);
     resetPatterns();
     gameState = "menu";
+
+    counters.pong = 0;
+    counters.cow = 0;
+    counters.math = 0;
+
+    healthBar.healthPoints.currentValue = 100;
+    healthBar.healthPoints.animation.gainingHealth.isActive = false;
+    healthBar.healthPoints.animation.losingHealth.isActive = false;
 }
 
 
