@@ -25,3 +25,5 @@ by Mike Johnston which is licensed with CC BY 2.0. To view a copy of this licens
 visit https://creativecommons.org/licenses/by/2.0/.
 
 <a href="https://www.vecteezy.com/free-vector/background">Background Vectors by Vecteezy</a>
+https://www.vecteezy.com/png/34466307-retro-vintage-spiral-background
+https://www.vecteezy.com/png/34466289-retro-vintage-spiral-background

@@ -12,13 +12,24 @@ const menuProperties = {
     }
 }
 
+const endProperties = {
+    backgroundImg: undefined,
+    playButton: {
+        text: "PLAY AGAIN",
+        x: 320,
+        y: 320,
+        w: 300,
+        h: 300,
+        f: "#b995ff"
+    }
+}
+
 /**
  * Handles the menu logic for the game
  */
 function menu() {
     image(menuProperties.backgroundImg, -20, -20, width + 50, height + 40);
     drawGameButton(menuProperties.playButton);
-
     buttonManager(menuProperties.playButton);
 }
 
@@ -54,4 +65,8 @@ function buttonManager(button) {
 
 
 function end() {
+    console.log(width);
+    image(endProperties.backgroundImg, -20, -20, width + 50, height + 40);
+    drawGameButton(endProperties.playButton);
+    buttonManager(endProperties.playButton);
 }

@@ -50,10 +50,10 @@ function soloPong(paddle, ball) {
     ball.y += ball.speedY;
 
     // Move paddle based on key presses
-    if (keyIsDown(LEFT_ARROW)) {
+    if (keyIsDown(65)) {
         paddle.x -= paddle.speed;
     }
-    if (keyIsDown(RIGHT_ARROW)) {
+    if (keyIsDown(68)) {
         paddle.x += paddle.speed;
     }
 

@@ -165,7 +165,7 @@ let healthBar = {
             losingHealth: {
                 isActive: false,
                 counter: 0,
-                amount: 15,
+                amount: 100,
                 rateOfChange: -1
             }
         }
@@ -178,20 +178,27 @@ let healthBar = {
  * @param succeeded Bool for whether the task was successful or not
  */
 function handleHealth(succeeded) {
-    healthBar.healthPoints.currentValue = constrain(healthBar.healthPoints.currentValue, healthBar.healthPoints.minValue, healthBar.healthPoints.maxValue);
-
-    // Determine how health is to be changed
+    // Decay or animate health changes
     if (succeeded === undefined) {
-        healthBar.healthPoints.currentValue += healthBar.healthPoints.decayRate; // Decay health consistently if nothing is happening
+        healthBar.healthPoints.currentValue += healthBar.healthPoints.decayRate;
     } else if (!succeeded) {
-        healthBar.healthPoints.animation.losingHealth.isActive = true; // Lose health if a task is failed
+        healthBar.healthPoints.animation.losingHealth.isActive = true;
     } else {
-        healthBar.healthPoints.animation.gainingHealth.isActive = true; // Gain health if a task is succeeded
+        healthBar.healthPoints.animation.gainingHealth.isActive = true;
     }
 
+    // Apply animations
     animateHealth(healthBar.healthPoints.animation.gainingHealth);
     animateHealth(healthBar.healthPoints.animation.losingHealth);
 
+    // Constrain value after any modification
+    healthBar.healthPoints.currentValue = constrain(
+        healthBar.healthPoints.currentValue,
+        healthBar.healthPoints.minValue,
+        healthBar.healthPoints.maxValue
+    );
+
+    // Draw the health bar
     drawHealth();
 }
 
@@ -202,6 +209,7 @@ function drawHealth() {
     // Calculate the fill level (proportion of the circle filled)
     let fillLevel = map(healthBar.healthPoints.currentValue, 0, healthBar.healthPoints.maxValue, 0, TWO_PI); // Map value to an angle (0 to 2π)
 
+    console.log(healthBar.healthPoints.currentValue);
     // Draw the background circle
     push();
     fill(healthBar.container.f);
@@ -238,6 +246,6 @@ function animateHealth(animation) {
 
 function manageFailState() {
     if (healthBar.healthPoints.currentValue === 0) {
-        console.log("game over");
+        end();
     }
 }

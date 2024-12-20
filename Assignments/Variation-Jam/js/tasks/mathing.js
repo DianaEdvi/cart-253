@@ -100,7 +100,7 @@ function mathing() {
 
             // If the boxes have returned to off-screen, reset the values (takes two seconds)
             if (mathBoxes.question.y <= -110) {
-                if (!successes.mathSuccess && mathBoxes.answerRight.fill === "red" && mathBoxes.answerLeft.fill === "red") {
+                if (!successes.mathSuccess && mathBoxes.answerRight.fill === mathBoxes.fillOptions.unanswered && mathBoxes.answerLeft.fill === mathBoxes.fillOptions.unanswered) {
                     handleHealth(successes.mathSuccess);
                     successes.mathSuccess = undefined;
                 }
@@ -116,7 +116,8 @@ function mathing() {
     }
 
     // Handle user clicks and determine success/failure
-    if (hasClicked && mathBoxes.answerRight.fill === mathBoxes.fillOptions.unanswered && mathBoxes.fillOptions.unanswered) {
+    if (hasClicked && mathBoxes.answerLeft.fill === mathBoxes.fillOptions.unanswered && mathBoxes.answerRight.fill === mathBoxes.fillOptions.unanswered) {
+        console.log("is it this?")
         if (isInArea(mathBoxes.answerLeft.x, mathBoxes.answerLeft.y, mathBoxes.answerLeft.w, mathBoxes.answerLeft.h)) {
             if (mathBoxes.answerLeft.isCorrect) {
                 mathBoxes.answerLeft.fill = mathBoxes.fillOptions.correct;
@@ -129,8 +130,7 @@ function mathing() {
             hasAnswered = true;
             handleHealth(successes.mathSuccess);
             clearTimeout(timers.answerTimeout); // Stop the timer if answered
-        }
-        if (isInArea(mathBoxes.answerRight.x, mathBoxes.answerRight.y, mathBoxes.answerRight.w, mathBoxes.answerRight.h)) {
+        } else if (isInArea(mathBoxes.answerRight.x, mathBoxes.answerRight.y, mathBoxes.answerRight.w, mathBoxes.answerRight.h)) {
             if (mathBoxes.answerRight.isCorrect) {
                 mathBoxes.answerRight.fill = mathBoxes.fillOptions.correct;
                 successes.mathSuccess = mathBoxes.answerRight.isCorrect;

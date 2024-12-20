@@ -65,6 +65,7 @@ function preload() {
     preloadPattern();
     menuProperties.backgroundImg = loadImage('assets/optical_illusion.png')
     backgroundImages.game = loadImage('assets/second_optical_illusion.jpg')
+    endProperties.backgroundImg = loadImage('assets/third_optical_illusion.png')
 }
 
 /**
@@ -83,7 +84,6 @@ function setup() {
  */
 function draw() {
 
-    console.log(gameState)
     if (gameState === "menu") {
         menu();
     } else if (gameState === "game") {
@@ -135,6 +135,7 @@ function game() {
     }
     handleHealth();
     manageFailState();
+    // end();
     hasClicked = false;
 }
 
@@ -145,7 +146,6 @@ function resetGame() {
     resetBall();
     resetCow(cow);
     resetPatterns();
-
     gameState = "menu";
 }
 
