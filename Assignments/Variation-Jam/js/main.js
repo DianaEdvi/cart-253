@@ -55,13 +55,8 @@ let gameStates = {
     end: "end",
 }
 
-let audio = {
-    background: undefined,
-    pong: undefined,
-    cow: undefined,
-    mathing: undefined,
-    pattern: undefined,
-}
+
+let sounds = [];
 
 function preload() {
     preloadPattern();
@@ -69,15 +64,13 @@ function preload() {
     backgroundImages.game = loadImage('assets/second_optical_illusion.jpg')
     endProperties.backgroundImg = loadImage('assets/third_optical_illusion.png')
 
-    audio.pong = loadSound('assets/sounds/pong.wav');
+    preloadAudio();
+
 }
 
 function keyPressed() {
     if (key === ' ') {
-        console.log("space")
-        if (!audio.pong.isPlaying()) {
-            audio.pong.play();
-        }
+        playSound(audio.tutorials.pong);
     }
 }
 
@@ -111,13 +104,24 @@ function game() {
     image(backgroundImages.game, 0, 0, width, height);
     // menu();
     if (playingBanner) {
+        if (counters.pong < 1) {
+            playSound(audio.tutorials.pong);
+
+            setTimeout(() => {
+                if (!audio.comments.goingGreat.hasPlayed) {
+                    playSound(audio.comments.goingGreat.audio);
+                    audio.comments.goingGreat.hasPlayed = true;
+                }
+            }, 15000)
+        }
         bannerAnimation(banners.text.text);
     }
     soloPong(paddle, ball);
 
+
     // Handle cow tasks
-    if (counters.pong >= 1) {
-        activateBannerOnce(counters.pong, activeTasks.randomCow, 1);
+    if (counters.pong >= 2) {
+        activateBannerOnce(counters.pong, activeTasks.randomCow, 2, audio.tutorials.cow);
         randomCow(cow);
 
         // Repeat the cow task periodically
@@ -130,8 +134,10 @@ function game() {
         }
     }
     // Handle math tasks
-    if (counters.cow >= 1) {
-        activateBannerOnce(counters.cow, activeTasks.mathing, 1);
+    if (counters.cow >= 2) {
+        if (!audio.gameSounds.moo_1.isPlaying() && !audio.gameSounds.moo_2.isPlaying()) {
+            activateBannerOnce(counters.cow, activeTasks.mathing, 2, audio.tutorials.mathing);
+        }
         mathing();
 
         // Repeat the cow task periodically
@@ -143,13 +149,12 @@ function game() {
             }, 2000);
         }
     }
-    if (counters.math >= 1) {
-        activateBannerOnce(counters.math, activeTasks.patterns, 1);
+    if (counters.math >= 3) {
+        activateBannerOnce(counters.math, activeTasks.patterns, 3, audio.tutorials.pattern);
         patterns();
     }
     handleHealth();
     manageFailState();
-    // end();
 }
 
 /**

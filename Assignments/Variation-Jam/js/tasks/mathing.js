@@ -115,6 +115,13 @@ function mathing() {
         }
     }
 
+    // Play the audio
+    if (mathBoxes.question.y === 32) {
+        playSound(audio.gameSounds.tickingClock);
+    } else {
+        audio.gameSounds.tickingClock.stop();
+    }
+
     // Handle user clicks and determine success/failure
     if (hasClicked && mathBoxes.answerLeft.fill === mathBoxes.fillOptions.unanswered && mathBoxes.answerRight.fill === mathBoxes.fillOptions.unanswered) {
         console.log("is it this?")

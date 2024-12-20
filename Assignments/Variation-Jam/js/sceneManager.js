@@ -57,9 +57,10 @@ function drawGameButton(buttonProperties) {
  */
 function buttonManager(button) {
     if (button.text === "PLAY" && hasClicked && isInArea(button.x, button.y, button.w, button.h)) {
-        console.log(healthBar);
+        playSound(audio.gameSounds.paddle);
         gameState = "game";
     } else if (button.text === "PLAY AGAIN" && hasClicked && isInArea(button.x, button.y, button.w, button.h)) {
+        playSound(audio.gameSounds.paddle);
         resetGame();
         gameState = "menu"
     }

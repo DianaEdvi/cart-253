@@ -69,7 +69,7 @@ function patterns() {
             if (!timers.patternTimeout) {
                 timers.patternTimeout = setTimeout(() => {
                     endTask = true;
-                }, 3000);
+                }, 5000);
             }
         }
     } else {
@@ -192,6 +192,9 @@ let heightGrowthRate = 1;
 // Flag so as not to reset the variables constantly
 let stateSelected = false;
 
+let wooshSound = undefined;
+let wooshPlayed = false;
+
 /**
  * Animates the prompt onto the screen
  */
@@ -207,6 +210,7 @@ function animatePrompt(state) {
         currentHeight = 0;
         currentPromptHeight = 0;
         stateSelected = true;
+        wooshSound = audio.gameSounds.enterWoosh;
     } else if (state === 'exit' && !stateSelected) {
         widthGrowthRate = -1 * abs(widthGrowthRate);
         heightGrowthRate = -1 * abs(heightGrowthRate);
@@ -217,6 +221,7 @@ function animatePrompt(state) {
         currentHeight = textBox.h;
         currentPromptHeight = prompt.h;
         stateSelected = true;
+        wooshSound = audio.gameSounds.exitWoosh;
     }
 
     // Depend prompt coordinates onto textBox
@@ -258,6 +263,7 @@ function animatePrompt(state) {
     // Make the rectangles spin
     if (currentWidth === targetWidth && currentHeight === targetHeight && angle % 360 === 0) {
         angle = 0;
+        wooshPlayed = false;
         if (state === 'enter') {
             promptIsReady = true;
         }
@@ -266,6 +272,10 @@ function animatePrompt(state) {
             resetPatterns();
         }
     } else {
+        if (!wooshPlayed) {
+            playSound(wooshSound);
+            wooshPlayed = true;
+        }
         // Increment the angle for continuous rotation
         angle += 20; // Adjust this value to control rotation speed
     }

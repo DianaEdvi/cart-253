@@ -32,7 +32,7 @@ function randomCow(cow) {
 
     //Check if mouse clicked cow
     if (hasClicked && !successes.cowSuccess && mouseX >= cow.x - cow.w / 2 && mouseX <= cow.x + cow.x / 2 && mouseY >= cow.y - cow.w / 2 && mouseY <= cow.y + cow.w / 2) {
-        console.log("moo sound");
+        playMooSound();
         cow.f.fill = cow.f.selected;
         successes.cowSuccess = true;
         handleHealth(successes.cowSuccess);
@@ -59,4 +59,19 @@ function resetCow(cow) {
     cow.y = random(100, height - 100); // Random vertical position
     cow.f.fill = cow.f.neutral;
     successes.cowSuccess = false;
+}
+
+/**
+ * Randomly picks a moo sound to play
+ */
+function playMooSound() {
+    // One in three chance for the moo to be the funny one
+    let r = floor(random(3));
+
+    if (r === 1) {
+        playSound(audio.gameSounds.moo_2);
+    } else {
+        playSound(audio.gameSounds.moo_1);
+    }
+
 }

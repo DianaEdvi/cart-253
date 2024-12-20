@@ -72,6 +72,7 @@ function soloPong(paddle, ball) {
 
     // Check collision with paddle
     if (ball.y + ball.w / 2 >= paddle.y && ball.x > paddle.x && ball.x < paddle.x + paddle.w) {
+        playSound(audio.gameSounds.paddle);
         // Increment counter
         counters.pong++;
         // Reverse vertical direction
