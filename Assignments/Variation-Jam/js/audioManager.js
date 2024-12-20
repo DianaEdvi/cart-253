@@ -15,13 +15,26 @@ let audio = {
         tickingClock: undefined,
         enterWoosh: undefined,
         exitWoosh: undefined,
+        ding: undefined,
+        dong: undefined,
     },
     comments: {
         goingGreat: {
             hasPlayed: false,
             audio: undefined,
         },
-        music: undefined,
+        music: {
+            hasPlayed: false,
+            audio: undefined
+        },
+        howRude: {
+            hasPlayed: false,
+            audio: undefined
+        },
+        bookClub: {
+            hasPlayed: false,
+            audio: undefined
+        }
     }
 
 }
@@ -39,9 +52,13 @@ function preloadAudio() {
     audio.gameSounds.tickingClock = loadSound('assets/sounds/gameSounds/ticking_clock.wav')
     audio.gameSounds.enterWoosh = loadSound('assets/sounds/gameSounds/enter_woosh.wav')
     audio.gameSounds.exitWoosh = loadSound('assets/sounds/gameSounds/exit_woosh.wav')
+    audio.gameSounds.ding = loadSound('assets/sounds/gameSounds/ding.wav')
+    audio.gameSounds.dong = loadSound('assets/sounds/gameSounds/bad-ding.wav')
 
     audio.comments.goingGreat.audio = loadSound('assets/sounds/comments/going_great.wav')
-    audio.comments.music = loadSound('assets/sounds/comments/music.wav')
+    audio.comments.music.audio = loadSound('assets/sounds/comments/music.wav')
+    audio.comments.howRude.audio = loadSound('assets/sounds/comments/how_rude.wav')
+    audio.comments.bookClub.audio = loadSound('assets/sounds/comments/book-club.wav')
 
 }
 

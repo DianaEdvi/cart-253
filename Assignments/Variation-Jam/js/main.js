@@ -134,11 +134,18 @@ function game() {
         }
     }
     // Handle math tasks
-    if (counters.cow >= 2) {
+    if (counters.cow >= 3) {
         if (!audio.gameSounds.moo_1.isPlaying() && !audio.gameSounds.moo_2.isPlaying()) {
-            activateBannerOnce(counters.cow, activeTasks.mathing, 2, audio.tutorials.mathing);
+            activateBannerOnce(counters.cow, activeTasks.mathing, 3, audio.tutorials.mathing);
         }
         mathing();
+
+        setTimeout(() => {
+            if (!audio.comments.music.hasPlayed) {
+                playSound(audio.comments.music.audio);
+                audio.comments.music.hasPlayed = true;
+            }
+        }, 10000)
 
         // Repeat the cow task periodically
         if (!timers.cowTimerStarted) {
@@ -149,8 +156,16 @@ function game() {
             }, 2000);
         }
     }
-    if (counters.math >= 3) {
-        activateBannerOnce(counters.math, activeTasks.patterns, 3, audio.tutorials.pattern);
+    if (counters.math >= 5) {
+        setTimeout(() => {
+            if (!audio.comments.bookClub.hasPlayed) {
+                playSound(audio.comments.bookClub.audio);
+                audio.comments.bookClub.hasPlayed = true;
+            }
+        }, 10000)
+
+        audio.comments.music.audio.setVolume(0.1);
+        activateBannerOnce(counters.math, activeTasks.patterns, 5, audio.tutorials.pattern);
         patterns();
     }
     handleHealth();

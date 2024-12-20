@@ -290,16 +290,19 @@ function displayPromptText() {
 function verifyAnswer() {
     if (isTyping && keyIsPressed && key === "Enter") {
         if (randomAnswer === inputText) {
+            playSound(audio.gameSounds.ding);
             console.log("Ding sound");
             handleHealth(true);
         } else {
             console.log("Dong sound");
+            playSound(audio.gameSounds.dong);
             handleHealth(false);
         }
         animatingIn = false;
         stateSelected = false;
     } else if (endTask) {
         console.log("Dong sound");
+        playSound(audio.gameSounds.dong);
         handleHealth(false);
         animatingIn = false;
         stateSelected = false;

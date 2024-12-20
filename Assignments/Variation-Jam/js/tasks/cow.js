@@ -32,7 +32,13 @@ function randomCow(cow) {
 
     //Check if mouse clicked cow
     if (hasClicked && !successes.cowSuccess && mouseX >= cow.x - cow.w / 2 && mouseX <= cow.x + cow.x / 2 && mouseY >= cow.y - cow.w / 2 && mouseY <= cow.y + cow.w / 2) {
-        playMooSound();
+        // Play the interrupt line
+        if (audio.tutorials.cow.isPlaying()) {
+            audio.tutorials.cow.stop();
+            playSound(audio.comments.howRude.audio);
+        } else {
+            playMooSound();
+        }
         cow.f.fill = cow.f.selected;
         successes.cowSuccess = true;
         handleHealth(successes.cowSuccess);

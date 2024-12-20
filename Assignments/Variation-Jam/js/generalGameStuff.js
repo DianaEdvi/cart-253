@@ -135,10 +135,10 @@ function setBannerText() {
     }
 }
 
-function activateBannerOnce(counter, newTask, countThreshold, audio) {
+function activateBannerOnce(counter, newTask, countThreshold, sound) {
     //Play the banner only once
     if (counter === countThreshold && !newTask) {
-        playSound(audio);
+        playSound(sound);
         playingBanner = true;
     }
 }
