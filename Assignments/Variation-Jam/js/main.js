@@ -164,6 +164,7 @@ function game() {
     }
     handleHealth();
     manageFailState();
+    drawScore(score, formatTime(millis() - startTime));
 }
 
 /**
@@ -198,7 +199,6 @@ function mouseClicked() {
 //Todo
 // speed up the game
 // Add timer in corner
-// show timer in end screen
 // refractor the code
 // comments
 

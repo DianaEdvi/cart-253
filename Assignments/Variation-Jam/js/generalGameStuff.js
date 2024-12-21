@@ -253,6 +253,25 @@ function manageFailState() {
 
 let startTime;
 let elapsedTime;
+let activeTime = 0;
+
+let score = {
+    text: {
+        size: 24
+    },
+    timer: {
+        text: undefined,
+        x: 550,
+        y: 50,
+    },
+    panel: {
+        fill: "#cacaca",
+        x: 550,
+        y: 50,
+        w: 100,
+        h: 50
+    }
+}
 
 
 /**
@@ -265,7 +284,16 @@ function manageGameTimer(state) {
         }
     } else if (state === "stop") {
         // Calculate the elapsed time and format it into seconds with decimals to the hundredth place
-        elapsedTime = ((millis() - startTime) / 1000).toFixed(2);
+        elapsedTime = formatTime((millis() - startTime));
         startTime = undefined;
     }
+}
+
+// Function to format time as MM:SS:MS
+function formatTime(elapsed) {
+    let minutes = Math.floor(elapsed / 60000);
+    let seconds = Math.floor((elapsed % 60000) / 1000);
+
+    // Use nf() to pad values to two digits
+    return nf(minutes, 2) + ':' + nf(seconds, 2);
 }

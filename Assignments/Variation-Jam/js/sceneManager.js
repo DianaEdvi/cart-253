@@ -21,6 +21,26 @@ const endProperties = {
         w: 300,
         h: 300,
         f: "#b995ff"
+    },
+    score: {
+        text: {
+            text: "You lasted this long: ",
+            x: 320,
+            y: 90,
+            size: 25
+        },
+        timer: {
+            text: undefined,
+            x: 320,
+            y: 120,
+        },
+        panel: {
+            fill: "#cacaca",
+            x: 320,
+            y: 100,
+            w: 300,
+            h: 75
+        }
     }
 }
 
@@ -68,16 +88,36 @@ function buttonManager(button) {
     }
 }
 
+
 function end() {
     image(endProperties.backgroundImg, -20, -20, width + 50, height + 40);
     drawGameButton(endProperties.playButton);
     buttonManager(endProperties.playButton);
 
-    console.log(elapsedTime);
+    drawScore(endProperties.score, elapsedTime);
+
     if (!audio.comments.gameOver.hasPlayed) {
         playSound(audio.comments.gameOver.audio);
         audio.comments.gameOver.hasPlayed = true;
     }
+}
 
+function drawScore(scoreProperties, time) {
+    console.log(elapsedTime);
+
+    // Draw rectangle
+    push();
+    rectMode(CENTER)
+    fill(scoreProperties.panel.fill);
+    rect(scoreProperties.panel.x, scoreProperties.panel.y, scoreProperties.panel.w, scoreProperties.panel.h, 10)
+    pop();
+
+    // Draw text
+    push();
+    textAlign(CENTER, CENTER);
+    textSize(scoreProperties.text.size);
+    text(scoreProperties.text.text, scoreProperties.text.x, scoreProperties.text.y);
+    text(time, scoreProperties.timer.x, scoreProperties.timer.y);
+    pop();
 }
 
