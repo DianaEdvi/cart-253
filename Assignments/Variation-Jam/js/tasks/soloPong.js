@@ -13,7 +13,7 @@ function soloPong(paddle, ball) {
     if (!activeTasks.soloPong) {
         activeTasks.task = "solo";
     }
-    handleHealth()
+    updateHealth()
     // Draw paddle
     push();
     fill(paddle.f);
@@ -89,7 +89,7 @@ function soloPong(paddle, ball) {
 
     // Check if ball goes off-screen
     if (ball.y - ball.w / 2 > height) {
-        handleHealth(false);
+        updateHealth(false);
         resetBall(); // Respawn ball in the center with a countdown
     }
 }

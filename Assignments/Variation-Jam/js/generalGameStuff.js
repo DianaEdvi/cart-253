@@ -46,7 +46,7 @@ let healthBar = {
         currentValue: 100,
         minValue: 0,
         maxValue: 100,
-        decayRate: -0.01,
+        decayRate: -0.001,
         animation: {
             gainingHealth: {
                 isActive: false,
@@ -199,7 +199,7 @@ function activateBannerOnce(counter, newTask, countThreshold, sound) {
  * Animates the increase so as not to be janky
  * @param succeeded Bool for whether the task was successful or not
  */
-function handleHealth(succeeded) {
+function updateHealth(succeeded) {
     // Decay or animate health changes
     if (succeeded === undefined) {
         healthBar.healthPoints.currentValue += healthBar.healthPoints.decayRate;

@@ -41,7 +41,7 @@ function randomCow(cow) {
         }
         cow.f.fill = cow.f.selected;
         successes.cowSuccess = true;
-        handleHealth(successes.cowSuccess);
+        updateHealth(successes.cowSuccess);
         //Increment counter
         counters.cow++
     }
@@ -49,7 +49,7 @@ function randomCow(cow) {
     // Check if the cow goes off-screen
     if (cow.x + cow.w / 2 < 0 || cow.y - cow.w / 2 > height) {
         if (!successes.cowSuccess) {
-            handleHealth(false);
+            updateHealth(false);
         }
         resetCow(cow);
     }

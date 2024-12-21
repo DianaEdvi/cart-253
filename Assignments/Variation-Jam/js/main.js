@@ -128,7 +128,7 @@ function game() {
 
 
     // Handle cow tasks
-    if (counters.pong >= 2) {
+    if (counters.pong >= 1) { //2
         activateBannerOnce(counters.pong, activeTasks.randomCow, 2, audio.tutorials.cow);
         randomCow(cow);
 
@@ -142,9 +142,9 @@ function game() {
         }
     }
     // Handle math tasks
-    if (counters.cow >= 3) {
+    if (counters.cow >= 1) { //3
         if (!audio.gameSounds.moo_1.isPlaying() && !audio.gameSounds.moo_2.isPlaying()) {
-            activateBannerOnce(counters.cow, activeTasks.mathing, 3, audio.tutorials.mathing);
+            activateBannerOnce(counters.cow, activeTasks.mathing, 1, audio.tutorials.mathing);
         }
         mathing();
 
@@ -164,7 +164,7 @@ function game() {
             }, 2000);
         }
     }
-    if (counters.math >= 5) {
+    if (counters.math >= 1) { //5
         setTimeout(() => {
             if (!audio.comments.bookClub.hasPlayed) {
                 playSound(audio.comments.bookClub.audio);
@@ -176,7 +176,7 @@ function game() {
         activateBannerOnce(counters.math, activeTasks.patterns, 5, audio.tutorials.pattern);
         patterns();
     }
-    handleHealth();
+    updateHealth();
     manageFailState();
     drawScore(score, formatTime(millis() - startTime));
 }
@@ -219,5 +219,6 @@ function mouseClicked() {
 // The paddle is weird if you hit it on the side. Will i fix?? prolly not
 // Math stuff
 // Patterns ****
+// Reset the game isnt working as intended.
 
 

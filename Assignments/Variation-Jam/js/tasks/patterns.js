@@ -50,11 +50,11 @@ function preloadPattern() {
     patternsData = loadJSON("assets/patterns.json");
 }
 
+
 function patterns() {
     if (!activeTasks.patterns) {
         activeTasks.task = "pattern";
     }
-
 
     if (animatingIn) {
         animationState = 'enter'
@@ -64,7 +64,6 @@ function patterns() {
             displayPromptText();
             typeText();
             verifyAnswer();
-
             // Only set timeout once and clear any existing one
             if (!timers.patternTimeout) {
                 timers.patternTimeout = setTimeout(() => {
@@ -291,19 +290,17 @@ function verifyAnswer() {
     if (isTyping && keyIsPressed && key === "Enter") {
         if (randomAnswer === inputText) {
             playSound(audio.gameSounds.ding);
-            console.log("Ding sound");
-            handleHealth(true);
+            updateHealth(true);
         } else {
-            console.log("Dong sound");
             playSound(audio.gameSounds.dong);
-            handleHealth(false);
+            updateHealth(false);
         }
         animatingIn = false;
         stateSelected = false;
     } else if (endTask) {
-        console.log("Dong sound");
+        console.log("itll be this one")
         playSound(audio.gameSounds.dong);
-        handleHealth(false);
+        updateHealth(false);
         animatingIn = false;
         stateSelected = false;
     }
@@ -320,6 +317,9 @@ function resetPatterns() {
     animatingIn = true;
     animationState = 'enter';
     endTask = false;
+    if (timers.patternTimeout) {
+        clearTimeout(timers.patternTimeout);
+    }
     timers.patternTimeout = undefined;
     generatePrompt();
 }

@@ -144,7 +144,7 @@ function animateMathUI() {
             // If the boxes have returned to off-screen, reset the values (takes two seconds)
             if (mathBoxes.question.y <= -110) {
                 if (!successes.mathSuccess && bothUnanswered) {
-                    handleHealth(successes.mathSuccess);
+                    updateHealth(successes.mathSuccess);
                     successes.mathSuccess = undefined;
                 }
                 // Reset state
@@ -174,7 +174,7 @@ function processAnswer(answerBox) {
     }
 
     hasAnswered = true;
-    handleHealth(successes.mathSuccess);
+    updateHealth(successes.mathSuccess);
     clearTimeout(timers.answerTimeout); // Stop the timer if answered
 }
 
