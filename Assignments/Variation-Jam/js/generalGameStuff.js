@@ -154,7 +154,7 @@ let healthBar = {
         f: "#9066b2",
         currentValue: 100,
         minValue: 0,
-        maxValue: 100,
+        maxValue: 15,
         decayRate: -0.01,
         animation: {
             gainingHealth: {

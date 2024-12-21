@@ -24,6 +24,7 @@ const endProperties = {
     }
 }
 
+
 /**
  * Handles the menu logic for the game
  */
@@ -71,4 +72,9 @@ function end() {
     image(endProperties.backgroundImg, -20, -20, width + 50, height + 40);
     drawGameButton(endProperties.playButton);
     buttonManager(endProperties.playButton);
+    if (!audio.comments.gameOver.hasPlayed) {
+        playSound(audio.comments.gameOver.audio);
+        audio.comments.gameOver.hasPlayed = true;
+    }
 }
+

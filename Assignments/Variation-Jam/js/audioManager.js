@@ -34,10 +34,16 @@ let audio = {
         bookClub: {
             hasPlayed: false,
             audio: undefined
+        },
+        gameOver: {
+            hasPlayed: false,
+            audio: undefined
         }
     }
 
 }
+
+let gameAudio = [];
 
 function preloadAudio() {
 
@@ -60,10 +66,30 @@ function preloadAudio() {
     audio.comments.howRude.audio = loadSound('assets/sounds/comments/how_rude.wav')
     audio.comments.bookClub.audio = loadSound('assets/sounds/comments/book-club.wav')
 
+    audio.comments.gameOver.audio = loadSound('assets/sounds/comments/game-over.wav')
 }
 
 function playSound(sound) {
     if (!sound.isPlaying()) {
         sound.play();
     }
+}
+
+function stopGameAudio() {
+    audio.tutorials.pong.stop();
+    audio.tutorials.cow.stop();
+    audio.tutorials.mathing.stop();
+    audio.tutorials.pattern.stop();
+    audio.gameSounds.paddle.stop();
+    audio.gameSounds.moo_1.stop();
+    audio.gameSounds.moo_2.stop();
+    audio.gameSounds.tickingClock.stop();
+    audio.gameSounds.enterWoosh.stop();
+    audio.gameSounds.exitWoosh.stop();
+    audio.gameSounds.ding.stop();
+    audio.gameSounds.dong.stop();
+    audio.comments.goingGreat.audio.stop();
+    audio.comments.music.audio.stop();
+    audio.comments.howRude.audio.stop();
+    audio.comments.bookClub.audio.stop();
 }

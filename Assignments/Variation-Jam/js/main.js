@@ -68,12 +68,6 @@ function preload() {
 
 }
 
-function keyPressed() {
-    if (key === ' ') {
-        playSound(audio.tutorials.pong);
-    }
-}
-
 /**
  * Set up any necessary variables before the game begins
  */
@@ -94,6 +88,7 @@ function draw() {
     } else if (gameState === "game") {
         game();
     } else if (gameState === "end") {
+        stopGameAudio();
         end();
     }
 
@@ -141,7 +136,7 @@ function game() {
         mathing();
 
         setTimeout(() => {
-            if (!audio.comments.music.hasPlayed) {
+            if (!audio.comments.music.hasPlayed && gameState === "game") {
                 playSound(audio.comments.music.audio);
                 audio.comments.music.hasPlayed = true;
             }
@@ -188,6 +183,8 @@ function resetGame() {
     healthBar.healthPoints.currentValue = 100;
     healthBar.healthPoints.animation.gainingHealth.isActive = false;
     healthBar.healthPoints.animation.losingHealth.isActive = false;
+
+    audio.comments.gameOver.audio.stop();
 }
 
 
@@ -200,16 +197,17 @@ function mouseClicked() {
 
 
 //Todo
-// import assets (sound and drawings)
-// check for microphone and mouse inputs
-// talk into mic function
-// Set the time on the clock
-// Audio of me rambling
-// Timer for how long the player lasted
-// menu
-// end game
+// speed up the game
+// Add timer in corner
+// show timer in end screen
+// refractor the code
+// add end and intro audio
+// Fix patterns recognition
+// comments
 
 //Bugs
 // The paddle is weird if you hit it on the side. Will i fix?? prolly not
-// Health bar
+// Math stuff
+// Patterns ****
+
 
