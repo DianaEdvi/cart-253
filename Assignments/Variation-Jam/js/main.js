@@ -97,7 +97,6 @@ function draw() {
 
 function game() {
     image(backgroundImages.game, 0, 0, width, height);
-    // menu();
     if (playingBanner) {
         if (counters.pong < 1) {
             playSound(audio.tutorials.pong);
@@ -201,8 +200,6 @@ function mouseClicked() {
 // Add timer in corner
 // show timer in end screen
 // refractor the code
-// add end and intro audio
-// Fix patterns recognition
 // comments
 
 //Bugs

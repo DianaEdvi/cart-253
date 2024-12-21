@@ -1,69 +1,69 @@
 {
-  "description": "Patterns for typing task",
+  "description": "patterns for typing task",
   "patterns": [
     {
-      "pattern": "One, Two, __, Four",
-      "answer": "Three"
+      "pattern": "one, two, __, four",
+      "answer": "three"
     },
     {
-      "pattern": "Five, __, Fifteen, Twenty",
-      "answer": "Ten"
+      "pattern": "five, __, fifteen, twenty",
+      "answer": "ten"
     },
     {
-      "pattern": "Monday, Tuesday, __, Thursday",
-      "answer": "Wednesday"
+      "pattern": "monday, tuesday, __, thursday",
+      "answer": "wednesday"
     },
     {
-      "pattern": "__, Afternoon, Evening,",
-      "answer": "Morning"
+      "pattern": "__, afternoon, evening,",
+      "answer": "morning"
     },
     {
-      "pattern": "Red, Orange, Yellow, __",
-      "answer": "Green"
+      "pattern": "red, orange, yellow, __",
+      "answer": "green"
     },
     {
-      "pattern": "Red, Blue, Red, __",
-      "answer": "Blue"
+      "pattern": "red, blue, red, __",
+      "answer": "blue"
     },
     {
-      "pattern": "Light Blue, Medium Blue, __",
-      "answer": "Dark Blue"
+      "pattern": "light blue, medium blue, __",
+      "answer": "dark blue"
     },
     {
-      "pattern": "Green, __, Green, Yellow",
-      "answer": "Yellow"
+      "pattern": "green, __, green, yellow",
+      "answer": "yellow"
     },
     {
-      "pattern": "A, B, C, __",
-      "answer": "D"
+      "pattern": "a, b, c, __",
+      "answer": "d"
     },
     {
-      "pattern": "__, N, O, P",
-      "answer": "M"
+      "pattern": "__, n, o, p",
+      "answer": "m"
     },
     {
-      "pattern": "C, __, E, F",
-      "answer": "D"
+      "pattern": "c, __, e, f",
+      "answer": "d"
     },
     {
-      "pattern": "W, X, __, Z",
-      "answer": "Y"
+      "pattern": "w, x, __, z",
+      "answer": "y"
     },
     {
-      "pattern": "One, Two, __, Four",
-      "answer": "Three"
+      "pattern": "one, two, __, four",
+      "answer": "three"
     },
     {
-      "pattern": "Head, Shoulders, __, Toes",
-      "answer": "Knees"
+      "pattern": "head, shoulders, __, toes",
+      "answer": "knees"
     },
     {
-      "pattern": "Day, Night, __, Night",
-      "answer": "Day"
+      "pattern": "day, night, __, night",
+      "answer": "day"
     },
     {
-      "pattern": "Small, __, Large",
-      "answer": "Medium"
+      "pattern": "small, __, large",
+      "answer": "medium"
     },
     {
       "pattern": "*, **, ***, __",
@@ -78,80 +78,80 @@
       "answer": ">>><<<"
     },
     {
-      "pattern": "Up, Up, Down, __",
-      "answer": "Down"
+      "pattern": "up, up, down, __",
+      "answer": "down"
     },
     {
-      "pattern": "Hot, __, Hot, Cold",
-      "answer": "Cold"
+      "pattern": "hot, __, hot, cold",
+      "answer": "cold"
     },
     {
       "pattern": "123, 321, 456, __",
       "answer": "654"
     },
     {
-      "pattern": "To be, or __",
+      "pattern": "to be, or __",
       "answer": "not to be"
     },
     {
-      "pattern": "Mirror, mirror, on the __",
+      "pattern": "mirror, mirror, on the __",
       "answer": "wall"
     },
     {
-      "pattern": "Twinkle, Twinkle, __",
-      "answer": "Little Star"
+      "pattern": "twinkle, twinkle, __",
+      "answer": "little star"
     },
     {
-      "pattern": "Mary, had a, __, Lamb",
-      "answer": "Little"
+      "pattern": "mary, had a, __, lamb",
+      "answer": "little"
     },
     {
-      "pattern": "Day, Week, __, Year",
-      "answer": "Month"
+      "pattern": "day, week, __, year",
+      "answer": "month"
     },
     {
-      "pattern": "__, Oink, Cow, Moo",
-      "answer": "Pig"
+      "pattern": "__, oink, cow, moo",
+      "answer": "pig"
     },
     {
-      "pattern": "Winter, __, Summer, Fall",
-      "answer": "Spring"
+      "pattern": "winter, __, summer, fall",
+      "answer": "spring"
     },
     {
-      "pattern": "__, South, East, West",
-      "answer": "North"
+      "pattern": "__, south, east, west",
+      "answer": "north"
     },
     {
-      "pattern": "Venus, Earth, __, Jupiter",
-      "answer": "Mars"
+      "pattern": "venus, earth, __, jupiter",
+      "answer": "mars"
     },
     {
-      "pattern": "Jupiter, __, Neptune, Pluto",
-      "answer": "Venus"
+      "pattern": "jupiter, __, neptune, pluto",
+      "answer": "venus"
     },
     {
-      "pattern": "August, __, October, November",
-      "answer": "September"
+      "pattern": "august, __, october, november",
+      "answer": "september"
     },
     {
-      "pattern": "__, Earth, Fire, Air",
-      "answer": "Water"
+      "pattern": "__, earth, fire, air",
+      "answer": "water"
     },
     {
-      "pattern": "Gold, Silver, __, Platinum",
-      "answer": "Bronze"
+      "pattern": "__, silver, gold, platinum",
+      "answer": "bronze"
     },
     {
-      "pattern": "King, Queen, Prince, __",
-      "answer": "Princess"
+      "pattern": "king, queen, prince, __",
+      "answer": "princess"
     },
     {
       "pattern": "1, 10, 100, __",
       "answer": "1000"
     },
     {
-      "pattern": "Breakfast, __, Dinner",
-      "answer": "Lunch"
+      "pattern": "breakfast, __, dinner",
+      "answer": "lunch"
     }
   ]
 }

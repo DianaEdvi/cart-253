@@ -246,7 +246,26 @@ function animateHealth(animation) {
 
 function manageFailState() {
     if (healthBar.healthPoints.currentValue === 0) {
-        console.log("its still 0")
+        manageGameTimer("stop");
         gameState = 'end';
+    }
+}
+
+let startTime;
+let elapsedTime;
+
+
+/**
+ * Creates a timer for the duration of the game which the user can judge themselves against
+ */
+function manageGameTimer(state) {
+    if (state === "start") {
+        if (!startTime) {
+            startTime = millis();
+        }
+    } else if (state === "stop") {
+        // Calculate the elapsed time and format it into seconds with decimals to the hundredth place
+        elapsedTime = ((millis() - startTime) / 1000).toFixed(2);
+        startTime = undefined;
     }
 }
