@@ -49,6 +49,7 @@ let otherString = undefined; // The incorrect answer
 let equationGenerated = false; // Track if the equation has already been generated
 let solutionLocation = -1; // This will store the location of the correct answer (0 for left, 1 for right)
 let resetInProgress = undefined; // Check for timer before the function starts again
+let bothUnanswered = undefined;
 
 /**
  * Generates a math equation and displays it onto the screen.
@@ -80,11 +81,53 @@ function mathing() {
         }, 5000);
     }
 
+    constrainYCoordinates();
+    animateMathUI();
+    playMathAudio();
+
+
+    bothUnanswered = mathBoxes.answerLeft.fill === mathBoxes.fillOptions.unanswered && mathBoxes.answerRight.fill === mathBoxes.fillOptions.unanswered
+
+    // Handle user clicks and determine success/failure
+    if (hasClicked && bothUnanswered) {
+        if (isInArea(mathBoxes.answerLeft.x, mathBoxes.answerLeft.y, mathBoxes.answerLeft.w, mathBoxes.answerLeft.h)) {
+            processAnswer(mathBoxes.answerLeft);
+        } else if (isInArea(mathBoxes.answerRight.x, mathBoxes.answerRight.y, mathBoxes.answerRight.w, mathBoxes.answerRight.h)) {
+            processAnswer(mathBoxes.answerRight);
+        }
+    }
+
+    // Draw the text boxes
+    drawMathBoxes();
+}
+
+/**
+ * Plays the audio for while the math UI is still
+ */
+function playMathAudio() {
+    // Play the audio
+    if (mathBoxes.question.y === 32) {
+        playSound(audio.gameSounds.tickingClock);
+    } else {
+        audio.gameSounds.tickingClock.stop();
+    }
+}
+
+/**
+ * Constrain the y coordinates of the UI
+ */
+function constrainYCoordinates() {
     // Constrain box y coordinates
     mathBoxes.question.y = constrain(mathBoxes.question.y, -110, 30);
     mathBoxes.answerLeft.y = constrain(mathBoxes.answerLeft.y, -40, 100);
     mathBoxes.answerRight.y = constrain(mathBoxes.answerRight.y, -40, 100);
+}
 
+/**
+ * Move the UI up and down
+ * Also checks if the player failed to answer don't ask me why its here
+ */
+function animateMathUI() {
     // Move the boxes
     if (mathBoxes.isActive) {
         if (!hasAnswered) {
@@ -100,7 +143,7 @@ function mathing() {
 
             // If the boxes have returned to off-screen, reset the values (takes two seconds)
             if (mathBoxes.question.y <= -110) {
-                if (!successes.mathSuccess && mathBoxes.answerRight.fill === mathBoxes.fillOptions.unanswered && mathBoxes.answerLeft.fill === mathBoxes.fillOptions.unanswered) {
+                if (!successes.mathSuccess && bothUnanswered) {
                     handleHealth(successes.mathSuccess);
                     successes.mathSuccess = undefined;
                 }
@@ -114,48 +157,30 @@ function mathing() {
             }
         }
     }
-
-    // Play the audio
-    if (mathBoxes.question.y === 32) {
-        playSound(audio.gameSounds.tickingClock);
-    } else {
-        audio.gameSounds.tickingClock.stop();
-    }
-
-    // Handle user clicks and determine success/failure
-    if (hasClicked && mathBoxes.answerLeft.fill === mathBoxes.fillOptions.unanswered && mathBoxes.answerRight.fill === mathBoxes.fillOptions.unanswered) {
-        console.log("is it this?")
-        if (isInArea(mathBoxes.answerLeft.x, mathBoxes.answerLeft.y, mathBoxes.answerLeft.w, mathBoxes.answerLeft.h)) {
-            if (mathBoxes.answerLeft.isCorrect) {
-                mathBoxes.answerLeft.fill = mathBoxes.fillOptions.correct;
-                successes.mathSuccess = mathBoxes.answerLeft.isCorrect;
-                counters.math++;
-            } else {
-                mathBoxes.answerLeft.fill = mathBoxes.fillOptions.wrong;
-            }
-
-            hasAnswered = true;
-            handleHealth(successes.mathSuccess);
-            clearTimeout(timers.answerTimeout); // Stop the timer if answered
-        } else if (isInArea(mathBoxes.answerRight.x, mathBoxes.answerRight.y, mathBoxes.answerRight.w, mathBoxes.answerRight.h)) {
-            if (mathBoxes.answerRight.isCorrect) {
-                mathBoxes.answerRight.fill = mathBoxes.fillOptions.correct;
-                successes.mathSuccess = mathBoxes.answerRight.isCorrect;
-                counters.math++;
-            } else {
-                mathBoxes.answerRight.fill = mathBoxes.fillOptions.wrong;
-
-            }
-            hasAnswered = true;
-            handleHealth(successes.mathSuccess);
-            clearTimeout(timers.answerTimeout); // Stop the timer if answered
-        }
-    }
-
-    // Draw the text boxes
-    drawMathBoxes();
 }
 
+/**
+ *  Color the boxes accordingly and manage health
+ * @param answerBox The box that was selected
+ */
+function processAnswer(answerBox) {
+    // Check if this box was the correct one
+    if (answerBox.isCorrect) {
+        answerBox.fill = mathBoxes.fillOptions.correct;
+        successes.mathSuccess = answerBox.isCorrect;
+        counters.math++;
+    } else {
+        answerBox.fill = mathBoxes.fillOptions.wrong;
+    }
+
+    hasAnswered = true;
+    handleHealth(successes.mathSuccess);
+    clearTimeout(timers.answerTimeout); // Stop the timer if answered
+}
+
+/**
+ * Calculates a random math equation
+ */
 function calculateEquation() {
     // Initialize question and answers
     let operators = [" + ", " - "]; // Array holding potential operators
@@ -183,6 +208,9 @@ function calculateEquation() {
     }
 }
 
+/**
+ * Randomizes where the solution is located
+ */
 function randomizeAnswerPlacement() {
     // Determine where the solution will be left (0) or right (1)
     solutionLocation = floor(random(0, 2));
@@ -197,7 +225,6 @@ function randomizeAnswerPlacement() {
         mathBoxes.answerLeft.text = otherString;
     }
 }
-
 
 /**
  * Draws the math task boxes and texts
@@ -245,7 +272,6 @@ function isInArea(x, y, w, h) {
         mouseY >= y - h / 2 &&
         mouseY <= y + h / 2;
 }
-
 
 /**
  * Reset the math function

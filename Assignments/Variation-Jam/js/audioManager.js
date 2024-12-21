@@ -43,8 +43,10 @@ let audio = {
 
 }
 
-let gameAudio = [];
 
+/**
+ * Load all the audio files
+ */
 function preloadAudio() {
 
     audio.tutorials.pong = loadSound('assets/sounds/tutorial/pong.wav');
@@ -69,12 +71,19 @@ function preloadAudio() {
     audio.comments.gameOver.audio = loadSound('assets/sounds/comments/game-over.wav')
 }
 
+/**
+ * Check if the sound is already playing, and if not, play it
+ * @param sound The sound to be played
+ */
 function playSound(sound) {
     if (!sound.isPlaying()) {
         sound.play();
     }
 }
 
+/**
+ * Stop the audio from continuing into the end
+ */
 function stopGameAudio() {
     audio.tutorials.pong.stop();
     audio.tutorials.cow.stop();

@@ -55,8 +55,22 @@ let gameStates = {
     end: "end",
 }
 
+let tasks = {
+    currentTask: undefined,
+    playingBanner: true,
+    pong: {
+        isActive: false,
+        isSuccessful: false,
+        counter: undefined,
+        bannerTimer: undefined,
+        prevTaskCounter: undefined
 
-let sounds = [];
+    },
+    cow: {},
+    math: {},
+    pattern: {}
+
+}
 
 function preload() {
     preloadPattern();
@@ -198,7 +212,6 @@ function mouseClicked() {
 
 //Todo
 // speed up the game
-// Add timer in corner
 // refractor the code
 // comments
 

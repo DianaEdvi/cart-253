@@ -34,6 +34,57 @@ let banners = {
 
 let bannerState = "forwards"
 
+let healthBar = {
+    x: 50,
+    y: 50,
+    size: 100,
+    container: {
+        f: "#cacaca"
+    },
+    healthPoints: {
+        f: "#9066b2",
+        currentValue: 100,
+        minValue: 0,
+        maxValue: 100,
+        decayRate: -0.01,
+        animation: {
+            gainingHealth: {
+                isActive: false,
+                counter: 0,
+                amount: 15,
+                rateOfChange: 1
+            },
+            losingHealth: {
+                isActive: false,
+                counter: 0,
+                amount: 15,
+                rateOfChange: -1
+            }
+        }
+    }
+}
+
+let startTime;
+let elapsedTime;
+
+let score = {
+    text: {
+        size: 24
+    },
+    timer: {
+        text: undefined,
+        x: 550,
+        y: 50,
+    },
+    panel: {
+        fill: "#cacaca",
+        x: 550,
+        y: 50,
+        w: 100,
+        h: 50
+    }
+}
+
 /**
  * Pushes a banner onto the screen and keeps it there for a few seconds. Then it gets pulled off the screen
  * @param displayStr
@@ -143,36 +194,6 @@ function activateBannerOnce(counter, newTask, countThreshold, sound) {
     }
 }
 
-let healthBar = {
-    x: 50,
-    y: 50,
-    size: 100,
-    container: {
-        f: "#cacaca"
-    },
-    healthPoints: {
-        f: "#9066b2",
-        currentValue: 100,
-        minValue: 0,
-        maxValue: 15,
-        decayRate: -0.01,
-        animation: {
-            gainingHealth: {
-                isActive: false,
-                counter: 0,
-                amount: 15,
-                rateOfChange: 1
-            },
-            losingHealth: {
-                isActive: false,
-                counter: 0,
-                amount: 15,
-                rateOfChange: -1
-            }
-        }
-    }
-}
-
 /**
  * Handles the health meter. Increases the health if a task was completed successfully and decreases if it fails
  * Animates the increase so as not to be janky
@@ -243,33 +264,14 @@ function animateHealth(animation) {
     }
 }
 
-
+/**
+ * Handle the end conditions of the game
+ */
 function manageFailState() {
+    // If the health reaches 0, stop the timer and go to the end state
     if (healthBar.healthPoints.currentValue === 0) {
         manageGameTimer("stop");
         gameState = 'end';
-    }
-}
-
-let startTime;
-let elapsedTime;
-let activeTime = 0;
-
-let score = {
-    text: {
-        size: 24
-    },
-    timer: {
-        text: undefined,
-        x: 550,
-        y: 50,
-    },
-    panel: {
-        fill: "#cacaca",
-        x: 550,
-        y: 50,
-        w: 100,
-        h: 50
     }
 }
 
@@ -289,11 +291,15 @@ function manageGameTimer(state) {
     }
 }
 
-// Function to format time as MM:SS:MS
+/**
+ * Format a string in the form MM:SS
+ * @param elapsed The time that has elapsed since the start of th game
+ * @returns {string} The formatted string in the form MM:SS
+ */
 function formatTime(elapsed) {
     let minutes = Math.floor(elapsed / 60000);
     let seconds = Math.floor((elapsed % 60000) / 1000);
 
-    // Use nf() to pad values to two digits
+    // Pad values to two digits
     return nf(minutes, 2) + ':' + nf(seconds, 2);
 }

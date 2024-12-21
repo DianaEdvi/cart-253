@@ -88,23 +88,29 @@ function buttonManager(button) {
     }
 }
 
-
+/**
+ * Displaus the end screen with a time score
+ */
 function end() {
     image(endProperties.backgroundImg, -20, -20, width + 50, height + 40);
+
     drawGameButton(endProperties.playButton);
     buttonManager(endProperties.playButton);
-
     drawScore(endProperties.score, elapsedTime);
 
+    // Play the game over audio
     if (!audio.comments.gameOver.hasPlayed) {
         playSound(audio.comments.gameOver.audio);
         audio.comments.gameOver.hasPlayed = true;
     }
 }
 
+/**
+ * Displays the time score onto the screen
+ * @param scoreProperties Properties of the score (coordinates, fill, etc)
+ * @param time The time to be displayed
+ */
 function drawScore(scoreProperties, time) {
-    console.log(elapsedTime);
-
     // Draw rectangle
     push();
     rectMode(CENTER)
