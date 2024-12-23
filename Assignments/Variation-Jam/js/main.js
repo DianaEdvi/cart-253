@@ -107,6 +107,7 @@ function draw() {
     }
 
     hasClicked = false;
+    console.log("Testing");
 }
 
 function game() {
