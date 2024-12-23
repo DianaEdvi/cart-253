@@ -46,13 +46,50 @@ const endProperties = {
 
 
 /**
- * Handles the menu logic for the game
+ * Displays the main menu
  */
 function menu() {
     image(menuProperties.backgroundImg, -20, -20, width + 50, height + 40);
     drawGameButton(menuProperties.playButton);
     buttonManager(menuProperties.playButton);
 }
+
+/**
+ * Displays the end screen with a time score
+ */
+function end() {
+    image(endProperties.backgroundImg, -20, -20, width + 50, height + 40);
+
+    drawGameButton(endProperties.playButton);
+    buttonManager(endProperties.playButton);
+    drawScore(endProperties.score, elapsedTime);
+
+    // Play the game over audio
+    if (!audio.comments.gameOver.hasPlayed) {
+        playSound(audio.comments.gameOver.audio);
+        audio.comments.gameOver.hasPlayed = true;
+    }
+}
+
+/**
+ * Changes the game's state according to which button is pressed
+ * @param button The button that is being pressed
+ */
+function buttonManager(button) {
+    if (button.text === "PLAY" && hasClicked && isInArea(button.x, button.y, button.w, button.h)) { // If user selects Play button
+
+        playSound(audio.gameSounds.paddle); // Play the button clicking sound
+        gameStates.current = gameStates.game; // Change the state to game
+        manageGameTimer("start"); // Start the in-game timer
+
+    } else if (button.text === "PLAY AGAIN" && hasClicked && isInArea(button.x, button.y, button.w, button.h)) { // If user selects Play Again button
+
+        playSound(audio.gameSounds.paddle); // Play the button clicking sound
+        resetGame(); // Reset the game
+        gameStates.current = gameStates.menu; // Change the state to menu
+    }
+}
+
 
 /**
  * Draw the button
@@ -72,60 +109,4 @@ function drawGameButton(buttonProperties) {
     pop();
 }
 
-/**
- * Changes the game's state according to which button is pressed
- * @param button The button that is being pressed
- */
-function buttonManager(button) {
-    if (button.text === "PLAY" && hasClicked && isInArea(button.x, button.y, button.w, button.h)) {
-        playSound(audio.gameSounds.paddle);
-        // gameState = "game";
-        gameStates.current = gameStates.game;
-        manageGameTimer("start");
-    } else if (button.text === "PLAY AGAIN" && hasClicked && isInArea(button.x, button.y, button.w, button.h)) {
-        playSound(audio.gameSounds.paddle);
-        resetGame();
-        // gameState = "menu"
-        gameStates.current = gameStates.menu;
-    }
-}
-
-/**
- * Displaus the end screen with a time score
- */
-function end() {
-    image(endProperties.backgroundImg, -20, -20, width + 50, height + 40);
-
-    drawGameButton(endProperties.playButton);
-    buttonManager(endProperties.playButton);
-    drawScore(endProperties.score, elapsedTime);
-
-    // Play the game over audio
-    if (!audio.comments.gameOver.hasPlayed) {
-        playSound(audio.comments.gameOver.audio);
-        audio.comments.gameOver.hasPlayed = true;
-    }
-}
-
-/**
- * Displays the time score onto the screen
- * @param scoreProperties Properties of the score (coordinates, fill, etc)
- * @param time The time to be displayed
- */
-function drawScore(scoreProperties, time) {
-    // Draw rectangle
-    push();
-    rectMode(CENTER)
-    fill(scoreProperties.panel.fill);
-    rect(scoreProperties.panel.x, scoreProperties.panel.y, scoreProperties.panel.w, scoreProperties.panel.h, 10)
-    pop();
-
-    // Draw text
-    push();
-    textAlign(CENTER, CENTER);
-    textSize(scoreProperties.text.size);
-    text(scoreProperties.text.text, scoreProperties.text.x, scoreProperties.text.y);
-    text(time, scoreProperties.timer.x, scoreProperties.timer.y);
-    pop();
-}
 

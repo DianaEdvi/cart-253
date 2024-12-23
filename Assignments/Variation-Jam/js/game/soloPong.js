@@ -12,9 +12,7 @@ let countdownStartTime; // Tracks when the countdown starts (used to calculate h
  * @param ball
  */
 function soloPong(paddle, ball) {
-    // if (!activeTasks.soloPong) {
     if (!tasks.pong.isActive) {
-        // activeTasks.task = "solo";
         tasks.currentTask = tasks.pong.name;
     }
     updateHealth()
@@ -78,7 +76,6 @@ function soloPong(paddle, ball) {
     if (ball.y + ball.w / 2 >= paddle.y && ball.x > paddle.x && ball.x < paddle.x + paddle.w) {
         playSound(audio.gameSounds.paddle);
         // Increment counter
-        // counters.pong++;
         tasks.pong.counter++;
         // Reverse vertical direction
         ball.speedY *= -1;

@@ -9,36 +9,45 @@ let tasks = {
         isActive: false,
         isSuccessful: false, //
         counter: undefined,
-        prevTaskCounter: undefined
+        prevTaskCounter: undefined, //
+        bannerText: "Don't drop the ball"
     },
     cow: {
         name: "cow",
         isActive: false,
         isSuccessful: false,
         counter: undefined,
-        prevTaskCounter: undefined
+        prevTaskCounter: 2,
+        bannerText: "You should pet the cows me-thinks"
     },
     math: {
         name: "math",
         isActive: false,
         isSuccessful: false,
         counter: undefined,
-        prevTaskCounter: undefined
+        prevTaskCounter: 3,
+        bannerText: "Whoever said math is fun was telling the truth"
     },
     pattern: {
         name: "pattern",
         isActive: false,
         isSuccessful: false, //
         counter: undefined, //
-        prevTaskCounter: undefined
+        prevTaskCounter: 5,
+        bannerText: "Are you smarter than a 5th grader?"
     }
 }
 
 function game() {
     image(backgroundImages.game, 0, 0, width, height);
+
+    soloPong(paddle, ball);
     if (tasks.playingBanner) {
         if (tasks.pong.counter < 1) {
+
+            // Tutorial audio
             playSound(audio.tutorials.pong);
+            // Wait 15 seconds, then play the "going great" audio
             setTimeout(() => {
                 if (!audio.comments.goingGreat.hasPlayed) {
                     playSound(audio.comments.goingGreat.audio);
@@ -48,20 +57,21 @@ function game() {
         }
         bannerAnimation(banners.text.text);
     }
-    soloPong(paddle, ball);
 
     // Handle cow tasks
-    if (tasks.pong.counter >= 2) {
-        activateBannerOnce(tasks.pong.counter, tasks.cow.isActive, 2, audio.tutorials.cow);
+    if (tasks.pong.counter >= tasks.cow.prevTaskCounter) {
+        activateBannerOnce(tasks.pong.counter, tasks.cow.isActive, tasks.cow.prevTaskCounter, audio.tutorials.cow);
         randomCow(cow);
     }
+
     // Handle math tasks
-    if (tasks.cow.counter >= 3) {
+    if (tasks.cow.counter >= tasks.math.prevTaskCounter) {
         if (!audio.gameSounds.moo_1.isPlaying() && !audio.gameSounds.moo_2.isPlaying()) {
-            activateBannerOnce(tasks.cow.counter, tasks.math.isActive, 3, audio.tutorials.mathing);
+            activateBannerOnce(tasks.cow.counter, tasks.math.isActive, tasks.math.prevTaskCounter, audio.tutorials.mathing);
         }
         mathing();
 
+        // Wait ten seconds, then play the music audio
         setTimeout(() => {
             if (!audio.comments.music.hasPlayed && gameStates.current === gameStates.game) {
                 playSound(audio.comments.music.audio);
@@ -69,7 +79,14 @@ function game() {
             }
         }, 10000)
     }
-    if (tasks.math.counter >= 5) {
+
+    // Handle pattern tasks
+    if (tasks.math.counter >= tasks.pattern.prevTaskCounter) {
+        activateBannerOnce(tasks.math.counter, tasks.pattern.isActive, tasks.pattern.prevTaskCounter, audio.tutorials.pattern);
+        audio.comments.music.audio.setVolume(0.1);
+        patterns();
+
+        // Wait ten seconds, then play the book club audio
         setTimeout(() => {
             if (!audio.comments.bookClub.hasPlayed) {
                 playSound(audio.comments.bookClub.audio);
@@ -77,9 +94,6 @@ function game() {
             }
         }, 10000)
 
-        audio.comments.music.audio.setVolume(0.1);
-        activateBannerOnce(tasks.math.counter, tasks.pattern.isActive, 5, audio.tutorials.pattern);
-        patterns();
     }
     updateHealth();
     manageFailState();

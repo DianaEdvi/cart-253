@@ -170,27 +170,21 @@ function bannerAnimation(displayStr) {
     pop();
 }
 
+/**
+ * Display the banner text according to which task is active
+ */
 function setBannerText() {
-    // if (activeTasks.task === "solo") {
     if (tasks.currentTask === tasks.pong.name) {
-        banners.text.text = "Don't drop the ball"
-        // activeTasks.soloPong = true;
+        banners.text.text = tasks.pong.bannerText;
         tasks.pong.isActive = true;
-        // } else if (activeTasks.task === "cow") {
-        // } else if (activeTasks.task === "cow") {
     } else if (tasks.currentTask === tasks.cow.name) {
-        banners.text.text = "You should pet the cows methinks"
-        // activeTasks.randomCow = true;
+        banners.text.text = tasks.cow.bannerText;
         tasks.cow.isActive = true;
-        // } else if (activeTasks.task === "math") {
     } else if (tasks.currentTask === tasks.math.name) {
-        banners.text.text = "If I had to do math for this, so do you :)"
-        // activeTasks.mathing = true;
+        banners.text.text = tasks.math.bannerText;
         tasks.math.isActive = true;
-        // } else if (activeTasks.task === "pattern") {
     } else if (tasks.currentTask === tasks.pattern.name) {
-        banners.text.text = "Patterns"
-        // activeTasks.patterns = true;
+        banners.text.text = tasks.pattern.bannerText;
         tasks.pattern.isActive = true;
     } else {
         banners.text.text = undefined;
@@ -315,4 +309,27 @@ function formatTime(elapsed) {
 
     // Pad values to two digits
     return nf(minutes, 2) + ':' + nf(seconds, 2);
+}
+
+
+/**
+ * Displays the time score onto the screen
+ * @param scoreProperties Properties of the score (coordinates, fill, etc)
+ * @param time The time to be displayed
+ */
+function drawScore(scoreProperties, time) {
+    // Draw rectangle
+    push();
+    rectMode(CENTER)
+    fill(scoreProperties.panel.fill);
+    rect(scoreProperties.panel.x, scoreProperties.panel.y, scoreProperties.panel.w, scoreProperties.panel.h, 10)
+    pop();
+
+    // Draw text
+    push();
+    textAlign(CENTER, CENTER);
+    textSize(scoreProperties.text.size);
+    text(scoreProperties.text.text, scoreProperties.text.x, scoreProperties.text.y);
+    text(time, scoreProperties.timer.x, scoreProperties.timer.y);
+    pop();
 }
