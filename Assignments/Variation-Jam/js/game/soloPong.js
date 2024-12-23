@@ -12,23 +12,22 @@ let countdownStartTime; // Tracks when the countdown starts (used to calculate h
  * @param ball
  */
 function soloPong(paddle, ball) {
-    // Set current task
     if (!tasks.pong.isActive) {
         tasks.currentTask = tasks.pong.name;
     }
-    // Draw the elements
-    drawPaddle();
-    drawBall();
 
-    // Move the elements
-    moveBall();
-    movePaddle();
+    drawPaddle(paddle);
+    movePaddle(paddle);
 
-    // Collision handler
-    handleCollision();
+    if (countdownActive) {
+        manageCountdown();
+        return;
+    }
 
-    // Display countdown
-    manageCountdown();
+    drawBall(ball);
+    moveBall(ball);
+
+    handleCollision(ball, paddle);
 
     // Check if ball goes off-screen
     if (ball.y - ball.w / 2 > height) {
@@ -51,7 +50,7 @@ function resetBall() {
 /**
  * Draw the ball onto the screen
  */
-function drawBall() {
+function drawBall(ball) {
     // Draw ball
     push();
     fill(ball.f);
@@ -62,7 +61,7 @@ function drawBall() {
 /**
  * Draw the paddle onto the screen
  */
-function drawPaddle() {
+function drawPaddle(paddle) {
     // Draw paddle
     push();
     fill(paddle.f);
@@ -113,16 +112,21 @@ function movePaddle() {
 /**
  * Manage collisions with paddle and walls
  */
-function handleCollision() {
+function handleCollision(ball, paddle) {
     // Check collisions with top wall
     if (ball.y - ball.w / 2 <= 0) {
         ball.speedY *= -1;
     }
 
     // Check collisions with side walls
-    if (ball.x - ball.w / 2 <= 0 || ball.x + ball.w / 2 >= width) {
+    if (ball.x - ball.w / 2 <= 0) {
+        ball.x = ball.w / 2; // Reset position to prevent overshooting
+        ball.speedX *= -1;
+    } else if (ball.x + ball.w / 2 >= width) {
+        ball.x = width - ball.w / 2; // Reset position to prevent overshooting
         ball.speedX *= -1;
     }
+
 
     // Check collision with paddle
     if (ball.y + ball.w / 2 >= paddle.y && ball.x > paddle.x && ball.x < paddle.x + paddle.w) {
@@ -146,15 +150,13 @@ function handleCollision() {
  * Calculate the countdown
  */
 function manageCountdown() {
-    if (countdownActive) {
-        // Handle countdown display
-        let elapsedTime = millis() - countdownStartTime;
-        let remaining = 3 - Math.floor(elapsedTime / 1000); // The remaining numbers to count
-        if (remaining >= 1) {
-            drawCountDown(remaining);
-        } else {
-            // End countdown
-            countdownActive = false;
-        }
+    // Handle countdown display
+    let elapsedTime = millis() - countdownStartTime;
+    let remaining = 3 - Math.floor(elapsedTime / 1000); // The remaining numbers to count
+    if (remaining >= 1) {
+        drawCountDown(remaining);
+    } else {
+        // End countdown
+        countdownActive = false;
     }
 }
