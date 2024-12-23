@@ -12,45 +12,92 @@ let countdownStartTime; // Tracks when the countdown starts (used to calculate h
  * @param ball
  */
 function soloPong(paddle, ball) {
+    // Set current task
     if (!tasks.pong.isActive) {
         tasks.currentTask = tasks.pong.name;
     }
-    updateHealth()
+    // Draw the elements
+    drawPaddle();
+    drawBall();
+
+    // Move the elements
+    moveBall();
+    movePaddle();
+
+    // Collision handler
+    handleCollision();
+
+    // Display countdown
+    manageCountdown();
+
+    // Check if ball goes off-screen
+    if (ball.y - ball.w / 2 > height) {
+        updateHealth(false);
+        resetBall(); // Respawn ball in the center with a countdown
+    }
+}
+
+/**
+ * Resets the ball to the center of the screen and starts a countdown
+ */
+function resetBall() {
+    ball.x = width / 2;
+    ball.y = height / 2;
+    countdown = 3;
+    countdownActive = true;
+    countdownStartTime = millis(); // Record the current time
+}
+
+/**
+ * Draw the ball onto the screen
+ */
+function drawBall() {
+    // Draw ball
+    push();
+    fill(ball.f);
+    ellipse(ball.x, ball.y, ball.w);
+    pop();
+}
+
+/**
+ * Draw the paddle onto the screen
+ */
+function drawPaddle() {
     // Draw paddle
     push();
     fill(paddle.f);
     rect(paddle.x, paddle.y, paddle.w, paddle.h);
     pop();
 
-    if (countdownActive) {
-        // Handle countdown display
-        let elapsedTime = millis() - countdownStartTime;
-        let remaining = 3 - Math.floor(elapsedTime / 1000); // The remaining numbers to count
-        if (remaining >= 1) {
-            // Draw countdown text
-            push();
-            fill("white");
-            textSize(32);
-            textAlign(CENTER, CENTER);
-            text(remaining, ball.x, ball.y);
-            pop();
-        } else {
-            // End countdown
-            countdownActive = false;
-        }
-        return; // Freeze the paddle when countdown is happening
-    }
+}
 
-    // Draw ball
+/**
+ * Draw the countdown
+ * @param remaining The remaining numbers to count
+ */
+function drawCountDown(remaining) {
+    // Draw countdown text
     push();
-    fill(ball.f);
-    ellipse(ball.x, ball.y, ball.w);
+    fill("white");
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    text(remaining, ball.x, ball.y);
     pop();
+}
 
+/**
+ * Move the ball
+ */
+function moveBall() {
     // Move ball
     ball.x += ball.speedX;
     ball.y += ball.speedY;
+}
 
+/**
+ * Move the paddle according to user input
+ */
+function movePaddle() {
     // Move paddle based on key presses
     if (keyIsDown(65)) {
         paddle.x -= paddle.speed;
@@ -61,7 +108,12 @@ function soloPong(paddle, ball) {
 
     // Constrain paddle within canvas boundaries
     paddle.x = constrain(paddle.x, 0, width - paddle.w);
+}
 
+/**
+ * Manage collisions with paddle and walls
+ */
+function handleCollision() {
     // Check collisions with top wall
     if (ball.y - ball.w / 2 <= 0) {
         ball.speedY *= -1;
@@ -88,21 +140,21 @@ function soloPong(paddle, ball) {
             ball.speedX = abs(ball.speedX); // Go right
         }
     }
-
-    // Check if ball goes off-screen
-    if (ball.y - ball.w / 2 > height) {
-        updateHealth(false);
-        resetBall(); // Respawn ball in the center with a countdown
-    }
 }
 
 /**
- * Resets the ball to the center of the screen and starts a countdown
+ * Calculate the countdown
  */
-function resetBall() {
-    ball.x = width / 2;
-    ball.y = height / 2;
-    countdown = 3;
-    countdownActive = true;
-    countdownStartTime = millis(); // Record the current time
+function manageCountdown() {
+    if (countdownActive) {
+        // Handle countdown display
+        let elapsedTime = millis() - countdownStartTime;
+        let remaining = 3 - Math.floor(elapsedTime / 1000); // The remaining numbers to count
+        if (remaining >= 1) {
+            drawCountDown(remaining);
+        } else {
+            // End countdown
+            countdownActive = false;
+        }
+    }
 }

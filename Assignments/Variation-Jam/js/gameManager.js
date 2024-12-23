@@ -38,22 +38,22 @@ let tasks = {
     }
 }
 
+/**
+ * The core function for playing the game
+ */
 function game() {
     image(backgroundImages.game, 0, 0, width, height);
 
+    // Handle pong tasks
     soloPong(paddle, ball);
     if (tasks.playingBanner) {
         if (tasks.pong.counter < 1) {
 
             // Tutorial audio
             playSound(audio.tutorials.pong);
+
             // Wait 15 seconds, then play the "going great" audio
-            setTimeout(() => {
-                if (!audio.comments.goingGreat.hasPlayed) {
-                    playSound(audio.comments.goingGreat.audio);
-                    audio.comments.goingGreat.hasPlayed = true;
-                }
-            }, 15000)
+            activateAudioWithDelay(audio.comments.goingGreat, 15000);
         }
         bannerAnimation(banners.text.text);
     }
@@ -70,14 +70,8 @@ function game() {
             activateBannerOnce(tasks.cow.counter, tasks.math.isActive, tasks.math.prevTaskCounter, audio.tutorials.mathing);
         }
         mathing();
-
         // Wait ten seconds, then play the music audio
-        setTimeout(() => {
-            if (!audio.comments.music.hasPlayed && gameStates.current === gameStates.game) {
-                playSound(audio.comments.music.audio);
-                audio.comments.music.hasPlayed = true;
-            }
-        }, 10000)
+        activateAudioWithDelay(audio.comments.music, 10000, () => gameStates.current === gameStates.game);
     }
 
     // Handle pattern tasks
@@ -87,13 +81,7 @@ function game() {
         patterns();
 
         // Wait ten seconds, then play the book club audio
-        setTimeout(() => {
-            if (!audio.comments.bookClub.hasPlayed) {
-                playSound(audio.comments.bookClub.audio);
-                audio.comments.bookClub.hasPlayed = true;
-            }
-        }, 10000)
-
+        activateAudioWithDelay(audio.comments.bookClub, 10000);
     }
     updateHealth();
     manageFailState();

@@ -102,3 +102,12 @@ function stopGameAudio() {
     audio.comments.howRude.audio.stop();
     audio.comments.bookClub.audio.stop();
 }
+
+function activateAudioWithDelay(audioObj, delay, condition = () => true) {
+    setTimeout(() => {
+        if (condition() && !audioObj.hasPlayed) {
+            playSound(audioObj.audio);
+            audioObj.hasPlayed = true;
+        }
+    }, delay);
+}
