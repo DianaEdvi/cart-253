@@ -75,13 +75,12 @@ function mouseClicked() {
 
 
 //Todo
-// Pause at beginning
+// Pause at beginning?
 // speed up the game
 // refractor the code
 // comments
 
 //Bugs
-// The paddle is weird if you hit it on the side. Will i fix?? prolly not
 // Reset the game isnt working as intended.
 
 

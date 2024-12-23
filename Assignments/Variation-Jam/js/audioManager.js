@@ -111,3 +111,17 @@ function activateAudioWithDelay(audioObj, delay, condition = () => true) {
         }
     }, delay);
 }
+
+function resetAudioObj(audioObj) {
+    audioObj.hasPlayed = false;
+}
+
+function resetAudio() {
+    resetAudioObj(audio.comments.howRude);
+    resetAudioObj(audio.comments.goingGreat);
+    resetAudioObj(audio.comments.music);
+    resetAudioObj(audio.comments.bookClub);
+
+    audio.comments.gameOver.audio.stop();
+
+}

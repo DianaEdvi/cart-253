@@ -8,7 +8,7 @@ let tasks = {
         name: "pong",
         isActive: false,
         isSuccessful: false, //
-        counter: undefined,
+        counter: 0,
         prevTaskCounter: undefined, //
         bannerText: "Don't drop the ball"
     },
@@ -103,15 +103,29 @@ function resetGame() {
     resetBall();
     resetCow(cow);
     resetPatterns();
+
+    resetTask(tasks.pong);
+    resetTask(tasks.cow);
+    tasks.cow.start = false;
+    resetTask(tasks.math);
+    resetTask(tasks.pattern);
+
     gameStates.current = gameStates.menu;
 
-    tasks.pong.counter = 0;
-    tasks.cow.counter = 0;
-    tasks.math.counter = 0;
+    resetHealth();
+    resetAudio();
 
+
+}
+
+function resetTask(taskObj) {
+    taskObj.isActive = false;
+    taskObj.isSuccessful = false;
+    taskObj.counter = 0;
+}
+
+function resetHealth() {
     healthBar.healthPoints.currentValue = 100;
     healthBar.healthPoints.animation.gainingHealth.isActive = false;
     healthBar.healthPoints.animation.losingHealth.isActive = false;
-
-    audio.comments.gameOver.audio.stop();
 }
