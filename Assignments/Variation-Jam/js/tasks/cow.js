@@ -17,8 +17,10 @@ let cow = {
  * @param cow
  */
 function randomCow(cow) {
-    if (!activeTasks.randomCow) {
-        activeTasks.task = "cow";
+    // if (!activeTasks.randomCow) {
+    if (!tasks.cow.isActive) {
+        // activeTasks.task = "cow";
+        tasks.currentTask = tasks.cow.name;
     }
     //Draw cow
     push();
@@ -31,7 +33,8 @@ function randomCow(cow) {
     cow.y += 0.25;
 
     //Check if mouse clicked cow
-    if (hasClicked && !successes.cowSuccess && mouseX >= cow.x - cow.w / 2 && mouseX <= cow.x + cow.x / 2 && mouseY >= cow.y - cow.w / 2 && mouseY <= cow.y + cow.w / 2) {
+    // if (hasClicked && !successes.cowSuccess && mouseX >= cow.x - cow.w / 2 && mouseX <= cow.x + cow.x / 2 && mouseY >= cow.y - cow.w / 2 && mouseY <= cow.y + cow.w / 2) {
+    if (hasClicked && !tasks.cow.isSuccessful && mouseX >= cow.x - cow.w / 2 && mouseX <= cow.x + cow.x / 2 && mouseY >= cow.y - cow.w / 2 && mouseY <= cow.y + cow.w / 2) {
         // Play the interrupt line
         if (audio.tutorials.cow.isPlaying()) {
             audio.tutorials.cow.stop();
@@ -40,15 +43,19 @@ function randomCow(cow) {
             playMooSound();
         }
         cow.f.fill = cow.f.selected;
-        successes.cowSuccess = true;
-        updateHealth(successes.cowSuccess);
+        // successes.cowSuccess = true;
+        tasks.cow.isSuccessful = true;
+        // updateHealth(successes.cowSuccess);
+        updateHealth(tasks.cow.isSuccessful);
         //Increment counter
-        counters.cow++
+        // counters.cow++
+        tasks.cow.counter++
     }
 
     // Check if the cow goes off-screen
     if (cow.x + cow.w / 2 < 0 || cow.y - cow.w / 2 > height) {
-        if (!successes.cowSuccess) {
+        // if (!successes.cowSuccess) {
+        if (!tasks.cow.isSuccessful) {
             updateHealth(false);
         }
         resetCow(cow);
@@ -64,7 +71,8 @@ function resetCow(cow) {
     cow.x = width + cow.w / 2; // Start on the right edge
     cow.y = random(100, height - 100); // Random vertical position
     cow.f.fill = cow.f.neutral;
-    successes.cowSuccess = false;
+    // successes.cowSuccess = false;
+    tasks.cow.isSuccessful = false;
 }
 
 /**

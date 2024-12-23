@@ -52,8 +52,10 @@ function preloadPattern() {
 
 
 function patterns() {
-    if (!activeTasks.patterns) {
-        activeTasks.task = "pattern";
+    // if (!activeTasks.patterns) {
+    if (!tasks.pattern.isActive) {
+        // activeTasks.task = "pattern";
+        tasks.currentTask = tasks.pattern.name;
     }
 
     if (animatingIn) {

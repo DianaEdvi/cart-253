@@ -8,35 +8,11 @@
 
 "use strict";
 
-let playingBanner = true;
-
-let activeTasks = {
-    task: "",
-    soloPong: false,
-    randomCow: false,
-    mathing: false,
-    patterns: false
-}
-
 let timers = {
     bannerTimerStarted: false, // The timer for keeping the banner on the screen for 3 seconds
-    cowTimerStarted: false,
-    mathingStarted: false,
-    patternStarted: false,
     answerTimeout: undefined,
     mathTimout: undefined,
     patternTimeout: undefined
-}
-
-let counters = {
-    pong: 0,
-    cow: 0,
-    math: 0,
-}
-
-let successes = {
-    cowSuccess: false,
-    mathSuccess: false,
 }
 
 let hasClicked = false;
@@ -46,8 +22,6 @@ const backgroundImages = {
     game: ""
 }
 
-let gameState = "menu";
-
 let gameStates = {
     current: undefined,
     menu: "menu",
@@ -55,22 +29,6 @@ let gameStates = {
     end: "end",
 }
 
-let tasks = {
-    currentTask: undefined,
-    playingBanner: true,
-    pong: {
-        isActive: false,
-        isSuccessful: false,
-        counter: undefined,
-        bannerTimer: undefined,
-        prevTaskCounter: undefined
-
-    },
-    cow: {},
-    math: {},
-    pattern: {}
-
-}
 
 function preload() {
     preloadPattern();
@@ -79,7 +37,6 @@ function preload() {
     endProperties.backgroundImg = loadImage('assets/third_optical_illusion.png')
 
     preloadAudio();
-
 }
 
 /**
@@ -97,111 +54,17 @@ function setup() {
  */
 function draw() {
 
-    if (gameState === "menu") {
+    if (gameStates.current === gameStates.menu) {
         menu();
-    } else if (gameState === "game") {
+    } else if (gameStates.current === gameStates.game) {
         game();
-    } else if (gameState === "end") {
+    } else if (gameStates.current === gameStates.end) {
         stopGameAudio();
         end();
     }
 
     hasClicked = false;
-    console.log("Testing");
 }
-
-function game() {
-    image(backgroundImages.game, 0, 0, width, height);
-    if (playingBanner) {
-        if (counters.pong < 1) {
-            playSound(audio.tutorials.pong);
-
-            setTimeout(() => {
-                if (!audio.comments.goingGreat.hasPlayed) {
-                    playSound(audio.comments.goingGreat.audio);
-                    audio.comments.goingGreat.hasPlayed = true;
-                }
-            }, 15000)
-        }
-        bannerAnimation(banners.text.text);
-    }
-    soloPong(paddle, ball);
-
-
-    // Handle cow tasks
-    if (counters.pong >= 2) {
-        activateBannerOnce(counters.pong, activeTasks.randomCow, 2, audio.tutorials.cow);
-        randomCow(cow);
-
-        // Repeat the cow task periodically
-        if (!timers.cowTimerStarted) {
-            timers.cowTimerStarted = true;
-            setTimeout(() => {
-                randomCow(cow)
-                timers.cowTimerStarted = false;
-            }, 2000);
-        }
-    }
-    // Handle math tasks
-    if (counters.cow >= 3) {
-        if (!audio.gameSounds.moo_1.isPlaying() && !audio.gameSounds.moo_2.isPlaying()) {
-            activateBannerOnce(counters.cow, activeTasks.mathing, 3, audio.tutorials.mathing);
-        }
-        mathing();
-
-        setTimeout(() => {
-            if (!audio.comments.music.hasPlayed && gameState === "game") {
-                playSound(audio.comments.music.audio);
-                audio.comments.music.hasPlayed = true;
-            }
-        }, 10000)
-
-        // Repeat the cow task periodically
-        if (!timers.cowTimerStarted) {
-            timers.cowTimerStarted = true;
-            setTimeout(() => {
-                randomCow(cow)
-                timers.cowTimerStarted = false;
-            }, 2000);
-        }
-    }
-    if (counters.math >= 5) {
-        setTimeout(() => {
-            if (!audio.comments.bookClub.hasPlayed) {
-                playSound(audio.comments.bookClub.audio);
-                audio.comments.bookClub.hasPlayed = true;
-            }
-        }, 10000)
-
-        audio.comments.music.audio.setVolume(0.1);
-        activateBannerOnce(counters.math, activeTasks.patterns, 5, audio.tutorials.pattern);
-        patterns();
-    }
-    updateHealth();
-    manageFailState();
-    drawScore(score, formatTime(millis() - startTime));
-}
-
-/**
- * Reset the game properties and tasks
- */
-function resetGame() {
-    resetBall();
-    resetCow(cow);
-    resetPatterns();
-    gameState = "menu";
-
-    counters.pong = 0;
-    counters.cow = 0;
-    counters.math = 0;
-
-    healthBar.healthPoints.currentValue = 100;
-    healthBar.healthPoints.animation.gainingHealth.isActive = false;
-    healthBar.healthPoints.animation.losingHealth.isActive = false;
-
-    audio.comments.gameOver.audio.stop();
-}
-
 
 /**
  * Crease bool checker for if the mouse has clicked
@@ -212,6 +75,7 @@ function mouseClicked() {
 
 
 //Todo
+// Pause at beginning
 // speed up the game
 // refractor the code
 // comments

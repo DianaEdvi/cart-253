@@ -79,12 +79,14 @@ function drawGameButton(buttonProperties) {
 function buttonManager(button) {
     if (button.text === "PLAY" && hasClicked && isInArea(button.x, button.y, button.w, button.h)) {
         playSound(audio.gameSounds.paddle);
-        gameState = "game";
+        // gameState = "game";
+        gameStates.current = gameStates.game;
         manageGameTimer("start");
     } else if (button.text === "PLAY AGAIN" && hasClicked && isInArea(button.x, button.y, button.w, button.h)) {
         playSound(audio.gameSounds.paddle);
         resetGame();
-        gameState = "menu"
+        // gameState = "menu"
+        gameStates.current = gameStates.menu;
     }
 }
 

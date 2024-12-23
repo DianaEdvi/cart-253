@@ -60,8 +60,10 @@ let bothUnanswered = undefined;
  *
  */
 function mathing() {
-    if (!activeTasks.mathing) {
-        activeTasks.task = "math";
+    // if (!activeTasks.mathing) {
+    if (!tasks.math.isActive) {
+        // activeTasks.task = "math";
+        tasks.currentTask = tasks.math.name;
     }
 
     //Generate the equation and answers
@@ -143,9 +145,12 @@ function animateMathUI() {
 
             // If the boxes have returned to off-screen, reset the values (takes two seconds)
             if (mathBoxes.question.y <= -110) {
-                if (!successes.mathSuccess && bothUnanswered) {
-                    updateHealth(successes.mathSuccess);
-                    successes.mathSuccess = undefined;
+                // if (!successes.mathSuccess && bothUnanswered) {
+                if (!tasks.math.isSuccessful && bothUnanswered) {
+                    // updateHealth(successes.mathSuccess);
+                    updateHealth(tasks.math.isSuccessful);
+                    // successes.mathSuccess = undefined;
+                    tasks.math.isSuccessful = undefined;
                 }
                 // Reset state
                 if (!resetInProgress) {
@@ -167,14 +172,17 @@ function processAnswer(answerBox) {
     // Check if this box was the correct one
     if (answerBox.isCorrect) {
         answerBox.fill = mathBoxes.fillOptions.correct;
-        successes.mathSuccess = answerBox.isCorrect;
-        counters.math++;
+        // successes.mathSuccess = answerBox.isCorrect;
+        tasks.math.isSuccessful = answerBox.isCorrect;
+        // counters.math++;
+        tasks.math.counter++;
     } else {
         answerBox.fill = mathBoxes.fillOptions.wrong;
     }
 
     hasAnswered = true;
-    updateHealth(successes.mathSuccess);
+    // updateHealth(successes.mathSuccess);
+    updateHealth(tasks.math.isSuccessful);
     clearTimeout(timers.answerTimeout); // Stop the timer if answered
 }
 
@@ -284,5 +292,6 @@ function resetMathing() {
     mathBoxes.answerRight.fill = mathBoxes.fillOptions.unanswered;
     mathBoxes.answerLeft.fill = mathBoxes.fillOptions.unanswered;
     resetInProgress = false; // Allow next reset
-    successes.mathSuccess = false;
+    // successes.mathSuccess = false;
+    tasks.math.isSuccessful = false;
 }

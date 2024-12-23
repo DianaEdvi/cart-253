@@ -1,3 +1,5 @@
+"use strict";
+
 let paddle = {x: 320, y: 625, w: 100, h: 15, f: "#e8b974", speed: 10};
 let ball = {x: 320, y: 320, w: 50, f: "#e8b974", speedY: 1, speedX: 3}; // Added speedX for horizontal movement
 let countdown = 3; // Countdown starts at 3 seconds
@@ -10,8 +12,10 @@ let countdownStartTime; // Tracks when the countdown starts (used to calculate h
  * @param ball
  */
 function soloPong(paddle, ball) {
-    if (!activeTasks.soloPong) {
-        activeTasks.task = "solo";
+    // if (!activeTasks.soloPong) {
+    if (!tasks.pong.isActive) {
+        // activeTasks.task = "solo";
+        tasks.currentTask = tasks.pong.name;
     }
     updateHealth()
     // Draw paddle
@@ -74,7 +78,8 @@ function soloPong(paddle, ball) {
     if (ball.y + ball.w / 2 >= paddle.y && ball.x > paddle.x && ball.x < paddle.x + paddle.w) {
         playSound(audio.gameSounds.paddle);
         // Increment counter
-        counters.pong++;
+        // counters.pong++;
+        tasks.pong.counter++;
         // Reverse vertical direction
         ball.speedY *= -1;
 

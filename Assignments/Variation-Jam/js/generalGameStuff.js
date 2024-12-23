@@ -131,8 +131,10 @@ function bannerAnimation(displayStr) {
         } else {
             // Reset variables
             bannerState = "forwards";
-            playingBanner = false;
-            activeTasks.task = undefined;
+            // playingBanner = false;
+            tasks.playingBanner = false;
+            // activeTasks.task = undefined;
+            tasks.currentTask = undefined;
         }
     }
 
@@ -169,18 +171,27 @@ function bannerAnimation(displayStr) {
 }
 
 function setBannerText() {
-    if (activeTasks.task === "solo") {
+    // if (activeTasks.task === "solo") {
+    if (tasks.currentTask === tasks.pong.name) {
         banners.text.text = "Don't drop the ball"
-        activeTasks.soloPong = true;
-    } else if (activeTasks.task === "cow") {
+        // activeTasks.soloPong = true;
+        tasks.pong.isActive = true;
+        // } else if (activeTasks.task === "cow") {
+        // } else if (activeTasks.task === "cow") {
+    } else if (tasks.currentTask === tasks.cow.name) {
         banners.text.text = "You should pet the cows methinks"
-        activeTasks.randomCow = true;
-    } else if (activeTasks.task === "math") {
+        // activeTasks.randomCow = true;
+        tasks.cow.isActive = true;
+        // } else if (activeTasks.task === "math") {
+    } else if (tasks.currentTask === tasks.math.name) {
         banners.text.text = "If I had to do math for this, so do you :)"
-        activeTasks.mathing = true;
-    } else if (activeTasks.task === "pattern") {
+        // activeTasks.mathing = true;
+        tasks.math.isActive = true;
+        // } else if (activeTasks.task === "pattern") {
+    } else if (tasks.currentTask === tasks.pattern.name) {
         banners.text.text = "Patterns"
-        activeTasks.patterns = true;
+        // activeTasks.patterns = true;
+        tasks.pattern.isActive = true;
     } else {
         banners.text.text = undefined;
     }
@@ -190,7 +201,8 @@ function activateBannerOnce(counter, newTask, countThreshold, sound) {
     //Play the banner only once
     if (counter === countThreshold && !newTask) {
         playSound(sound);
-        playingBanner = true;
+        // playingBanner = true;
+        tasks.playingBanner = true;
     }
 }
 
@@ -271,7 +283,8 @@ function manageFailState() {
     // If the health reaches 0, stop the timer and go to the end state
     if (healthBar.healthPoints.currentValue === 0) {
         manageGameTimer("stop");
-        gameState = 'end';
+        // gameState = 'end';
+        gameStates.current = gameStates.end;
     }
 }
 
