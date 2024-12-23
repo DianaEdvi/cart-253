@@ -58,7 +58,7 @@ function randomCow(cow) {
         if (!tasks.cow.isSuccessful) {
             updateHealth(false);
         }
-        resetCow(cow);
+        renewCow(cow);
     }
 }
 
@@ -66,7 +66,7 @@ function randomCow(cow) {
  * Resets the cow properties
  * @param cow The cow properties
  */
-function resetCow(cow) {
+function renewCow(cow) {
     // Reset cow position to start again from the right
     cow.x = width + cow.w / 2; // Start on the right edge
     cow.y = random(100, height - 100); // Random vertical position
@@ -88,4 +88,10 @@ function playMooSound() {
         playSound(audio.gameSounds.moo_1);
     }
 
+}
+
+function resetCow() {
+    cow.x = 640;
+    cow.y = 100;
+    cow.f.fill = cow.f.neutral;
 }

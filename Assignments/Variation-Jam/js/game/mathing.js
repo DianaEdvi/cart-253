@@ -151,7 +151,7 @@ function animateMathUI() {
                 if (!resetInProgress) {
                     resetInProgress = true; // Prevent multiple resets
                     setTimeout(() => {
-                        resetMathing(); // Reset the function
+                        renewMathing(); // Reset the function
                     }, 2000); // Pause for 2 seconds (2000 milliseconds)
                 }
             }
@@ -276,7 +276,7 @@ function isInArea(x, y, w, h) {
 /**
  * Reset the math function
  */
-function resetMathing() {
+function renewMathing() {
     equationGenerated = false;
     mathBoxes.isActive = false;
     mathBoxes.answerLeft.isCorrect = false;
@@ -285,4 +285,31 @@ function resetMathing() {
     mathBoxes.answerLeft.fill = mathBoxes.fillOptions.unanswered;
     resetInProgress = false; // Allow next reset
     tasks.math.isSuccessful = false;
+}
+
+function resetMathing() {
+
+    mathBoxes.hasAnswered = false;
+    mathBoxes.isActive = true;
+
+    mathBoxes.question.text = "";
+    mathBoxes.question.y = -110;
+
+    mathBoxes.answerRight.fill = "#e63535";
+    mathBoxes.answerRight.text = "";
+    mathBoxes.answerRight.y = -40;
+    mathBoxes.answerRight.isCorrect = false;
+
+    mathBoxes.answerLeft.fill = "#e63535";
+    mathBoxes.answerLeft.text = "";
+    mathBoxes.answerLeft.y = -40;
+    mathBoxes.answerLeft.isCorrect = false;
+
+    hasAnswered = false; // Track whether the player has answered the equation
+    answerString = undefined; // The corrct answer
+    otherString = undefined; // The incorrect answer
+    equationGenerated = false; // Track if the equation has already been generated
+    solutionLocation = -1; // This will store the location of the correct answer (0 for left, 1 for right)
+    resetInProgress = undefined; // Check for timer before the function starts again
+    bothUnanswered = undefined;
 }

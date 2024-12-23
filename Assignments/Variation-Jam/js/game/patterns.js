@@ -52,9 +52,7 @@ function preloadPattern() {
 
 
 function patterns() {
-    // if (!activeTasks.patterns) {
     if (!tasks.pattern.isActive) {
-        // activeTasks.task = "pattern";
         tasks.currentTask = tasks.pattern.name;
     }
 
@@ -270,7 +268,7 @@ function animatePrompt(state) {
         }
 
         if (state === 'exit') {
-            resetPatterns();
+            renewPatterns();
         }
     } else {
         if (!wooshPlayed) {
@@ -308,7 +306,7 @@ function verifyAnswer() {
     }
 }
 
-function resetPatterns() {
+function renewPatterns() {
     inputText = '';
     isTyping = false;
     isPlaceholderActive = true;
@@ -336,4 +334,32 @@ function generatePrompt() {
     randomAnswer = selectedPattern.answer;
     promptInfo = randomPattern;
 
+}
+
+function resetPatterns() {
+
+    renewPatterns();
+    textBox.x = 170;
+    textBox.y = 200;
+    textBox.w = 300;
+    textBox.h = 40;
+    textBox.f = 200;
+
+    prompt.x = undefined;
+    prompt.y = undefined;
+    prompt.w = 300;
+    prompt.h = 80;
+    prompt.text = "";
+
+    inputText = '';
+    isTyping = false;
+    placeholderText = "Enter here...";
+    isPlaceholderActive = true;
+    backspaceTime = 0;
+
+    angle = 0; // Rotation angle in radians
+    promptIsReady = false;
+    animatingIn = true;
+    animationState = 'enter';
+    endTask = false;
 }

@@ -11,8 +11,8 @@
 let timers = {
     bannerTimerStarted: false, // The timer for keeping the banner on the screen for 3 seconds
     answerTimeout: undefined,
-    mathTimout: undefined,
-    patternTimeout: undefined
+    patternTimeout: undefined,
+    cowTimeout: undefined
 }
 
 let hasClicked = false;

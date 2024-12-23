@@ -179,3 +179,17 @@ function manageCountdown() {
         countdownActive = false;
     }
 }
+
+function resetSoloPong() {
+    paddle = {x: 320, y: 625, w: 100, h: 15, f: "#e8b974", speed: 10};
+    ball = {x: 320, y: 320, w: 50, f: "#e8b974", speedY: 1, speedX: 3}; // Added speedX for horizontal movement
+    countdown = 3; // Countdown starts at 3 seconds
+    countdownActive = true; // Flag to control countdown state
+    countdownStartTime = undefined; // Tracks when the countdown starts (used to calculate how much time has passed since the countdown beg
+    lastX = ball.x;  // Stores the last X position of the ball
+    lastTime = Date.now();  // Stores the last time the X position was checked
+    stuckThreshold = 100;  // Time threshold in milliseconds (1 second)
+    currentTime = undefined;
+
+    resetBall();
+}

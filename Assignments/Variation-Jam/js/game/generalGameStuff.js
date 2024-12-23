@@ -131,9 +131,7 @@ function bannerAnimation(displayStr) {
         } else {
             // Reset variables
             bannerState = "forwards";
-            // playingBanner = false;
             tasks.playingBanner = false;
-            // activeTasks.task = undefined;
             tasks.currentTask = undefined;
         }
     }
@@ -143,7 +141,6 @@ function bannerAnimation(displayStr) {
     fill("#faf8d6");
     quad(banners.white.x1, banners.white.y1, banners.white.x2, banners.white.y2, banners.white.x3, banners.white.y3, banners.white.x4, banners.white.y4);
     pop();
-    // console.log(banners.text.x, banners.text.y, banners.text.w, banners.text.h)
 
     //Draw red banner
     push();
@@ -155,7 +152,6 @@ function bannerAnimation(displayStr) {
     fill("red")
     rectMode(CENTER)
     rect(banners.text.x, banners.text.y, banners.text.w, banners.text.h)
-    // console.log(banners.text.x, banners.text.y, banners.text.w, banners.text.h)
     pop();
 
     //Draw the text on top
@@ -332,4 +328,10 @@ function drawScore(scoreProperties, time) {
     text(scoreProperties.text.text, scoreProperties.text.x, scoreProperties.text.y);
     text(time, scoreProperties.timer.x, scoreProperties.timer.y);
     pop();
+}
+
+function resetHealth() {
+    healthBar.healthPoints.currentValue = 100;
+    healthBar.healthPoints.animation.gainingHealth.isActive = false;
+    healthBar.healthPoints.animation.losingHealth.isActive = false;
 }

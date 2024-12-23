@@ -61,7 +61,7 @@ function game() {
 
 
     // Set cow task according to a timer because sometimes the pong counter goes wild
-    setTimeout(() => {
+    timers.cowTimeout = setTimeout(() => {
         tasks.cow.start = true
         tasks.pong.counter = tasks.cow.prevTaskCounter;
     }, 20000);
@@ -100,10 +100,6 @@ function game() {
  * Reset the game properties and tasks
  */
 function resetGame() {
-    resetBall();
-    resetCow(cow);
-    resetPatterns();
-
     resetTask(tasks.pong);
     resetTask(tasks.cow);
     tasks.cow.start = false;
@@ -111,10 +107,25 @@ function resetGame() {
     resetTask(tasks.pattern);
 
     gameStates.current = gameStates.menu;
+    tasks.currentTask = undefined;
+    banners.text.text = undefined;
 
     resetHealth();
     resetAudio();
 
+    resetSoloPong();
+    resetCow();
+    resetMathing();
+    resetPatterns();
+
+    clearTimeout(timers.cowTimeout);
+    timers.bannerTimerStarted = false;
+    timers.answerTimeout = undefined;
+    timers.patternTimeout = undefined;
+    timers.cowTimeout = undefined;
+
+    endProperties.score.timer.text = undefined;
+    score.timer.text = undefined;
 
 }
 
@@ -124,8 +135,3 @@ function resetTask(taskObj) {
     taskObj.counter = 0;
 }
 
-function resetHealth() {
-    healthBar.healthPoints.currentValue = 100;
-    healthBar.healthPoints.animation.gainingHealth.isActive = false;
-    healthBar.healthPoints.animation.losingHealth.isActive = false;
-}
