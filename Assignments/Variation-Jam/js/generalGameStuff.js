@@ -46,7 +46,7 @@ let healthBar = {
         currentValue: 100,
         minValue: 0,
         maxValue: 100,
-        decayRate: -0.001,
+        decayRate: -0.01,
         animation: {
             gainingHealth: {
                 isActive: false,
