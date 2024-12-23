@@ -6,6 +6,12 @@ let countdown = 3; // Countdown starts at 3 seconds
 let countdownActive = true; // Flag to control countdown state
 let countdownStartTime; // Tracks when the countdown starts (used to calculate how much time has passed since the countdown began)
 
+let lastX = ball.x;  // Stores the last X position of the ball
+let lastTime = Date.now();  // Stores the last time the X position was checked
+let stuckThreshold = 100;  // Time threshold in milliseconds (1 second)
+let currentTime;
+
+
 /**
  * Creates the solo pong mechanic. Draws the ball and the paddle and checks for user input to move the paddle
  * @param paddle
@@ -91,6 +97,20 @@ function moveBall() {
     // Move ball
     ball.x += ball.speedX;
     ball.y += ball.speedY;
+
+    // Check if the ball's x position hasn't changed for 1 second
+    if (Math.abs(ball.x - lastX) < 1) {  // Ball's X hasn't moved significantly
+        currentTime = Date.now();  // Get the current time
+        if (currentTime - lastTime > stuckThreshold) {
+            // The ball has been in the same X position for over 1 second
+            resetBall();
+            updateHealth(false);
+        }
+    } else {
+        // Reset the last time and position since the ball has moved
+        lastX = ball.x;
+        lastTime = Date.now();  // Update the last time
+    }
 }
 
 /**
@@ -126,7 +146,6 @@ function handleCollision(ball, paddle) {
         ball.x = width - ball.w / 2; // Reset position to prevent overshooting
         ball.speedX *= -1;
     }
-
 
     // Check collision with paddle
     if (ball.y + ball.w / 2 >= paddle.y && ball.x > paddle.x && ball.x < paddle.x + paddle.w) {

@@ -18,7 +18,8 @@ let tasks = {
         isSuccessful: false,
         counter: undefined,
         prevTaskCounter: 2,
-        bannerText: "You should pet the cows me-thinks"
+        bannerText: "You should pet the cows me-thinks",
+        start: false
     },
     math: {
         name: "math",
@@ -58,8 +59,15 @@ function game() {
         bannerAnimation(banners.text.text);
     }
 
+
+    // Set cow task according to a timer because sometimes the pong counter goes wild
+    setTimeout(() => {
+        tasks.cow.start = true
+        tasks.pong.counter = tasks.cow.prevTaskCounter;
+    }, 20000);
+
     // Handle cow tasks
-    if (tasks.pong.counter >= tasks.cow.prevTaskCounter) {
+    if (tasks.cow.start) {
         activateBannerOnce(tasks.pong.counter, tasks.cow.isActive, tasks.cow.prevTaskCounter, audio.tutorials.cow);
         randomCow(cow);
     }
