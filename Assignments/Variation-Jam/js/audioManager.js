@@ -1,13 +1,13 @@
 "use strict";
 
-let audio = {
-    tutorials: {
+let audio = { // Will hold all the audio information
+    tutorials: { // The voiceover that goes with the banners where the voice explains what to do
         pong: undefined,
         cow: undefined,
         mathing: undefined,
         pattern: undefined,
     },
-    gameSounds: {
+    gameSounds: { // The game sounds
         paddle: undefined,
         moos: [],
         moo_1: undefined,
@@ -18,9 +18,9 @@ let audio = {
         ding: undefined,
         dong: undefined,
     },
-    comments: {
+    comments: { // The voiceovers that don't have anything to do with learning the game
         goingGreat: {
-            hasPlayed: false,
+            hasPlayed: false, // To prevent infinitely looping
             audio: undefined,
         },
         music: {
@@ -103,6 +103,12 @@ function stopGameAudio() {
     audio.comments.bookClub.audio.stop();
 }
 
+/**
+ * Some audio clips are meant to be played after a certain time and under certain conditions. This handles that
+ * @param audioObj The parent of the audio that will be played
+ * @param delay The amount of time that the audio will wait before playing
+ * @param condition Any additional conditions before the audio can play
+ */
 function activateAudioWithDelay(audioObj, delay, condition = () => true) {
     setTimeout(() => {
         if (condition() && !audioObj.hasPlayed) {
@@ -112,10 +118,17 @@ function activateAudioWithDelay(audioObj, delay, condition = () => true) {
     }, delay);
 }
 
+/**
+ * Reset an audio object
+ * @param audioObj The object to be reset
+ */
 function resetAudioObj(audioObj) {
     audioObj.hasPlayed = false;
 }
 
+/**
+ * Reset all necessary audio variables
+ */
 function resetAudio() {
     resetAudioObj(audio.comments.howRude);
     resetAudioObj(audio.comments.goingGreat);
@@ -123,5 +136,4 @@ function resetAudio() {
     resetAudioObj(audio.comments.bookClub);
 
     audio.comments.gameOver.audio.stop();
-
 }

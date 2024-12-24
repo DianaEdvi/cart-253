@@ -98,11 +98,11 @@ function moveBall() {
     ball.x += ball.speedX;
     ball.y += ball.speedY;
 
-    // Check if the ball's x position hasn't changed for 1 second
+    // Check if the ball's x position hasn't changed for 1 second (otherwise the ball can get stuck between the paddle and a wall)
     if (Math.abs(ball.x - lastX) < 1) {  // Ball's X hasn't moved significantly
         currentTime = Date.now();  // Get the current time
+        // If the ball has been in the same X position for longer than the specified time, reset it
         if (currentTime - lastTime > stuckThreshold) {
-            // The ball has been in the same X position for over 1 second
             resetBall();
             updateHealth(false);
         }
@@ -180,6 +180,9 @@ function manageCountdown() {
     }
 }
 
+/**
+ * Reset the pong variables
+ */
 function resetSoloPong() {
     paddle = {x: 320, y: 625, w: 100, h: 15, f: "#e8b974", speed: 10};
     ball = {x: 320, y: 320, w: 50, f: "#e8b974", speedY: 1, speedX: 3}; // Added speedX for horizontal movement

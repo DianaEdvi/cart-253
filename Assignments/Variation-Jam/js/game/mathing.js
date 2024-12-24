@@ -1,10 +1,8 @@
+/**
+ * Animates a math equation onto the screen that the user must answer correctly
+ */
 "use strict";
 
-
-/**
- * Displays a math problem onto the screen that the user must solve before ...?
- * @param mathStr the variable holding the display string
- */
 
 let mathBoxes = {
     hasAnswered: false,
@@ -56,14 +54,10 @@ let resetInProgress = undefined; // Check for timer before the function starts a
 let bothUnanswered = undefined;
 
 /**
- * Generates a math equation and displays it onto the screen.
- * Specifically:
- * Generates an equation and randomizes the solution's location
- * Displays the equation and animates the UI onto the screen
- * Checks if the user answered correctly or at all and handles the health accordingly
- *
+ * Displays a math problem onto the screen that the user must solve within a specific time frame
  */
 function mathing() {
+    // Set the current task
     if (!tasks.math.isActive) {
         tasks.currentTask = tasks.math.name;
     }
@@ -89,7 +83,7 @@ function mathing() {
     animateMathUI();
     playMathAudio();
 
-
+    // Boolean for tracking if neither answer has been selected
     bothUnanswered = mathBoxes.answerLeft.fill === mathBoxes.fillOptions.unanswered && mathBoxes.answerRight.fill === mathBoxes.fillOptions.unanswered
 
     // Handle user clicks and determine success/failure
@@ -181,6 +175,7 @@ function processAnswer(answerBox) {
     updateHealth(tasks.math.isSuccessful);
     clearTimeout(timers.answerTimeout); // Stop the timer if answered
 
+    // Lower the amount of time the equation waits after the patterns task shows up
     if (speedMath) {
         mathBoxes.timeout.pause = 3000;
         mathBoxes.timeout.reset = 1000;
@@ -256,6 +251,7 @@ function drawMathBoxes() {
 
     pop();
 
+    // Draw text
     push();
     textSize(mathBoxes.textSize);
     textAlign(CENTER, CENTER);
@@ -283,7 +279,7 @@ function isInArea(x, y, w, h) {
 }
 
 /**
- * Reset the math function
+ * Generate a new equation
  */
 function renewMathing() {
     equationGenerated = false;
@@ -296,6 +292,9 @@ function renewMathing() {
     tasks.math.isSuccessful = false;
 }
 
+/**
+ * Reset the variables to their original values for reset
+ */
 function resetMathing() {
 
     mathBoxes.hasAnswered = false;

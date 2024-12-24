@@ -1,6 +1,9 @@
+/**
+ * Contains the functionality for all of the general game mechanics that are present throughout the game, such as the health bar, the banner, and the timer
+ */
 "use strict";
 
-let banners = {
+let banners = { // The banner that pops up when a new task appears
     red: {
         x1: 690,
         y1: 540,
@@ -32,9 +35,9 @@ let banners = {
     }
 }
 
-let bannerState = "forwards"
+let bannerState = "forwards" // The state of the banner for animation purposes
 
-let healthBar = {
+let healthBar = { // The health bar that appears in the top left
     x: 50,
     y: 50,
     size: 100,
@@ -47,7 +50,7 @@ let healthBar = {
         minValue: 0,
         maxValue: 100,
         decayRate: -0.02,
-        animation: {
+        animation: { // To be performed when a task is succeeded/failed
             gainingHealth: {
                 isActive: false,
                 counter: 0,
@@ -64,10 +67,10 @@ let healthBar = {
     }
 }
 
-let startTime;
-let elapsedTime;
+let startTime; // The start time of the game
+let elapsedTime; // The time that has elapsed since the start of the game
 
-let score = {
+let score = { // The timer that tracks how long a player lasted
     text: {
         size: 24
     },
@@ -84,6 +87,10 @@ let score = {
         h: 50
     }
 }
+
+// Conditions to speed up tasks in the future
+let speedPattern = false;
+let speedMath = false;
 
 /**
  * Pushes a banner onto the screen and keeps it there for a few seconds. Then it gets pulled off the screen
@@ -187,11 +194,17 @@ function setBannerText() {
     }
 }
 
+/**
+ * Activates the banner for a particular task only one time
+ * @param counter The current success count of the task
+ * @param newTask The new task to be called
+ * @param countThreshold The amount of counts the previous task must have to activate the new one
+ * @param sound The audio of the tutorial guy explaining the task
+ */
 function activateBannerOnce(counter, newTask, countThreshold, sound) {
     //Play the banner only once
     if (counter === countThreshold && !newTask) {
         playSound(sound);
-        // playingBanner = true;
         tasks.playingBanner = true;
     }
 }
@@ -273,16 +286,15 @@ function manageFailState() {
     // If the health reaches 0, stop the timer and go to the end state
     if (healthBar.healthPoints.currentValue === 0) {
         manageGameTimer("stop");
-        // gameState = 'end';
         gameStates.current = gameStates.end;
     }
 }
-
 
 /**
  * Creates a timer for the duration of the game which the user can judge themselves against
  */
 function manageGameTimer(state) {
+    // Save the time that has passed when the game begins
     if (state === "start") {
         if (!startTime) {
             startTime = millis();
@@ -307,7 +319,6 @@ function formatTime(elapsed) {
     return nf(minutes, 2) + ':' + nf(seconds, 2);
 }
 
-
 /**
  * Displays the time score onto the screen
  * @param scoreProperties Properties of the score (coordinates, fill, etc)
@@ -330,18 +341,19 @@ function drawScore(scoreProperties, time) {
     pop();
 }
 
+/**
+ * Reset the health bar
+ */
 function resetHealth() {
     healthBar.healthPoints.currentValue = 100;
     healthBar.healthPoints.animation.gainingHealth.isActive = false;
     healthBar.healthPoints.animation.losingHealth.isActive = false;
 }
 
-let speedPattern = false;
-
-let speedMath = false;
-
+/**
+ * Speed up the cow and prepare to shorten the pause duration of the math and pattern tasks
+ */
 function speedUp() {
-
     if (cow.speedX < 2) {
         cow.speedX += 0.001;
         cow.speedY += 0.001;

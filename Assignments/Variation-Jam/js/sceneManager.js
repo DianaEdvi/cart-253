@@ -1,6 +1,10 @@
+/**
+ * Contains the logic for any non-game states
+ */
+
 "use strict";
 
-const menuProperties = {
+const menuProperties = { // The stuff you see in the menu
     backgroundImg: undefined,
     playButton: {
         text: "PLAY",
@@ -12,7 +16,7 @@ const menuProperties = {
     }
 }
 
-const endProperties = {
+const endProperties = { // The stuff you see in the end
     backgroundImg: undefined,
     playButton: {
         text: "PLAY AGAIN",
@@ -96,12 +100,14 @@ function buttonManager(button) {
  * @param buttonProperties The properties of the button
  */
 function drawGameButton(buttonProperties) {
+    // Draw rectangle
     push();
     rectMode(CENTER);
     fill(buttonProperties.f);
     rect(buttonProperties.x, buttonProperties.y, buttonProperties.w, buttonProperties.h, 10);
     pop();
 
+    // Draw the text
     push();
     textAlign(CENTER, CENTER);
     textSize(40);

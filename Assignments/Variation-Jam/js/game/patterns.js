@@ -1,6 +1,9 @@
+/**
+ * Animates a pattern prompt onto the screen that the user must type the correct missing element to within a specific time frame
+ */
 "use strict";
 
-let textBox = {
+let textBox = { // The box that is typed in
     x: 170,
     y: 200,
     w: 300,
@@ -8,7 +11,7 @@ let textBox = {
     f: 200
 }
 
-let prompt = {
+let prompt = { // The box holding the prompt
     x: undefined,
     y: undefined,
     w: 300,
@@ -17,7 +20,7 @@ let prompt = {
     text: "",
 }
 
-let patternTimeout = 5000;
+let patternTimeout = 5000; // The amount of time the pattern waits before animating out
 
 
 // Typing properties
@@ -49,25 +52,33 @@ let promptInfo = undefined;
 let randomPattern;
 let randomAnswer;
 
+/**
+ * Load the data
+ */
 function preloadPattern() {
     patternsData = loadJSON("assets/patterns.json");
 }
 
-
+/**
+ * Animates the prompt onto the screen and handles user input
+ */
 function patterns() {
+    // Set the current task
     if (!tasks.pattern.isActive) {
         tasks.currentTask = tasks.pattern.name;
     }
 
+    // Animate the prompt in or out and generate new prompts accordingly
     if (animatingIn) {
         animationState = 'enter'
         animatePrompt(animationState);
 
+        // Display the prompt
         if (promptIsReady) {
             displayPromptText();
             typeText();
             verifyAnswer();
-            // Only set timeout once and clear any existing one
+            // Keep the pattern on screen for a specified amount of time
             if (!timers.patternTimeout) {
                 timers.patternTimeout = setTimeout(() => {
                     endTask = true;
@@ -82,6 +93,7 @@ function patterns() {
 
 /**
  * Handles the typing input from the user and displays it onto the screen
+ * This functionality was written by ChatGPT and modified by me as a base to work off of
  */
 function typeText() {
     displayTypedText();
@@ -284,13 +296,20 @@ function animatePrompt(state) {
 
 }
 
-
+/**
+ * Display the prompt text
+ */
 function displayPromptText() {
     text(promptInfo, prompt.x + 10, prompt.y + prompt.h / 2 - 10);
 }
 
+/**
+ * Verify the user's response to the pattern
+ */
 function verifyAnswer() {
+    // Check if the user typed something
     if (isTyping && keyIsPressed && key === "Enter") {
+        // Check if what they typed is correct
         if (randomAnswer === inputText) {
             playSound(audio.gameSounds.ding);
             updateHealth(true);
@@ -301,7 +320,6 @@ function verifyAnswer() {
         animatingIn = false;
         stateSelected = false;
     } else if (endTask) {
-        console.log("itll be this one")
         playSound(audio.gameSounds.dong);
         updateHealth(false);
         animatingIn = false;
@@ -309,6 +327,9 @@ function verifyAnswer() {
     }
 }
 
+/**
+ * Reset all necessary variables and generate a new prompt
+ */
 function renewPatterns() {
     inputText = '';
     isTyping = false;
@@ -331,6 +352,9 @@ function renewPatterns() {
     generatePrompt();
 }
 
+/**
+ * Creates a new prompt by taking a random pattern from the json file
+ */
 function generatePrompt() {
     // Select a random index from the patterns array
     let randomIndex = Math.floor(random(patternsData.patterns.length));
@@ -343,6 +367,9 @@ function generatePrompt() {
 
 }
 
+/**
+ * Reset the patterns script
+ */
 function resetPatterns() {
 
     renewPatterns();

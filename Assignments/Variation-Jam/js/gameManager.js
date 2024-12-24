@@ -1,7 +1,9 @@
+/**
+ * Handles the game portion of the project
+ */
 "use strict";
 
-
-let tasks = {
+let tasks = { // The different tasks the user must complete
     currentTask: undefined,
     playingBanner: true,
     pong: {
@@ -40,7 +42,7 @@ let tasks = {
 }
 
 
-let timers = {
+let timers = { // Any timers that need to be stored in a variable
     bannerTimerStarted: false, // The timer for keeping the banner on the screen for 3 seconds
     answerTimeout: undefined,
     patternTimeout: undefined,
@@ -67,7 +69,6 @@ function game() {
         }
         bannerAnimation(banners.text.text);
     }
-
 
     // Set cow task according to a timer because sometimes the pong counter goes wild
     timers.cowTimeout = setTimeout(() => {
@@ -103,6 +104,7 @@ function game() {
         timers.speedTimeout = setTimeout(() => speedUp(), 5000);
 
     }
+
     updateHealth();
     manageFailState();
     drawScore(score, formatTime(millis() - startTime));
@@ -135,9 +137,6 @@ function resetGame() {
         timers.cowTimeout = undefined;
     }
     timers.bannerTimerStarted = false;
-    // timers.answerTimeout = undefined;
-    // timers.patternTimeout = undefined;
-
     endProperties.score.timer.text = undefined;
     score.timer.text = undefined;
 

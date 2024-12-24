@@ -1,5 +1,8 @@
-"use strict";
+/**
+ * Sends a cow across the screen that the user has to click
+ */
 
+"use strict";
 
 let cow = {
     x: 640,

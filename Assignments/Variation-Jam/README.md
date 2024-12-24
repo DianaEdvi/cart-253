@@ -1,13 +1,15 @@
-# Template p5 Project
+# Overloaded
 
-Author Name
+By Diana Edvi
 
-[View this project online](URL_FOR_THE_RUNNING_PROJECT)
+[View this project online](https://dianaedvi.github.io/cart-253/Assignments/Variation-Jam/)
 
 ## Description
 
-This description should help the reader understand what the program is, what any controls do, and perhaps what the
-desired experience it.
+This game is about slowly overwhelming the user with more and more tasks to do. It starts off with a single menial ball
+to keep up, and slowly increases in difficulty as more tasks appear. There are four total: the solo-pong game, a
+simple "cow" that the user has to click on, a math prompt, and a pattern prompt. The original goal was to get the game
+to be very overwhelming by the end. I think the final result is only mildly so.
 
 ## Credits
 
@@ -17,38 +19,25 @@ This project uses [p5.js](https://p5js.org).
 
 ## Attribution
 
-This bit should attribute any assets or other elements used taken from other sources. For example:
+NOTE: I tried using an HTML textbox in my game and could not get it to overlap properly with my canvas (and I couldn't
+find any sources online that did what I wanted), so I had chatGPT write a custom textbox in p5 which I then used as a
+base. The function is marked.
 
-The fish images were sourced from
-the [Creative Commons image "Georgia Aquarium Fish"](https://search.creativecommons.org/photos/96f6f770-eac1-488c-8abb-16bee7bcc874)
-by Mike Johnston which is licensed with CC BY 2.0. To view a copy of this license,
-visit https://creativecommons.org/licenses/by/2.0/.
+All sounds effects were sourced from
+<a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=195970">
+Pixabay</a>
+
+All images were sourced from
+[Vecteezy](https://www.vecteezy.com/png/34466307-retro-vintage-spiral-background
+)
 
 <a href="https://www.vecteezy.com/free-vector/background">Background Vectors by Vecteezy</a>
-https://www.vecteezy.com/png/34466307-retro-vintage-spiral-background
-https://www.vecteezy.com/png/34466289-retro-vintage-spiral-background
 
-https://ttsreader.com/player/
+[Orange](https://www.vecteezy.com/png/34466307-retro-vintage-spiral-background)
 
-https://www.naturalreaders.com/online/
+I cant find the black and white or the green one :( I should have saved it earlier )
 
-Sound Effect
-by <a href="https://pixabay.com/users/alex_jauk-16800354/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=195970">
-Alexander Jauk</a>
-from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=195970">
-Pixabay</a>
-
-Sound Effect
-by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=104587">
-freesound_community</a>
-from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=104587">
-Pixabay</a>
-
-Sound Effect
-by <a href="https://pixabay.com/users/lazychillzone-40482846/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=223546">
-Lazy Chill Zone</a>
-from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=223546">
-Pixabay</a>
+[Voiceovers](https://ttsreader.com/player/)
 
 Clock Sound Effect
 by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=58822">
@@ -68,16 +57,34 @@ Ribhav Agrawal</a>
 from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=230554">
 Pixabay</a>
 
-ding Sound Effect
+Ding Sound Effect
 by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=67618">
 freesound_community</a>
 from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=67618">
 Pixabay</a>
 
-bad ding Sound Effect
+Dong Sound Effect
 by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=37310">
 freesound_community</a>
 from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=37310">
 Pixabay</a>
 
 Music: https://archive.org/details/SymphonyNo.5
+
+Sound Effect
+by <a href="https://pixabay.com/users/alex_jauk-16800354/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=195970">
+Alexander Jauk</a>
+from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=195970">
+Pixabay</a>
+
+Sound Effect
+by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=104587">
+freesound_community</a>
+from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=104587">
+Pixabay</a>
+
+Sound Effect
+by <a href="https://pixabay.com/users/lazychillzone-40482846/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=223546">
+Lazy Chill Zone</a>
+from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=223546">
+Pixabay</a>
