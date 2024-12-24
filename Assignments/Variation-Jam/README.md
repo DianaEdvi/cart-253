@@ -9,7 +9,8 @@ By Diana Edvi
 This game is about slowly overwhelming the user with more and more tasks to do. It starts off with a single menial ball
 to keep up, and slowly increases in difficulty as more tasks appear. There are four total: the solo-pong game, a
 simple "cow" that the user has to click on, a math prompt, and a pattern prompt. The original goal was to get the game
-to be very overwhelming by the end. I think the final result is only mildly so,but I still think its enjoyable.
+to be very overwhelming by the end. I think the final result is only mildly so, you can definitely keep up with
+everything, but I still think its enjoyable.
 
 NOTE: The reset button does not work properly :) If you want to play again, it's better to refresh the page.
 
