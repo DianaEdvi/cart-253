@@ -14,8 +14,11 @@ let prompt = {
     w: 300,
     h: 80,
     f: "#005293",
-    text: ""
+    text: "",
 }
+
+let patternTimeout = 5000;
+
 
 // Typing properties
 let inputText = '';
@@ -68,7 +71,7 @@ function patterns() {
             if (!timers.patternTimeout) {
                 timers.patternTimeout = setTimeout(() => {
                     endTask = true;
-                }, 5000);
+                }, patternTimeout);
             }
         }
     } else {
@@ -319,6 +322,10 @@ function renewPatterns() {
     endTask = false;
     if (timers.patternTimeout) {
         clearTimeout(timers.patternTimeout);
+
+        if (speedPattern) {
+            patternTimeout = 3000;
+        }
     }
     timers.patternTimeout = undefined;
     generatePrompt();

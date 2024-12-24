@@ -35,8 +35,17 @@ let tasks = {
         isSuccessful: false, //
         counter: undefined, //
         prevTaskCounter: 5,
-        bannerText: "Are you smarter than a 5th grader?"
+        bannerText: "Game's gonna get faster soon..."
     }
+}
+
+
+let timers = {
+    bannerTimerStarted: false, // The timer for keeping the banner on the screen for 3 seconds
+    answerTimeout: undefined,
+    patternTimeout: undefined,
+    cowTimeout: undefined,
+    speedTimeout: undefined
 }
 
 /**
@@ -90,6 +99,9 @@ function game() {
 
         // Wait ten seconds, then play the book club audio
         activateAudioWithDelay(audio.comments.bookClub, 10000);
+
+        timers.speedTimeout = setTimeout(() => speedUp(), 5000);
+
     }
     updateHealth();
     manageFailState();
@@ -118,11 +130,13 @@ function resetGame() {
     resetMathing();
     resetPatterns();
 
-    clearTimeout(timers.cowTimeout);
+    if (timers.cowTimeout) {
+        clearTimeout(timers.cowTimeout);
+        timers.cowTimeout = undefined;
+    }
     timers.bannerTimerStarted = false;
-    timers.answerTimeout = undefined;
-    timers.patternTimeout = undefined;
-    timers.cowTimeout = undefined;
+    // timers.answerTimeout = undefined;
+    // timers.patternTimeout = undefined;
 
     endProperties.score.timer.text = undefined;
     score.timer.text = undefined;

@@ -46,18 +46,18 @@ let healthBar = {
         currentValue: 100,
         minValue: 0,
         maxValue: 100,
-        decayRate: -0.01,
+        decayRate: -0.02,
         animation: {
             gainingHealth: {
                 isActive: false,
                 counter: 0,
-                amount: 15,
+                amount: 10,
                 rateOfChange: 1
             },
             losingHealth: {
                 isActive: false,
                 counter: 0,
-                amount: 15,
+                amount: 10,
                 rateOfChange: -1
             }
         }
@@ -334,4 +334,20 @@ function resetHealth() {
     healthBar.healthPoints.currentValue = 100;
     healthBar.healthPoints.animation.gainingHealth.isActive = false;
     healthBar.healthPoints.animation.losingHealth.isActive = false;
+}
+
+let speedPattern = false;
+
+let speedMath = false;
+
+function speedUp() {
+
+    if (cow.speedX < 2) {
+        cow.speedX += 0.001;
+        cow.speedY += 0.001;
+    }
+
+    speedMath = true;
+    speedPattern = true;
+
 }

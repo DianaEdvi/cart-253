@@ -9,7 +9,9 @@ let cow = {
         fill: undefined,
         neutral: "#000000",
         selected: "#eaa2d3"
-    }
+    },
+    speedX: 1,
+    speedY: 0.25,
 }
 
 /**
@@ -29,8 +31,8 @@ function randomCow(cow) {
     pop();
 
     //Move cow
-    cow.x -= 1;
-    cow.y += 0.25;
+    cow.x -= cow.speedX;
+    cow.y += cow.speedY;
 
     //Check if mouse clicked cow
     // if (hasClicked && !successes.cowSuccess && mouseX >= cow.x - cow.w / 2 && mouseX <= cow.x + cow.x / 2 && mouseY >= cow.y - cow.w / 2 && mouseY <= cow.y + cow.w / 2) {
@@ -90,6 +92,9 @@ function playMooSound() {
 
 }
 
+/**
+ * Reset the cow function
+ */
 function resetCow() {
     cow.x = 640;
     cow.y = 100;

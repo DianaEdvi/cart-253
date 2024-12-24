@@ -40,6 +40,10 @@ let mathBoxes = {
         h: 80,
         text: "",
         isCorrect: false
+    },
+    timeout: {
+        pause: 5000,
+        reset: 2000
     }
 }
 
@@ -78,7 +82,7 @@ function mathing() {
         clearTimeout(timers.answerTimeout); // Clear any existing timeout
         timers.answerTimeout = setTimeout(() => {
             hasAnswered = true;
-        }, 5000);
+        }, mathBoxes.timeout.pause);
     }
 
     constrainYCoordinates();
@@ -152,7 +156,7 @@ function animateMathUI() {
                     resetInProgress = true; // Prevent multiple resets
                     setTimeout(() => {
                         renewMathing(); // Reset the function
-                    }, 2000); // Pause for 2 seconds (2000 milliseconds)
+                    }, mathBoxes.timeout.reset); // Pause for 2 seconds (2000 milliseconds)
                 }
             }
         }
@@ -176,6 +180,11 @@ function processAnswer(answerBox) {
     hasAnswered = true;
     updateHealth(tasks.math.isSuccessful);
     clearTimeout(timers.answerTimeout); // Stop the timer if answered
+
+    if (speedMath) {
+        mathBoxes.timeout.pause = 3000;
+        mathBoxes.timeout.reset = 1000;
+    }
 }
 
 /**
