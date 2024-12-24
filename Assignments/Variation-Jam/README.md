@@ -10,7 +10,8 @@ This game is about slowly overwhelming the user with more and more tasks to do. 
 to keep up, and slowly increases in difficulty as more tasks appear. There are four total: the solo-pong game, a
 simple "cow" that the user has to click on, a math prompt, and a pattern prompt. The original goal was to get the game
 to be very overwhelming by the end. I think the final result is only mildly so, you can definitely keep up with
-everything, but I still think its enjoyable.
+everything, but I still think its enjoyable. Also, it doesn't really feel like it's speeding up by the end (because it
+barely is, trying to do that gave me a massive headache). You get the idea though. Anyway, have fun.
 
 NOTE: The reset button does not work properly :) If you want to play again, it's better to refresh the page.
 
